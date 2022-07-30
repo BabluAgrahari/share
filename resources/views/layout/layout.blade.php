@@ -275,6 +275,7 @@
             <!-- partial -->
             <div class="main-panel">
                 <div class="content-wrapper">
+                    @include('include.conf_respinse')
                     <div class="card shadow mb-4">
                         @yield('content')
                     </div>
