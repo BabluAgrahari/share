@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
-use App\Http\Controllers\Admin\UserController as User;
+use App\Http\Controllers\LoginController as User;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,10 +20,11 @@ use App\Http\Controllers\Admin\UserController as User;
 // });
 
 // Route::resource('product',Product::class);
-Route::get('/',[user::class,'index']);
-Route::get('create',[user::class,'create']);
-Route::POST('store',[user::class,'store']);
-Route::POST('login',[user::class,'show']);
-Route::get('dashboard',[user::class,'dashboard']);
-Route::get('logout',[user::class,'logout']);
-Route::get('home',[user::class,'home']);
+
+Route::get('/',         [user::class, 'index']);
+Route::get('register',  [user::class, 'register']);
+Route::POST('store',    [user::class, 'store']);
+Route::POST('login',    [user::class, 'show']);
+Route::get('dashboard', [user::class, 'dashboard']);
+Route::get('logout',    [user::class, 'logout']);
+Route::get('home',      [user::class, 'home']);

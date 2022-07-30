@@ -52,10 +52,10 @@
                             <form class="pt-3" action="{{url('login')}}" method="POST">
                                 @csrf
                                 <div class="form-group">
-                                    <input type="email" class="form-control form-control-lg" id="exampleInputEmail1" name="email" placeholder="Username">
+                                    <input type="email" class="form-control" id="exampleInputEmail1" name="email" placeholder="Username">
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" name="password" placeholder="Password">
+                                    <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Password">
                                 </div>
                                 <div class="mt-3">
                                     <button type="submit" class="btn btn-success btn-lg w-100">SIGN IN</button>
@@ -71,7 +71,7 @@
                                     <button type="button" class="btn btn-block btn-facebook auth-form-btn">
                                         <i class="mdi mdi-facebook me-2"></i>Connect using facebook </button>
                                 </div> -->
-                                <div class="text-center mt-4 font-weight-light"> Don't have an account? <a href="{{url('create')}}" class="text-primary">Create</a>
+                                <div class="text-center mt-4 font-weight-light"> Don't have an account? <a href="{{url('register')}}" class="text-primary">Create</a>
                                 </div>
                             </form>
                         </div>
