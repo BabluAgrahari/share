@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\LoginController as User;
+use App\http\Controllers\admin\ClientController as Client;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,3 +29,6 @@ Route::POST('login',    [user::class, 'show']);
 Route::get('dashboard', [user::class, 'dashboard']);
 Route::get('logout',    [user::class, 'logout']);
 Route::get('home',      [user::class, 'home']);
+
+Route::resource('client',Client::class);
+Route::get('delete/{id}',      [Client::class, 'delete']);

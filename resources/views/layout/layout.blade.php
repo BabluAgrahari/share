@@ -57,9 +57,9 @@
                     <span class="nav-item-head">Template Pages</span>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../../index.html">
+                    <a class="nav-link" href="{{url('client')}}">
                         <i class="mdi mdi-compass-outline menu-icon"></i>
-                        <span class="menu-title">Dashboard</span>
+                        <span class="menu-title">Client</span>
                     </a>
                 </li>
                 <li class="nav-item">
