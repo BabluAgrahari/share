@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('admin.user.login');
+        return view('user.login');
     }
 
     /**
@@ -26,7 +26,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.user.register');
+        return view('user.register');
     }
 
     /**
@@ -138,7 +138,7 @@ class UserController extends Controller
     
     public function home()
     {
-        return view('admin.dashboard.home');
+        return view('dashboard.home');
     }
 
     /**

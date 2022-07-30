@@ -16,7 +16,7 @@ use App\Http\Controllers\Admin\UserController as User;
 */
 
 // Route::get('/', function () {
-//     return view('admin.dashboard');
+//     return view('dashboard');
 // });
 
 // Route::resource('product',Product::class);
