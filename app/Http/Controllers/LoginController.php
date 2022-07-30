@@ -24,13 +24,11 @@ class LoginController extends Controller
 
     public function store(Request $request)
     {
+
         $request->validate(
             [
                 'firstname' => 'required',
                 'lastname' => 'required',
-                'father_name' => 'required',
-                'add' => 'required',
-                'mobile' => 'required',
                 'email' => 'required|email',
                 'password' => 'min:6 |required'
             ],
@@ -38,9 +36,6 @@ class LoginController extends Controller
             [
                 'firstname.required' => 'First Name is required',
                 'lastname.required' => 'Last Name is required',
-                'father_name.required' => 'Father Name is required',
-                'add.required' => 'Address is required',
-                'mobile.required' => 'Phone Number is required',
                 'email.required' => 'Email is required',
                 'password.required' => 'Password is required'
             ],
@@ -57,17 +52,10 @@ class LoginController extends Controller
         $store->email               = $request->email;
         $store->password            = Hash::make($request->password);
 
-        if ($request->file('image')) {
-            $file = $request->file('image');
-            $filename = date('ymdhi') . $file->getClientOriginalName();
-            $file->move(public_path('/image'), $filename);
-            $store->image    = $filename;
+        if ($store->save())
+            return redirect('/')->with('success', 'Data Insert Successfully');
 
-            if ($store->save()) {
-                return redirect('/')->with('success', 'Data Insert Successfully');
-            }
-            return redirect('/')->with('error', 'Data Not Insert ');
-        }
+        return redirect('/')->with('error', 'Data Not Insert ');
     }
 
     public function show(Request $request)
@@ -115,7 +103,7 @@ class LoginController extends Controller
 
     public function home()
     {
-        return view('home');
+        return view('dashboard');
     }
 
     public function destroy($id)

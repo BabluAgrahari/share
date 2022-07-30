@@ -33,6 +33,22 @@
               </div>
               <h4>New here?</h4>
               <h6 class="font-weight-light">Signing up is easy. It only takes a few steps</h6>
+              <div class="col-md-12">@if(Session::has('success'))
+                <div class="alert alert-success">
+                  {{ Session::get('success') }}
+                  @php
+                  Session::forget('success');
+                  @endphp
+                </div>
+                @elseif(Session::has('error'))
+                <div class="alert alert-danger">
+                  {{ Session::get('error') }}
+                  @php
+                  Session::forget('error');
+                  @endphp
+                </div>
+                @endif
+              </div>
               <form class="pt-3" action="{{url('store')}}" method="POST" enctype="multipart/form-data">
                 @csrf
 
