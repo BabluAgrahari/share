@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientRequest;
 use App\Models\client;
+use App\Models\ContactPerson;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -16,14 +17,16 @@ class ClientController extends Controller
         return view('client.index', $data);
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        return view('client.create');
+        $data['contacts']= ContactPerson::get();
+        return view('client.create',$data);
     }
 
     public function store(ClientRequest $request)
     {
         $store = new Client;
+        $store->contact_person   =$request->contact_person;
         $store->file_no         = $request->file_no;
         $store->share_holder    = $request->share_holder;
         $store->surivor_name    = $request->surivor_name;
@@ -32,6 +35,8 @@ class ClientController extends Controller
         $store->state           = $request->state;
         $store->pin             = $request->pin;
 
+        // echo "<pre>";
+        // print_r($request->all());die;
         if ($store->save()) {
             return redirect()->back()->with('success', 'Client Created Successfully');
         }
@@ -47,12 +52,14 @@ class ClientController extends Controller
     public function edit($id)
     {
         $data['res'] = Client::find($id);
+        $data['contacts']= ContactPerson::get();
         return view('client.edit', $data);
     }
 
     public function update(ClientRequest $request, $id)
     {
         $update =  Client::find($id);
+        $update->contact_person            =$request->contact_person;
         $update->file_no       = $request->file_no;
         $update->share_holder  = $request->share_holder;
         $update->surivor_name  = $request->surivor_name;

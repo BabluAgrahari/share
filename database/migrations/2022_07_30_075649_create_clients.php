@@ -22,9 +22,6 @@ return new class extends Migration
             $table->string('city', 200,)->nullable();
             $table->string('state', 200,)->nullable();
             $table->string('pin', 200,)->nullable();
-            $table->string('contact_person_name', 200,)->nullable();
-            $table->string('mobile', 200,)->nullable();
-            $table->string('email', 200,)->nullable();
             $table->timestamps();
         });
     }

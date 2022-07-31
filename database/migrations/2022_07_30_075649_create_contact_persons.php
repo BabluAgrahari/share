@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('contact_person', function (Blueprint $table) {
+        Schema::create('contact_persons', function (Blueprint $table) {
             $table->id();
             $table->string('name', 200,)->nullable();
             $table->string('email', 200,)->nullable();
             $table->string('mobile', 200,)->nullable();
-            $table->integer('status', 1,)->default(0);
+            $table->string('status', 1,)->nullable();
             $table->timestamps();
         });
     }

@@ -83,6 +83,20 @@
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
+
+                    <div class="form-group col-md-4">
+                        <label>Contant Person</label>
+                        <select class="form-control form-control-sm" placeholder="Select Contant" name="contact_person">
+                            <option value="">Select</option>
+                            @foreach($contacts as $show)
+                            <option value="{{ $show->id }}" {{($show->id==$res->contact_person)?"selected":''}}>{{ ucwords($show->name)}}</option>
+
+                            @endforeach
+                        </select>
+                        @error('state')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
                 </div>
 
                 <div class="form-group text-center">

@@ -38,7 +38,7 @@
                         </div>
                     </a>
                 </li>
-                <li class="nav-item pt-3">
+                <!-- <li class="nav-item pt-3">
                     <a class="nav-link d-block" href="../../index.html">
                         <img class="sidebar-brand-logo" src="{{asset('')}}assets/images/logo.svg" alt="" />
                         <img class="sidebar-brand-logomini" src="{{asset('')}}assets/images/logo-mini.svg" alt="" />
@@ -52,7 +52,7 @@
                             <input type="text" class="form-control border-0" placeholder="Search" />
                         </div>
                     </form>
-                </li>
+                </li> -->
                 <li class="pt-2 pb-1">
                     <span class="nav-item-head">Template Pages</span>
                 </li>
@@ -63,12 +63,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                    <a class="nav-link" href="{{url('contact')}}">
                         <i class="mdi mdi-crosshairs-gps menu-icon"></i>
-                        <span class="menu-title">UI Elements</span>
-                        <i class="menu-arrow"></i>
+                        <span class="menu-title">Contact</span>
+                      
                     </a>
-                    <div class="collapse" id="ui-basic">
+                    <!-- <div class="collapse" id="ui-basic">
                         <ul class="nav flex-column sub-menu">
                             <li class="nav-item">
                                 <a class="nav-link" href="../../pages/ui-features/buttons.html">Buttons</a>
@@ -80,7 +80,7 @@
                                 <a class="nav-link" href="../../pages/ui-features/typography.html">Typography</a>
                             </li>
                         </ul>
-                    </div>
+                    </div> -->
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="../../pages/icons/mdi.html">
@@ -148,7 +148,7 @@
                     <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
                         <a class="navbar-brand brand-logo-mini" href="../../index.html"><img src="{{asset('')}}assets/images/logo-mini.svg" alt="logo" /></a>
                     </div>
-                    <ul class="navbar-nav">
+                    <!-- <ul class="navbar-nav">
                         <li class="nav-item dropdown">
                             <a class="nav-link" id="messageDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="mdi mdi-email-outline"></i>
@@ -235,10 +235,10 @@
                                 <h6 class="p-3 font-13 mb-0 text-primary text-center">View all notifications</h6>
                             </div>
                         </li>
-                    </ul>
+                    </ul> -->
                     <ul class="navbar-nav navbar-nav-right">
-                        <li class="nav-item nav-logout d-none d-md-block me-3">
-                            <a class="nav-link" href="{{url('logout')}}">Logout</a>
+                        <li class="">
+                            <a class=" btn btn-danger btn-sm" href="{{url('logout')}}">Logout</a>
                         </li>
                         <!-- <li class="nav-item nav-logout d-none d-md-block">
                             <button class="btn btn-sm btn-danger">Trailing</button>
@@ -260,12 +260,12 @@
                                 <a class="dropdown-item" href="#">
                                     <i class="flag-icon flag-icon-ru me-3"></i>Russian </a>
                             </div>
-                        </li>
+                        </li>-->
                         <li class="nav-item nav-logout d-none d-lg-block">
-                            <a class="nav-link" href="../../index.html">
+                            <a class="nav-link" href="">
                                 <i class="mdi mdi-home-circle"></i>
                             </a>
-                        </li> -->
+                        </li> 
                     </ul>
                     <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
                         <span class="mdi mdi-menu"></span>

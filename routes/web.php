@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\LoginController as User;
 use App\http\Controllers\admin\ClientController as Client;
+use App\http\Controllers\admin\ContactPersonController as ContactPerson;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,3 +33,6 @@ Route::get('home',      [user::class, 'home']);
 
 Route::resource('client',Client::class);
 Route::get('delete/{id}',      [Client::class, 'delete']);
+
+Route::resource('contact',ContactPerson::class);
+Route::get('delete2/{id}',      [ContactPerson::class, 'delete']);
