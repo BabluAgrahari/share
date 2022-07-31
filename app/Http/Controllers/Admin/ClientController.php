@@ -13,8 +13,9 @@ use Illuminate\Http\Request;
 class ClientController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
+       
         $data['lists'] = Client::all();
         return view('client.index', $data);
     }

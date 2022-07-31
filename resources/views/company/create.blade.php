@@ -57,9 +57,10 @@
                     <div class="form-group col-md-4">
                         <label>State</label>
                         <select class="form-control form-control-sm" placeholder="Enter State" name="state">
-                            <option>Select</option>
-                            <option>up</option>
-                            <option>delhi</option>
+                            <option value=" ">Select</option>
+                            @foreach(config('global.state') as $state)
+                            <option value="{{$state}}">{{$state}}</option>
+                            @endforeach
                         </select>
                         @error('state')
                         <span class="text-danger">{{ $message }}</span>

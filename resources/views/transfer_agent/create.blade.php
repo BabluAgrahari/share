@@ -58,8 +58,9 @@
                         <label>State</label>
                         <select class="form-control form-control-sm" placeholder="Enter State" name="state">
                             <option value=" ">Select</option>
-                            <option>up</option>
-                            <option>delhi</option>
+                            @foreach(config('global.state') as $state)
+                            <option value="{{$state}}">{{$state}}</option>
+                            @endforeach
                         </select>
                         @error('state')
                         <span class="text-danger">{{ $message }}</span>
