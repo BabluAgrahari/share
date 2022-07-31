@@ -33,14 +33,14 @@ Route::get('dashboard', [user::class, 'dashboard']);
 Route::get('logout',    [user::class, 'logout']);
 Route::get('home',      [user::class, 'home']);
 
-Route::resource('client',Client::class);
+Route::resource('client', Client::class);
 Route::get('delete/{id}',      [Client::class, 'delete']);
 
-Route::resource('contact',ContactPerson::class);
+Route::resource('contact', ContactPerson::class);
 Route::get('delete2/{id}',      [ContactPerson::class, 'delete']);
 
-Route::resource('company',Company::class);
+Route::resource('company', Company::class);
 Route::get('delete3/{id}',      [Company::class, 'delete']);
 
-Route::resource('transfer_agent',TransferAgents::class);
+Route::resource('transfer-agent', TransferAgents::class);
 Route::get('delete4/{id}',      [TransferAgents::class, 'delete']);

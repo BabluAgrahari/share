@@ -69,7 +69,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('transfer_agent')}}">
+                    <a class="nav-link" href="{{url('transfer-agent')}}">
                         <i class="mdi mdi-account-convert menu-icon"></i>
                         <span class="menu-title">Transfer Agent</span>
                     </a>
@@ -77,7 +77,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link" href="{{url('client')}}">
-                        <i class="mdi mdi-compass-outline menu-icon"></i>
+                        <i class="mdi mdi-account-multiple menu-icon"></i>
                         <span class="menu-title">Client</span>
                     </a>
                 </li>

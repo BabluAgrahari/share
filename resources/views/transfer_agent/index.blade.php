@@ -8,7 +8,7 @@
         </div>
 
         <div class="col-md-6">
-            <a href="{{url('transfer_agent/create')}} " class="btn btn-success btn-sm" style="float:right;"><span class="mdi mdi-plus"></span>&nbsp;Add</a>
+            <a href="{{url('transfer-agent/create')}} " class="btn btn-success btn-sm" style="float:right;"><span class="mdi mdi-plus"></span>&nbsp;Add</a>
         </div>
     </div>
 </div>
@@ -39,7 +39,7 @@
                 <td>{{$list->state}}</td>
                 <td>{{$list->pin}}</td>
                 <td>
-                    <a href="transfer_agent/{{$list->id}}/edit" class="btn btn-sm btn-outline-info"><span class="mdi mdi-pencil-box-outline"></span></a>
+                    <a href="transfer-agent/{{$list->id}}/edit" class="btn btn-sm btn-outline-info"><span class="mdi mdi-pencil-box-outline"></span></a>
                     <a onclick="return confirm('Are you sure to detele this?')" href="delete4/{{$list->id}}" class="btn btn-sm btn-outline-danger"><span class="mdi mdi-delete"></span></a>
                 </td>
             </tr>

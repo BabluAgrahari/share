@@ -23,7 +23,8 @@
                 <th>Address</th>
                 <th>City</th>
                 <th>State</th>
-                <th>Pin Code</th>
+                <th>Pin</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -32,7 +33,7 @@
                 <td>{{ ++$key }}</td>
                 <td>{{$list->file_no}}</td>
                 <td>{{$list->share_holder}}</td>
-                <td>{{$list->surivor_name}}</td>
+                <td>{{$list->survivor_name}}</td>
                 <td>{{$list->address}}</td>
                 <td>{{$list->city}}</td>
                 <td>{{$list->state}}</td>

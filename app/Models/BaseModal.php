@@ -3,13 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class BaseModel extends Model
+class BaseModal extends Model
 {
+    use SoftDeletes;
+
     public $timestamps = false;
     const CREATED_AT = 'created';
-    const UPDATED_AT = 'modified';
-    protected $primaryKey = '_id';
+    const UPDATED_AT = 'updated';
+    const DELETED_AT = 'deleted';
+    protected $primaryKey = 'id';
     protected $guarded = [];
 
     public static function boot()
@@ -17,7 +21,7 @@ class BaseModel extends Model
         parent::boot();
 
         self::creating(function ($model) {
-            $model->modified = time();
+            $model->updated = time();
 
             $model->created = time();
         });
@@ -27,7 +31,7 @@ class BaseModel extends Model
         });
 
         self::updating(function ($model) {
-            $model->modified = time();
+            $model->updated = time();
         });
 
         self::updated(function ($model) {
@@ -35,7 +39,7 @@ class BaseModel extends Model
         });
 
         self::deleting(function ($model) {
-            // ... code here
+            $model->deleted = time();
         });
 
         self::deleted(function ($model) {

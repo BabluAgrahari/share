@@ -36,7 +36,7 @@ class ClientController extends Controller
         $store->company_id     = $request->company_id;
         $store->file_no         = $request->file_no;
         $store->share_holder    = $request->share_holder;
-        $store->surivor_name    = $request->surivor_name;
+        $store->survivor_name    = $request->survivor_name;
         $store->address         = $request->address;
         $store->city            = $request->city;
         $store->state           = $request->state;
@@ -74,7 +74,7 @@ class ClientController extends Controller
         $update->company_id   = $request->company_id;
         $update->file_no       = $request->file_no;
         $update->share_holder  = $request->share_holder;
-        $update->surivor_name  = $request->surivor_name;
+        $update->survivor_name  = $request->survivor_name;
         $update->address       = $request->address;
         $update->city          = $request->city;
         $update->state         = $request->state;

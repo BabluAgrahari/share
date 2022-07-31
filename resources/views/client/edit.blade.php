@@ -44,9 +44,9 @@
                     <div class="form-group col-md-4">
                         <label>Survivor Name</label>
                         <input type="text" class="form-control form-control-sm"
-                            value="{{ old('surivor_name')??$res->surivor_name }}" placeholder=" Enter Survivor Name"
-                            name="surivor_name">
-                        @error('surivor_name')
+                            value="{{ old('survivor_name')??$res->survivor_name }}" placeholder=" Enter Survivor Name"
+                            name="survivor_name">
+                        @error('survivor_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -87,7 +87,7 @@
                     <div class="form-group col-md-6">
                         <label>Address</label>
                         <textarea type="text" class="form-control form-control-sm" placeholder="Enter Address"
-                            name="address">{{ old('surivor_name')??$res->address }}</textarea>
+                            name="address">{{ old('address')??$res->address }}</textarea>
                         @error('address')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror

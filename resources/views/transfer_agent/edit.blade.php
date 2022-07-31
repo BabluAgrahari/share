@@ -8,7 +8,7 @@
         </div>
 
         <div class="col-md-6">
-            <a href="{{url('transfer_agent')}}" class="btn btn-warning btn-sm" style="float:right;"><span class="mdi mdi-backburger"></span>&nbsp;Back</a>
+            <a href="{{url('transfer-agent')}}" class="btn btn-warning btn-sm" style="float:right;"><span class="mdi mdi-backburger"></span>&nbsp;Back</a>
         </div>
     </div>
 </div>
@@ -17,7 +17,7 @@
     <div class="row">
         <div class="col-md-12">
 
-            <form action="{{url('transfer_agent/'.$res->id)}}" method="POST" enctype="multipart/form-data">
+            <form action="{{url('transfer-agent/'.$res->id)}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('put')
                 <div class="row">
