@@ -56,9 +56,10 @@
                     <div class="form-group col-md-4">
                         <label>State</label>
                         <select class="form-control form-control-sm" placeholder="Enter State" name="state">
-                            <option>Select</option>
-                            <option>up</option>
-                            <option>delhi</option>
+                            <option value=" ">Select</option>
+                            @foreach(config('global.state') as $state)
+                            <option value="{{$state}}">{{$state}}</option>
+                            @endforeach
                         </select>
                         @error('state')
                         <span class="text-danger">{{ $message }}</span>
@@ -86,7 +87,7 @@
                     <div class="form-group col-md-4">
                         <label>Contant Person</label>
                         <select class="form-control form-control-sm" placeholder="Select Contant" name="contact_person_id">
-                            <option>Select</option>
+                            <option value=" ">Select</option>
                             @foreach($contacts as $show)
                             <option value="{{ $show->id }}">{{ ucwords($show->name)}}</option>
 
@@ -101,10 +102,10 @@
 
                 <div class="row">
 
-                <div class="form-group col-md-4">
+                    <div class="form-group col-md-4">
                         <label>Transfer Agent</label>
                         <select class="form-control form-control-sm" placeholder="Select Contant" name="agent_id">
-                            <option>Select</option>
+                            <option value=" ">Select</option>
                             @foreach($agents as $show)
                             <option value="{{ $show->id }}">{{ ucwords($show->agency_name)}}</option>
 
