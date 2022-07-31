@@ -32,9 +32,9 @@ class ContactPersonController extends Controller
         $store->status       = $request->status;
 
         if ($store->save()) {
-            return redirect()->back()->with('success', 'contact Created Successfully');
+            return redirect()->back()->with('success', 'Contact Person Created Successfully');
         }
-        return redirect()->back()->with('error', 'contact not Created');
+        return redirect()->back()->with('error', 'Contact Person not Created');
     }
 
 
@@ -56,14 +56,11 @@ class ContactPersonController extends Controller
         $update->mobile        = $request->mobile;
         $update->email        = $request->email;
         $update->status       = $request->status;
-        // $update->contact_person_name     = $request->contact_person_name;
-        // $update->mobile                  = $request->mobile;
-        // $update->email                   = $request->email;
 
         if ($update->save()) {
-            return redirect('/contact')->with('success', 'contact Update successfully');
+            return redirect('/contact')->with('success', 'Contact Person  Update successfully');
         }
-        return redirect()->back()->with('error', 'contact not Update');
+        return redirect()->back()->with('error', 'Contact Person not Update');
     }
 
     public function delete($id)
@@ -71,8 +68,8 @@ class ContactPersonController extends Controller
         $res = ContactPerson::find($id)->delete();
 
         if ($res) {
-            return redirect()->back()->with('success', 'contact Removed Successfully');
+            return redirect()->back()->with('success', 'Contact Person Removed Successfully');
         }
-        return redirect()->back()->with('error', 'contact not Removed');
+        return redirect()->back()->with('error', 'Contact Person not Removed');
     }
 }

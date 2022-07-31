@@ -46,16 +46,16 @@
                     </div>
                 </div>
 
-                    <div class="form-group col-md-4">
-                        <label>State</label>
-                        <select class="form-control form-control-sm" placeholder="Enter status" name="status">
-                            <option value="1">Active</option>
-                            <option value="0">Inactive</option>
-                        </select>
-                        @error('state')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
+                <div class="form-group col-md-4">
+                    <label>Status</label>
+                    <select class="form-control form-control-sm" placeholder="Enter status" name="status">
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                    </select>
+                    @error('status')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
 
 
                 <div class="form-group text-center">

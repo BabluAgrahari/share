@@ -85,7 +85,7 @@
 
                     <div class="form-group col-md-4">
                         <label>Contant Person</label>
-                        <select class="form-control form-control-sm" placeholder="Select Contant" name="contact_person">
+                        <select class="form-control form-control-sm" placeholder="Select Contant" name="contact_person_id">
                             <option>Select</option>
                             @foreach($contacts as $show)
                             <option value="{{ $show->id }}">{{ ucwords($show->name)}}</option>

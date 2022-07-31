@@ -53,47 +53,35 @@
                         </div>
                     </form>
                 </li> -->
-                <li class="pt-2 pb-1">
-                    <span class="nav-item-head">Template Pages</span>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url('contact')}}">
+                        <i class="mdi mdi-account-circle menu-icon"></i>
+                        <span class="menu-title">Contact Person</span>
+                    </a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url('company')}}">
+                        <i class="mdi mdi-hexagon menu-icon"></i>
+                        <span class="menu-title">Company</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url('transfer_agent')}}">
+                        <i class="mdi mdi-account-convert menu-icon"></i>
+                        <span class="menu-title">Transfer Agent</span>
+                    </a>
+                </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="{{url('client')}}">
                         <i class="mdi mdi-compass-outline menu-icon"></i>
                         <span class="menu-title">Client</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url('contact')}}">
-                        <i class="mdi mdi-crosshairs-gps menu-icon"></i>
-                        <span class="menu-title">Contact</span>
-                      
-                    </a>
-                    <!-- <div class="collapse" id="ui-basic">
-                        <ul class="nav flex-column sub-menu">
-                            <li class="nav-item">
-                                <a class="nav-link" href="../../pages/ui-features/buttons.html">Buttons</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="../../pages/ui-features/dropdowns.html">Dropdowns</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="../../pages/ui-features/typography.html">Typography</a>
-                            </li>
-                        </ul>
-                    </div> -->
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url('company')}}">
-                        <i class="mdi mdi-contacts menu-icon"></i>
-                        <span class="menu-title">Company</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url('transfer_agent')}}">
-                        <i class="mdi mdi-format-list-bulleted menu-icon"></i>
-                        <span class="menu-title">Transfer Agent</span>
-                    </a>
-                </li>
+
                 <!-- <li class="nav-item">
                     <a class="nav-link" href="../../pages/charts/chartjs.html">
                         <i class="mdi mdi-chart-bar menu-icon"></i>
@@ -265,7 +253,7 @@
                             <a class="nav-link" href="">
                                 <i class="mdi mdi-home-circle"></i>
                             </a>
-                        </li> 
+                        </li>
                     </ul>
                     <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
                         <span class="mdi mdi-menu"></span>

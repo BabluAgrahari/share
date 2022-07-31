@@ -21,18 +21,19 @@ class ClientController extends Controller
 
     public function create(Request $request)
     {
-        $data['companies']= Company::get();
-        $data['agents']= TransferAgent::get();
-        $data['contacts']= ContactPerson::get();
-        return view('client.create',$data);
+        $data['companies'] = Company::select('id', 'company_name')->get();
+        $data['agents']    = TransferAgent::select('id', 'agency_name')->get();
+        $data['contacts']  = ContactPerson::select('id', 'name')->get();
+
+        return view('client.create', $data);
     }
 
     public function store(ClientRequest $request)
     {
         $store = new Client;
-        $store->contact_person   =$request->contact_person;
-        $store->agent_name   =$request->agent_id;
-        $store->company_name   =$request->company_id;
+        $store->contact_person_id   = $request->contact_person_id;
+        $store->agent_id       = $request->agent_id;
+        $store->company_id     = $request->company_id;
         $store->file_no         = $request->file_no;
         $store->share_holder    = $request->share_holder;
         $store->surivor_name    = $request->surivor_name;
@@ -57,19 +58,20 @@ class ClientController extends Controller
 
     public function edit($id)
     {
-        $data['companies']= Company::get();
-        $data['agents']= TransferAgent::get();
+        $data['companies'] = Company::select('id', 'company_name')->get();
+        $data['agents']    = TransferAgent::select('id', 'agency_name')->get();
+        $data['contacts']  = ContactPerson::select('id', 'name')->get();
+
         $data['res'] = Client::find($id);
-        $data['contacts']= ContactPerson::get();
         return view('client.edit', $data);
     }
 
     public function update(ClientRequest $request, $id)
     {
         $update =  Client::find($id);
-        $update->contact_person =$request->contact_person;
-        $update->agent_name   =$request->agent_id;
-        $update->company_name   =$request->company_id;
+        $update->contact_person_id = $request->contact_person_id;
+        $update->agent_id   = $request->agent_id;
+        $update->company_id   = $request->company_id;
         $update->file_no       = $request->file_no;
         $update->share_holder  = $request->share_holder;
         $update->surivor_name  = $request->surivor_name;
@@ -77,9 +79,6 @@ class ClientController extends Controller
         $update->city          = $request->city;
         $update->state         = $request->state;
         $update->pin           = $request->pin;
-        // $update->contact_person_name     = $request->contact_person_name;
-        // $update->mobile                  = $request->mobile;
-        // $update->email                   = $request->email;
 
         if ($update->save()) {
             return redirect('/client')->with('success', 'Client Update successfully');

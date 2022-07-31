@@ -19,14 +19,14 @@ class CompanyController extends Controller
 
     public function create(Request $request)
     {
-        $data['contacts']= ContactPerson::get();
-        return view('company.create',$data);
+        $data['contacts'] = ContactPerson::get();
+        return view('company.create', $data);
     }
 
     public function store(CompanyRequest $request)
     {
         $store = new Company;
-        $store->contact_person   =$request->contact_person;
+        $store->contact_person_id   = $request->contact_person_id;
         $store->company_name     = $request->company_name;
         $store->phone            = $request->phone;
         $store->email            = $request->email;
@@ -52,14 +52,14 @@ class CompanyController extends Controller
     public function edit($id)
     {
         $data['res'] = Company::find($id);
-        $data['contacts']= ContactPerson::get();
+        $data['contacts'] = ContactPerson::get();
         return view('company.edit', $data);
     }
 
     public function update(CompanyRequest $request, $id)
     {
         $update =  Company::find($id);
-        $update->contact_person   =$request->contact_person;
+        $update->contact_person_id   = $request->contact_person_id;
         $update->company_name     = $request->company_name;
         $update->phone            = $request->phone;
         $update->email            = $request->email;
@@ -67,9 +67,6 @@ class CompanyController extends Controller
         $update->city            = $request->city;
         $update->state           = $request->state;
         $update->pin             = $request->pin;
-        // $update->contact_person_name     = $request->contact_person_name;
-        // $update->mobile                  = $request->mobile;
-        // $update->email                   = $request->email;
 
         if ($update->save()) {
             return redirect('/company')->with('success', 'Company Update successfully');

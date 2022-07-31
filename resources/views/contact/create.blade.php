@@ -46,15 +46,15 @@
                 </div>
 
                 <div class="form-group col-md-4">
-                        <label>State</label>
-                        <select class="form-control form-control-sm" placeholder="Enter status" name="status">
-                            <option value="1">Active</option>
-                            <option value="0">Inactive</option>
-                        </select>
-                        @error('state')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
+                    <label>Status</label>
+                    <select class="form-control form-control-sm" placeholder="Enter status" name="status">
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                    </select>
+                    @error('state')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
 
                 <div class="form-group text-center">
                     <button type="submit" class="btn btn-primary">Submit</button>
