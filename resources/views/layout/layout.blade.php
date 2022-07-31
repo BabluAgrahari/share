@@ -34,7 +34,7 @@
                         </div>
                         <div class="nav-profile-text d-flex ms-0 mb-3 flex-column">
                             <span class="font-weight-semibold mb-1 mt-2 text-center">Antonio Olson</span>
-                            <span class="text-secondary icon-sm text-center">$3499.00</span>
+                            <!-- <span class="text-secondary icon-sm text-center">$3499.00</span> -->
                         </div>
                     </a>
                 </li>
@@ -83,18 +83,18 @@
                     </div> -->
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../../pages/icons/mdi.html">
+                    <a class="nav-link" href="{{url('company')}}">
                         <i class="mdi mdi-contacts menu-icon"></i>
-                        <span class="menu-title">Icons</span>
+                        <span class="menu-title">Company</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../../pages/forms/basic_elements.html">
+                    <a class="nav-link" href="{{url('transfer_agent')}}">
                         <i class="mdi mdi-format-list-bulleted menu-icon"></i>
-                        <span class="menu-title">Forms</span>
+                        <span class="menu-title">Transfer Agent</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="../../pages/charts/chartjs.html">
                         <i class="mdi mdi-chart-bar menu-icon"></i>
                         <span class="menu-title">Charts</span>
@@ -110,7 +110,7 @@
                     <a class="nav-link" href="http://bootstrapdash.com/demo/plus-free/documentation/documentation.html" target="_blank">
                         <i class="mdi mdi-file-document-box menu-icon"></i>
                         <span class="menu-title">Documentation</span>
-                    </a>
+                    </a> -->
                 </li>
             </ul>
         </nav>

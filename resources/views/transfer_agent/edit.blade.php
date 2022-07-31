@@ -4,27 +4,27 @@
 <div class="card-header py-2 h-body">
     <div class="row">
         <div class="col-md-6 pt-1">
-            <h6 class="m-0 font-weight-bold text-primary">Edit Company</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Add Transfer Agent</h6>
         </div>
 
         <div class="col-md-6">
-            <a href="{{url('company')}} " class="btn btn-warning btn-sm" style="float:right;"><span class="mdi mdi-backburger"></span>&nbsp;Back</a>
+            <a href="{{url('transfer_agent')}}" class="btn btn-warning btn-sm" style="float:right;"><span class="mdi mdi-backburger"></span>&nbsp;Back</a>
         </div>
     </div>
 </div>
+
 <div class="card-body h-body">
     <div class="row">
         <div class="col-md-12">
 
-            <form action="{{url('company/'.$res->id)}}" method="POST" enctype="multipart/form-data">
+            <form action="{{url('transfer_agent/'.$res->id)}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('put')
-
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label>company_name</label>
-                        <input type="text" class="form-control form-control-sm" value="{{ old('company_name')??$res->company_name }}" placeholder="Enter company_name" name="company_name">
-                        @error('company_name')
+                        <label>Agency Name</label>
+                        <input type="text" class="form-control form-control-sm" value="{{ old('agency_name')??$res->agency_name }}" placeholder="Enter agency_name" name="agency_name">
+                        @error('agency_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>

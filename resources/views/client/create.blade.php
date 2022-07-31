@@ -96,6 +96,38 @@
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
+
+                </div>
+
+                <div class="row">
+
+                <div class="form-group col-md-4">
+                        <label>Transfer Agent</label>
+                        <select class="form-control form-control-sm" placeholder="Select Contant" name="agent_id">
+                            <option>Select</option>
+                            @foreach($agents as $show)
+                            <option value="{{ $show->id }}">{{ ucwords($show->agency_name)}}</option>
+
+                            @endforeach
+                        </select>
+                        @error('agent')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label>Compnay Name</label>
+                        <select class="form-control form-control-sm" placeholder="Select Contant" name="company_id">
+                            <option>Select</option>
+                            @foreach($companies as $show)
+                            <option value="{{ $show->id }}">{{ ucwords($show->company_name)}}</option>
+
+                            @endforeach
+                        </select>
+                        @error('company')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
                 </div>
 
                 <div class="form-group text-center">

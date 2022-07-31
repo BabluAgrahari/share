@@ -4,11 +4,11 @@
 <div class="card-header py-2 h-body">
     <div class="row">
         <div class="col-md-6 pt-1">
-            <h6 class="m-0 font-weight-bold text-primary">Company List</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Transfer Agent List</h6>
         </div>
 
         <div class="col-md-6">
-            <a href="{{url('company/create')}} " class="btn btn-success btn-sm" style="float:right;"><span class="mdi mdi-plus"></span>&nbsp;Add</a>
+            <a href="{{url('transfer_agent/create')}} " class="btn btn-success btn-sm" style="float:right;"><span class="mdi mdi-plus"></span>&nbsp;Add</a>
         </div>
     </div>
 </div>
@@ -17,7 +17,7 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th>Company Name</th>
+                <th>Agency Name</th>
                 <th>Phone No.</th>
                 <th>Email</th>
                 <th>Address</th>
@@ -31,7 +31,7 @@
             @foreach($lists as $key => $list)
             <tr>
                 <td>{{ ++$key }}</td>
-                <td>{{$list->company_name}}</td>
+                <td>{{$list->agency_name}}</td>
                 <td>{{$list->phone}}</td>
                 <td>{{$list->eamil}}</td>
                 <td>{{$list->address}}</td>
@@ -39,8 +39,8 @@
                 <td>{{$list->state}}</td>
                 <td>{{$list->pin}}</td>
                 <td>
-                    <a href="company/{{$list->id}}/edit" class="btn btn-sm btn-outline-info"><span class="mdi mdi-pencil-box-outline"></span></a>
-                    <a onclick="return confirm('Are you sure to detele this?')" href="delete3/{{$list->id}}" class="btn btn-sm btn-outline-danger"><span class="mdi mdi-delete"></span></a>
+                    <a href="transfer_agent/{{$list->id}}/edit" class="btn btn-sm btn-outline-info"><span class="mdi mdi-pencil-box-outline"></span></a>
+                    <a onclick="return confirm('Are you sure to detele this?')" href="delete4/{{$list->id}}" class="btn btn-sm btn-outline-danger"><span class="mdi mdi-delete"></span></a>
                 </td>
             </tr>
             @endforeach

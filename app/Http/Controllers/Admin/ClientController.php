@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientRequest;
 use App\Models\client;
 use App\Models\ContactPerson;
+use App\Models\Company;
+use App\Models\TransferAgent;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -19,6 +21,8 @@ class ClientController extends Controller
 
     public function create(Request $request)
     {
+        $data['companies']= Company::get();
+        $data['agents']= TransferAgent::get();
         $data['contacts']= ContactPerson::get();
         return view('client.create',$data);
     }
@@ -27,6 +31,8 @@ class ClientController extends Controller
     {
         $store = new Client;
         $store->contact_person   =$request->contact_person;
+        $store->agent_name   =$request->agent_id;
+        $store->company_name   =$request->company_id;
         $store->file_no         = $request->file_no;
         $store->share_holder    = $request->share_holder;
         $store->surivor_name    = $request->surivor_name;
@@ -51,6 +57,8 @@ class ClientController extends Controller
 
     public function edit($id)
     {
+        $data['companies']= Company::get();
+        $data['agents']= TransferAgent::get();
         $data['res'] = Client::find($id);
         $data['contacts']= ContactPerson::get();
         return view('client.edit', $data);
@@ -59,7 +67,9 @@ class ClientController extends Controller
     public function update(ClientRequest $request, $id)
     {
         $update =  Client::find($id);
-        $update->contact_person            =$request->contact_person;
+        $update->contact_person =$request->contact_person;
+        $update->agent_name   =$request->agent_id;
+        $update->company_name   =$request->company_id;
         $update->file_no       = $request->file_no;
         $update->share_holder  = $request->share_holder;
         $update->surivor_name  = $request->surivor_name;

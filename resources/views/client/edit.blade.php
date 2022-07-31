@@ -8,7 +8,8 @@
         </div>
 
         <div class="col-md-6">
-            <a href="{{url('client')}} " class="btn btn-warning btn-sm" style="float:right;"><span class="mdi mdi-backburger"></span>&nbsp;Back</a>
+            <a href="{{url('client')}} " class="btn btn-warning btn-sm" style="float:right;"><span
+                    class="mdi mdi-backburger"></span>&nbsp;Back</a>
         </div>
     </div>
 </div>
@@ -23,7 +24,8 @@
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label>File No</label>
-                        <input type="text" class="form-control form-control-sm" value="{{ old('file_no')??$res->file_no }}" placeholder="Enter File No" name="file_no">
+                        <input type="text" class="form-control form-control-sm"
+                            value="{{ old('file_no')??$res->file_no }}" placeholder="Enter File No" name="file_no">
                         @error('file_no')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -31,7 +33,9 @@
 
                     <div class="form-group col-md-4">
                         <label>Share Holder</label>
-                        <input type="text" class="form-control form-control-sm" value="{{ old('share_holder')??$res->share_holder }}" placeholder="Enter Share Holder" name="share_holder">
+                        <input type="text" class="form-control form-control-sm"
+                            value="{{ old('share_holder')??$res->share_holder }}" placeholder="Enter Share Holder"
+                            name="share_holder">
                         @error('share_holder')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -39,7 +43,9 @@
 
                     <div class="form-group col-md-4">
                         <label>Survivor Name</label>
-                        <input type="text" class="form-control form-control-sm" value="{{ old('surivor_name')??$res->surivor_name }}" placeholder=" Enter Survivor Name" name="surivor_name">
+                        <input type="text" class="form-control form-control-sm"
+                            value="{{ old('surivor_name')??$res->surivor_name }}" placeholder=" Enter Survivor Name"
+                            name="surivor_name">
                         @error('surivor_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -48,7 +54,8 @@
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label>City</label>
-                        <input type="text" class="form-control form-control-sm" value="{{ old('city')??$res->city }}" placeholder="Enter City" name="city">
+                        <input type="text" class="form-control form-control-sm" value="{{ old('city')??$res->city }}"
+                            placeholder="Enter City" name="city">
                         @error('state')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -68,7 +75,8 @@
 
                     <div class="form-group col-md-4">
                         <label>Pin</label>
-                        <input type="text" class="form-control form-control-sm" value="{{ old('pin')??$res->pin }}" placeholder="Enter Pin Code" name="pin">
+                        <input type="text" class="form-control form-control-sm" value="{{ old('pin')??$res->pin }}"
+                            placeholder="Enter Pin Code" name="pin">
                         @error('pin')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -78,7 +86,8 @@
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label>Address</label>
-                        <textarea type="text" class="form-control form-control-sm" placeholder="Enter Address" name="address">{{ old('surivor_name')??$res->address }}</textarea>
+                        <textarea type="text" class="form-control form-control-sm" placeholder="Enter Address"
+                            name="address">{{ old('surivor_name')??$res->address }}</textarea>
                         @error('address')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -89,11 +98,45 @@
                         <select class="form-control form-control-sm" placeholder="Select Contant" name="contact_person">
                             <option value="">Select</option>
                             @foreach($contacts as $show)
-                            <option value="{{ $show->id }}" {{($show->id==$res->contact_person)?"selected":''}}>{{ ucwords($show->name)}}</option>
+                            <option value="{{ $show->id }}" {{($show->id==$res->contact_person)?"selected":''}}>
+                                {{ ucwords($show->name)}}</option>
 
                             @endforeach
                         </select>
                         @error('state')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label>Transfer Agent</label>
+                        <select class="form-control form-control-sm" placeholder="Select Contant" name="agent_id">
+                            <option value="">Select</option>
+                            @foreach($agents as $show)
+                            <option value="{{ $show->id }}" {{($show->id==$res->agent_id)?"selected":''}}>
+                                {{ ucwords($show->agency_name)}}</option>
+
+                            @endforeach
+                        </select>
+                        @error('state')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label>Company Name</label>
+                        <select class="form-control form-control-sm" placeholder="Select Contant" name="company_id">
+                            <option value="">Select</option>
+                            @foreach($companies as $show)
+                            <option value="{{ $show->id }}" {{($show->id==$res->company_id)?"selected":''}}>
+                                {{ ucwords($show->company_name)}}</option>
+
+                            @endforeach
+                        </select>
+                        @error('company')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>

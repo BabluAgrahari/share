@@ -8,7 +8,7 @@
         </div>
 
         <div class="col-md-6">
-            <a href="{{url('contact/create')}} " class="btn btn-success btn-sm" style="float:right;">Add</a>
+            <a href="{{url('contact/create')}} " class="btn btn-success btn-sm" style="float:right;"><span class="mdi mdi-plus"></span>&nbsp;Add</a>
         </div>
     </div>
 </div>

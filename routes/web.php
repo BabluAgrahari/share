@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\LoginController as User;
 use App\http\Controllers\admin\ClientController as Client;
 use App\http\Controllers\admin\ContactPersonController as ContactPerson;
+use App\http\Controllers\Admin\CompanyController as Company;
+use App\http\Controllers\Admin\TransferAgentsController as TransferAgents;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,3 +38,9 @@ Route::get('delete/{id}',      [Client::class, 'delete']);
 
 Route::resource('contact',ContactPerson::class);
 Route::get('delete2/{id}',      [ContactPerson::class, 'delete']);
+
+Route::resource('company',Company::class);
+Route::get('delete3/{id}',      [Company::class, 'delete']);
+
+Route::resource('transfer_agent',TransferAgents::class);
+Route::get('delete4/{id}',      [TransferAgents::class, 'delete']);

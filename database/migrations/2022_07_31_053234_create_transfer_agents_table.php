@@ -13,15 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('companies', function (Blueprint $table) {
+        Schema::create('transfer_agents', function (Blueprint $table) {
             $table->id();
-            $table->string('company_name', 200,)->nullable();
+            $table->string('agency_name', 200,)->nullable();
             $table->string('phone', 200,)->nullable();
             $table->string('email', 200,)->nullable();
             $table->string('address', 200,)->nullable();
             $table->string('city', 200,)->nullable();
-            $table->string('status', 1,)->nullable();
+            $table->string('state', 250,)->nullable();
             $table->string('pin', 200,)->nullable();
+            $table->string('contact_person', 200,)->nullable();
             $table->timestamps();
         });
     }
@@ -33,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('companies');
+        Schema::dropIfExists('transfer_agents');
     }
 };
