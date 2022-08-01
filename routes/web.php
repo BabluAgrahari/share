@@ -47,4 +47,14 @@ Route::resource('transfer-agent', TransferAgents::class);
 Route::get('delete4/{id}',      [TransferAgents::class, 'delete']);
 
 Route::resource('layer', Layer::class);
-Route::get('delete4/{id}',      [Layer::class, 'delete']);
+Route::get('delete5/{id}',      [Layer::class, 'delete']);
+
+Route::get('/clear-cache', function () {
+    Artisan::call('cache:clear');
+    return "Cache is cleared";
+});
+
+Route::get('/optimize', function () {
+    Artisan::call('optimize');
+    return "Cache/Route is cleared";
+});

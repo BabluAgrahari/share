@@ -19,6 +19,18 @@
     <link rel="stylesheet" href="{{asset('')}}assets/css/demo_1/style.css" />
     <!-- End layout styles -->
     <link rel="shortcut icon" href="{{asset('')}}assets/images/favicon.png" />
+
+    <style>
+        .text-danger {
+            color: red !important;
+            font-size: 12px !important;
+            font-weight: 600 !important;
+        }
+        hr {
+            color: #d8d8d8;
+            margin-bottom: 8px;
+        }
+    </style>
 </head>
 
 <body>
@@ -362,6 +374,8 @@
     <!-- Custom js for this page -->
     <script src="{{asset('')}}assets/js/chart.js"></script>
     <!-- End custom js for this page -->
+
+    @stack('script')
 </body>
 
 </html>

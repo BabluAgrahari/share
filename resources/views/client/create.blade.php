@@ -20,6 +20,8 @@
             <form action="{{url('client')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
+                    <!-- <h6>Client Details</h6>
+                    <hr> -->
                     <div class="form-group col-md-4">
                         <label>File No</label>
                         <input type="text" class="form-control form-control-sm" value="{{ old('file_no') }}" placeholder="Enter File No" name="file_no">
@@ -45,7 +47,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label>City</label>
                         <input type="text" class="form-control form-control-sm" value="{{old('city')}}" placeholder="Enter City" name="city">
                         @error('state')
@@ -53,7 +55,7 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-2">
                         <label value="">State</label>
                         <select class="form-control form-control-sm" placeholder="Enter State" name="state">
                             <option value=" ">Select</option>
@@ -66,17 +68,15 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-2">
                         <label>Pin</label>
                         <input type="text" class="form-control form-control-sm" value="{{ old('pin') }}" placeholder="Enter Pin Code" name="pin">
                         @error('pin')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-5">
                         <label>Address</label>
                         <textarea type="text" class="form-control form-control-sm" placeholder="Enter Address" name="address">{{ old('address') }}</textarea>
                         @error('address')
@@ -84,58 +84,141 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <label>Contant Person</label>
-                        <select class="form-control form-control-sm" placeholder="Select Contant" name="contact_person_id">
-                            <option value="">Select</option>
-                            @foreach($contacts as $show)
-                            <option value="{{ $show->id }}">{{ ucwords($show->name)}}</option>
+                </div>
 
-                            @endforeach
-                        </select>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label>Remark</label>
+                        <textarea name="remark" class="form-control form-control-sm" placeholder="Enter Remark" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- <h6><i class="mdi mdi-account-circle menu-icon"></i>Contact Person Details</h6>
+                    <hr> -->
+                    <div class="form-group col-md-4">
+                        <label>Contant Person Name</label>
+                        <input type="text" class="form-control form-control-sm" name="contact_person_name" placeholder="Contact Person Name">
                         @error('state')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
+                    <div class="form-group col-md-3">
+                        <label>Email</label>
+                        <input type="email" class="form-control form-control-sm" name="email" placeholder="Enter Email">
+                        @error('email')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label>Mobile</label>
+                        <input type="text" class="form-control form-control-sm" name="mobile" placeholder="Enter Mobile">
+                        @error('mobile')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
                 </div>
 
-                <div class="row">
+                <div class="row mb-2">
+                    <!-- <h6>Company Details</h6> -->
+                    <!-- <hr> -->
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Company Name</th>
+                                <th>Share Unit</th>
+                                <th>Transfer Agent</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="field_wrapper">
+                            <tr>
+                                <td class="w-25">
+                                    <select id="company_name" class="form-control form-control-sm" name="company_id">
+                                        <option value="">Select</option>
+                                        @foreach($companies as $list)
+                                        <option value="{{ $list->id }}">{{ ucwords($list->company_name)}}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
 
-                    <div class="form-group col-md-4">
-                        <label>Transfer Agent</label>
-                        <select class="form-control form-control-sm" placeholder="Select Contant" name="agent_id">
-                            <option value="">Select</option>
-                            @foreach($agents as $show)
-                            <option value="{{ $show->id }}">{{ ucwords($show->agency_name)}}</option>
+                                <td class="w-25">
+                                    <input type="number" class="form-control form-control-sm" name="unit" placeholder="Enter Unit">
+                                </td>
 
-                            @endforeach
-                        </select>
-                        @error('agent')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label>Compnay Name</label>
-                        <select class="form-control form-control-sm" placeholder="Select Contant" name="company_id">
-                            <option value="">Select</option>
-                            @foreach($companies as $show)
-                            <option value="{{ $show->id }}">{{ ucwords($show->company_name)}}</option>
-                            @endforeach
-                        </select>
-                        @error('company')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
+                                <td class="w-25">
+                                    <select class="form-control form-control-sm" placeholder="Select Contant" name="agent_id">
+                                        <option value="">Select</option>
+                                        @foreach($agents as $list)
+                                        <option value="{{ $list->id }}">{{ ucwords($list->agency_name)}}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" id="add_more" class="btn btn-xs btn-success"><span class="mdi mdi-plus"></span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
 
                 <div class="form-group text-center">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
-
             </form>
         </div>
     </div>
 </div>
 @endsection
+
+@push('script')
+<script>
+    var i = 1;
+    $('#add_more').click(function() {
+        var vendor_id = $(this).attr('vendor_id');
+        var fieldHTML = `<tr id="row-${i}">
+                                <td class="w-25">
+                                    <select id="company_name" class="form-control form-control-sm" name="company_id">
+                                        <option value="">Select</option>
+                                        @foreach($companies as $list)
+                                        <option value="{{ $list->id }}">{{ ucwords($list->company_name)}}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+
+                                <td class="w-25">
+                                    <input type="number" class="form-control form-control-sm" name="unit" placeholder="Enter Unit">
+                                </td>
+
+                                <td class="w-25">
+                                    <select class="form-control form-control-sm" placeholder="Select Contant" name="agent_id">
+                                        <option value="">Select</option>
+                                        @foreach($agents as $list)
+                                        <option value="{{ $list->id }}">{{ ucwords($list->agency_name)}}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                <a href="javascript:void(0)" onClick="removeRow(${i});" class="btn btn-xs btn-danger"><span class="mdi mdi-delete-forever"></span></a>
+                                </td>
+                            </tr>`;
+
+        $('#field_wrapper').append(fieldHTML);
+
+        select2Dropdown('product-sku', vendor_id);
+        i++;
+    });
+
+    function removeRow(id) {
+        var element = document.getElementById("row-" + id);
+        element.parentNode.removeChild(element);
+    }
+
+    $(document).on('change', 'company', function() {
+        let company_id = $(this).val();
+    });
+</script>
+
+@endpush
