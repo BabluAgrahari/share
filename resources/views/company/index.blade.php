@@ -33,7 +33,7 @@
                 <td>{{ ++$key }}</td>
                 <td>{{$list->company_name}}</td>
                 <td>{{$list->phone}}</td>
-                <td>{{$list->eamil}}</td>
+                <td>{{$list->email}}</td>
                 <td>{{$list->address}}</td>
                 <td>{{$list->city}}</td>
                 <td>{{$list->state}}</td>

@@ -77,9 +77,6 @@
 
                 </div>
                 <div class="row">
-
-
-
                     <div class="form-group col-md-6">
                         <label>Address</label>
                         <textarea type="text" class="form-control form-control-sm" placeholder="Enter Address" name="address">{{ old('address') }}</textarea>
@@ -88,20 +85,36 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <label>Contant Person</label>
-                        <select class="form-control form-control-sm" placeholder="Select Contant" name="contact_person_id">
-                            <option>Select</option>
-                            @foreach($contacts as $show)
-                            <option value="{{ $show->id }}">{{ ucwords($show->name)}}</option>
+                </div>
 
-                            @endforeach
-                        </select>
-                        @error('state')
+                <div class="row">
+                    <!-- <h6><i class="mdi mdi-account-circle menu-icon"></i>Contact Person Details</h6>
+                    <hr> -->
+                    <div class="form-group col-md-4">
+                        <label>Contant Person Name</label>
+                        <input type="text" class="form-control form-control-sm" value="{{ old('cp_name') }}" name="cp_name" placeholder="Contact Person Name">
+                        @error('cp_name')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label> Email</label>
+                        <input type="email" class="form-control form-control-sm" value="{{ old('cp_email') }}" name="cp_email" placeholder="Enter Email">
+                        @error('cp_email')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label> Mobile</label>
+                        <input type="text" class="form-control form-control-sm" value="{{ old('cp_phone') }}" name="cp_phone" placeholder="Enter Mobile">
+                        @error('cp_phone')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
                 </div>
+
 
                 <div class="form-group text-center">
                     <button type="submit" class="btn btn-primary">Submit</button>
