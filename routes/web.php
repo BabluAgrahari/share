@@ -36,6 +36,7 @@ Route::get('home',      [user::class, 'home']);
 
 Route::resource('client', Client::class);
 Route::get('delete/{id}',      [Client::class, 'delete']);
+Route::get('client/find-agent/{id}', [Client::class, 'findClient']);
 
 Route::resource('contact', ContactPerson::class);
 Route::get('delete2/{id}',      [ContactPerson::class, 'delete']);

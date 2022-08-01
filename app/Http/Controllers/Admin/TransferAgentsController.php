@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TransferAgentsRequest;
+use App\Models\Company;
 use App\Models\TransferAgent;
 use App\Models\ContactPerson;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class TransferAgentsController extends Controller
 
     public function create(Request $request)
     {
-        $data['contacts'] = ContactPerson::get();
+        $data['companies'] = Company::select('id', 'company_name')->get();
         return view('transfer_agent.create', $data);
     }
 
@@ -33,6 +34,7 @@ class TransferAgentsController extends Controller
         $store->city            = $request->city;
         $store->state           = $request->state;
         $store->pin             = $request->pin;
+        $store->company_id      = $request->company_id;
 
         if ($store->save()) {
             return redirect()->back()->with('success', 'Transfer Agent Created Successfully');
@@ -49,7 +51,7 @@ class TransferAgentsController extends Controller
     public function edit($id)
     {
         $data['res'] = TransferAgent::find($id);
-        $data['contacts'] = ContactPerson::get();
+        $data['companies'] = Company::select('id', 'company_name')->get();
         return view('transfer_agent.edit', $data);
     }
 
@@ -64,9 +66,10 @@ class TransferAgentsController extends Controller
         $update->city            = $request->city;
         $update->state           = $request->state;
         $update->pin             = $request->pin;
+        $update->company_id      = $request->company_id;
 
         if ($update->save()) {
-            return redirect('/transfer_agent')->with('success', 'Transfer Agent Update successfully');
+            return redirect('/transfer-agent')->with('success', 'Transfer Agent Update successfully');
         }
         return redirect()->back()->with('error', 'Transfer Agent not Update');
     }

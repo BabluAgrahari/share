@@ -136,7 +136,7 @@
                         <tbody id="field_wrapper">
                             <tr>
                                 <td class="w-25">
-                                    <select id="company_name" class="form-control form-control-sm" name="company_id">
+                                    <select id="company_name" selector="0" class="form-control form-control-sm" name="company[0][company_id]">
                                         <option value="">Select</option>
                                         @foreach($companies as $list)
                                         <option value="{{ $list->id }}">{{ ucwords($list->company_name)}}</option>
@@ -145,15 +145,13 @@
                                 </td>
 
                                 <td class="w-25">
-                                    <input type="number" class="form-control form-control-sm" name="unit" placeholder="Enter Unit">
+                                    <input type="number" class="form-control form-control-sm" name="company[0][unit]" placeholder="Enter Unit">
                                 </td>
 
                                 <td class="w-25">
-                                    <select class="form-control form-control-sm" placeholder="Select Contant" name="agent_id">
+                                    <select class="form-control form-control-sm" id="agent-id-0" placeholder="Select Contant" name="company[0][agent_id]">
                                         <option value="">Select</option>
-                                        @foreach($agents as $list)
-                                        <option value="{{ $list->id }}">{{ ucwords($list->agency_name)}}</option>
-                                        @endforeach
+
                                     </select>
                                 </td>
                                 <td>
@@ -216,8 +214,18 @@
         element.parentNode.removeChild(element);
     }
 
-    $(document).on('change', 'company', function() {
+    $(document).on('change', 'company_name', function() {
         let company_id = $(this).val();
+        let selector = $(this).attr('selector');
+        $.ajax({
+            url: "{{url('client/find-agent')}}/" + id,
+            type: "GET",
+            dataType: "JSON",
+            success: function(res) {
+
+                $('#agent-id-' + selector).html(res);
+            }
+        })
     });
 </script>
 

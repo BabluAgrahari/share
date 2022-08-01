@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientRequest;
@@ -15,7 +15,7 @@ class ClientController extends Controller
 
     public function index(Request $request)
     {
-       
+
         $data['lists'] = Client::all();
         return view('client.index', $data);
     }
@@ -95,5 +95,21 @@ class ClientController extends Controller
             return redirect()->back()->with('success', 'Client Removed Successfully');
         }
         return redirect()->back()->with('error', 'Client not Removed');
+    }
+
+
+    public function findClient($id = false)
+    {
+        if (!$id)
+            return false;
+
+        $results = TransferAgent::where('campany_name', $id)->get();
+
+        $option = '<option value="">Select</option>';
+        foreach ($results as $res) {
+            $option .= '<option value="' . $res->id . '">' . ucwords($res->agency_name) . '</option>';
+        }
+
+        die($option);
     }
 }

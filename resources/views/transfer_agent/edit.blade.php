@@ -21,7 +21,21 @@
                 @csrf
                 @method('put')
                 <div class="row">
-                    <div class="form-group col-md-4">
+
+                    <div class="form-group col-md-3">
+                        <label>Select Company</label>
+                        <select class="form-control form-control-sm" placeholder="Enter State" name="company_id">
+                            <option value="">Select</option>
+                            @foreach($companies as $list)
+                            <option value="{{$list->id}}" {{($list->id==$res->company_id)?'selected':''}}>{{ucwords($list->company_name)}}</option>
+                            @endforeach
+                        </select>
+                        @error('company_id')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col-md-3">
                         <label>Agency Name</label>
                         <input type="text" class="form-control form-control-sm" value="{{ old('agency_name')??$res->agency_name }}" placeholder="Enter agency_name" name="agency_name">
                         @error('agency_name')
@@ -29,7 +43,7 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label>Phone No.</label>
                         <input type="text" class="form-control form-control-sm" value="{{ old('phone')??$res->phone }}" placeholder="Enter Phone No." name="phone">
                         @error('phone')
@@ -37,7 +51,7 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label>Email</label>
                         <input type="text" class="form-control form-control-sm" value="{{ old('email')??$res->email }}" placeholder=" Enter Email" name="email">
                         @error('email')
@@ -57,9 +71,10 @@
                     <div class="form-group col-md-4">
                         <label>State</label>
                         <select class="form-control form-control-sm" placeholder="Enter State" name="state">
-                            <option value="">Select</option>
-                            <option>up</option>
-                            <option>delhi</option>
+                            <option value=" ">Select</option>
+                            @foreach(config('global.state') as $state)
+                            <option value="{{$state}}" {{(old('state')==$state)?"selected":($state==$res->state?'selected':'')}}>{{$state}}</option>
+                            @endforeach
                         </select>
                         @error('state')
                         <span class="text-danger">{{ $message }}</span>
@@ -80,20 +95,6 @@
                         <label>Address</label>
                         <textarea type="text" class="form-control form-control-sm" placeholder="Enter Address" name="address">{{ old('address')??$res->address }}</textarea>
                         @error('address')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label>Contant Person</label>
-                        <select class="form-control form-control-sm" placeholder="Select Contant" name="contact_person_id">
-                            <option value="">Select</option>
-                            @foreach($contacts as $show)
-                            <option value="{{ $show->id }}" {{($show->id==$res->contact_person)?"selected":''}}>{{ ucwords($show->name)}}</option>
-
-                            @endforeach
-                        </select>
-                        @error('state')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
