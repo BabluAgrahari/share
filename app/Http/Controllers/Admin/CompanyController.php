@@ -26,7 +26,7 @@ class CompanyController extends Controller
     public function store(CompanyRequest $request)
     {
         $store = new Company;
-        $store->contact_person_id   = $request->contact_person_id;
+        $store->cp_id   = $request->cp_id;
         $store->company_name     = $request->company_name;
         $store->phone            = $request->phone;
         $store->email            = $request->email;
@@ -34,6 +34,9 @@ class CompanyController extends Controller
         $store->city            = $request->city;
         $store->state           = $request->state;
         $store->pin             = $request->pin;
+        $store->cp_name         = $request->cp_name;
+        $store->cp_email         = $request->cp_email;
+        $store->cp_phone         = $request->cp_phone;
 
         // echo "<pre>";
         // print_r($request->all());die;
@@ -59,7 +62,7 @@ class CompanyController extends Controller
     public function update(CompanyRequest $request, $id)
     {
         $update =  Company::find($id);
-        $update->contact_person_id   = $request->contact_person_id;
+        $update->cp_id   = $request->cp_id;
         $update->company_name     = $request->company_name;
         $update->phone            = $request->phone;
         $update->email            = $request->email;
@@ -67,6 +70,9 @@ class CompanyController extends Controller
         $update->city            = $request->city;
         $update->state           = $request->state;
         $update->pin             = $request->pin;
+        $update->cp_name         = $request->cp_name;
+        $update->cp_email         = $request->cp_email;
+        $update->cp_phone         = $request->cp_phone;
 
         if ($update->save()) {
             return redirect('/company')->with('success', 'Company Update successfully');

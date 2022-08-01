@@ -25,7 +25,7 @@ class TransferAgentsController extends Controller
     public function store(TransferAgentsRequest $request)
     {
         $store = new TransferAgent;
-        $store->contact_person_id  = $request->contact_person_id;
+        $store->cp_id           = $request->cp_id;
         $store->agency_name     = $request->agency_name;
         $store->phone            = $request->phone;
         $store->email            = $request->email;
@@ -33,6 +33,9 @@ class TransferAgentsController extends Controller
         $store->city            = $request->city;
         $store->state           = $request->state;
         $store->pin             = $request->pin;
+        $store->cp_name         = $request->cp_name;
+        $store->cp_email         = $request->cp_email;
+        $store->cp_phone         = $request->cp_phone;
 
         if ($store->save()) {
             return redirect()->back()->with('success', 'Transfer Agent Created Successfully');
@@ -56,7 +59,7 @@ class TransferAgentsController extends Controller
     public function update(TransferAgentsRequest $request, $id)
     {
         $update =  TransferAgent::find($id);
-        $update->contact_person_id   = $request->contact_person_id;
+        $update->cp_id          = $request->cp_id;
         $update->agency_name     = $request->agency_name;
         $update->phone            = $request->phone;
         $update->email            = $request->email;
@@ -64,6 +67,9 @@ class TransferAgentsController extends Controller
         $update->city            = $request->city;
         $update->state           = $request->state;
         $update->pin             = $request->pin;
+        $update->cp_name         = $request->cp_name;
+        $update->cp_email         = $request->cp_email;
+        $update->cp_phone         = $request->cp_phone;
 
         if ($update->save()) {
             return redirect('/transfer_agent')->with('success', 'Transfer Agent Update successfully');
