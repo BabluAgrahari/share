@@ -7,6 +7,7 @@ use App\http\Controllers\admin\ClientController as Client;
 use App\http\Controllers\admin\ContactPersonController as ContactPerson;
 use App\http\Controllers\Admin\CompanyController as Company;
 use App\http\Controllers\Admin\TransferAgentsController as TransferAgents;
+use App\http\Controllers\Admin\LayerController as Layer;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,3 +45,6 @@ Route::get('delete3/{id}',      [Company::class, 'delete']);
 
 Route::resource('transfer-agent', TransferAgents::class);
 Route::get('delete4/{id}',      [TransferAgents::class, 'delete']);
+
+Route::resource('layer', Layer::class);
+Route::get('delete4/{id}',      [Layer::class, 'delete']);
