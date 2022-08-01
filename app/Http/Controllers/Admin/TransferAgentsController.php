@@ -38,6 +38,7 @@ class TransferAgentsController extends Controller
         $store->cp_name         = $request->cp_name;
         $store->cp_email         = $request->cp_email;
         $store->cp_phone         = $request->cp_phone;
+        $store->remarks         = $request->remarks;
 
         if ($store->save()) {
             return redirect()->back()->with('success', 'Transfer Agent Created Successfully');
@@ -73,6 +74,7 @@ class TransferAgentsController extends Controller
         $update->cp_name         = $request->cp_name;
         $update->cp_email         = $request->cp_email;
         $update->cp_phone         = $request->cp_phone;
+        $update->remarks         = $request->remarks;
 
         if ($update->save()) {
             return redirect('/transfer-agent')->with('success', 'Transfer Agent Update successfully');

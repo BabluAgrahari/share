@@ -37,6 +37,7 @@ class CompanyController extends Controller
         $store->cp_name         = $request->cp_name;
         $store->cp_email         = $request->cp_email;
         $store->cp_phone         = $request->cp_phone;
+        $store->remarks         = $request->remarks;
 
         // echo "<pre>";
         // print_r($request->all());die;
@@ -73,6 +74,7 @@ class CompanyController extends Controller
         $update->cp_name         = $request->cp_name;
         $update->cp_email         = $request->cp_email;
         $update->cp_phone         = $request->cp_phone;
+        $update->remarks         = $request->remarks;
 
         if ($update->save()) {
             return redirect('/company')->with('success', 'Company Update successfully');
