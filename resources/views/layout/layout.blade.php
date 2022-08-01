@@ -95,9 +95,9 @@
                 </li>
 
                  <li class="nav-item">
-                    <a class="nav-link" href="{{url('layer')}}">
+                    <a class="nav-link" href="{{url('court')}}">
                         <i class="mdi mdi-chart-bar menu-icon"></i>
-                        <span class="menu-title">Layer</span>
+                        <span class="menu-title">Court</span>
                     </a>
                 </li>
                <!--<li class="nav-item">

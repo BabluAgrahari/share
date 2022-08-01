@@ -79,8 +79,16 @@
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label>Address</label>
-                        <textarea type="text" class="form-control form-control-sm" placeholder="Enter Address" name="address">{{ old('address') }}</textarea>
+                        <textarea type="text" class="form-control form-control-sm" placeholder="Enter Address" rows="3" name="address">{{ old('address') }}</textarea>
                         @error('address')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label>Remarks</label>
+                        <textarea type="text" class="form-control form-control-sm" placeholder="Enter Remarks" rows="3" name="remarks">{{ old('remarks') }}</textarea>
+                        @error('remarks')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
