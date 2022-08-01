@@ -44,6 +44,7 @@ class BaseModal extends Model
 
         self::deleted(function ($model) {
             // ... code here
+            $model->deleted = time();
         });
     }
     //

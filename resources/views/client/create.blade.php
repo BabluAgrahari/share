@@ -89,7 +89,7 @@
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label>Remark</label>
-                        <textarea name="remark" class="form-control form-control-sm" placeholder="Enter Remark" rows="3"></textarea>
+                        <textarea name="remarks" class="form-control form-control-sm" placeholder="Enter Remark" rows="3">{{ old('remarks') }}</textarea>
                     </div>
                 </div>
 
@@ -98,24 +98,24 @@
                     <hr> -->
                     <div class="form-group col-md-4">
                         <label>Contant Person Name</label>
-                        <input type="text" class="form-control form-control-sm" name="contact_person_name" placeholder="Contact Person Name">
-                        @error('state')
+                        <input type="text" class="form-control form-control-sm" name="cp_name" value="{{ old('cp_name') }}" placeholder="Contact Person Name">
+                        @error('cp_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group col-md-3">
                         <label>Email</label>
-                        <input type="email" class="form-control form-control-sm" name="email" placeholder="Enter Email">
-                        @error('email')
+                        <input type="email" class="form-control form-control-sm" name="cp_email" value="{{ old('cp_email') }}" placeholder="Enter Email">
+                        @error('cp_email')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group col-md-3">
                         <label>Mobile</label>
-                        <input type="text" class="form-control form-control-sm" name="mobile" placeholder="Enter Mobile">
-                        @error('mobile')
+                        <input type="text" class="form-control form-control-sm" name="cp_mobile" value="{{ old('cp_mobile') }}" placeholder="Enter Mobile">
+                        @error('cp_mobile')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -178,7 +178,7 @@
         var vendor_id = $(this).attr('vendor_id');
         var fieldHTML = `<tr id="row-${i}">
                                 <td class="w-25">
-                                    <select id="company_name" class="form-control form-control-sm" name="company_id">
+                                    <select id="company_name" class="form-control selector="${i}" form-control-sm" name="company[${i}][company_id]">
                                         <option value="">Select</option>
                                         @foreach($companies as $list)
                                         <option value="{{ $list->id }}">{{ ucwords($list->company_name)}}</option>
@@ -187,11 +187,11 @@
                                 </td>
 
                                 <td class="w-25">
-                                    <input type="number" class="form-control form-control-sm" name="unit" placeholder="Enter Unit">
+                                    <input type="number" class="form-control form-control-sm" name="company[${i}][unit]" placeholder="Enter Unit">
                                 </td>
 
                                 <td class="w-25">
-                                    <select class="form-control form-control-sm" placeholder="Select Contant" name="agent_id">
+                                    <select class="form-control form-control-sm" placeholder="Select Contant" name="company[${i}][agent_id]">
                                         <option value="">Select</option>
                                         @foreach($agents as $list)
                                         <option value="{{ $list->id }}">{{ ucwords($list->agency_name)}}</option>
@@ -204,8 +204,6 @@
                             </tr>`;
 
         $('#field_wrapper').append(fieldHTML);
-
-        select2Dropdown('product-sku', vendor_id);
         i++;
     });
 
@@ -214,11 +212,11 @@
         element.parentNode.removeChild(element);
     }
 
-    $(document).on('change', 'company_name', function() {
+    $(document).on('change', '#company_name', function() {
         let company_id = $(this).val();
         let selector = $(this).attr('selector');
         $.ajax({
-            url: "{{url('client/find-agent')}}/" + id,
+            url: "{{url('client/find-agent')}}/" + company_id,
             type: "GET",
             dataType: "JSON",
             success: function(res) {

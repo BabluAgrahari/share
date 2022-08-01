@@ -49,7 +49,7 @@
                     <div class="form-group col-md-4">
                         <label>City</label>
                         <input type="text" class="form-control form-control-sm" value="{{ old('city')??$res->city }}" placeholder="Enter City" name="city">
-                        @error('state')
+                        @error('city')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -59,7 +59,7 @@
                         <select class="form-control form-control-sm" placeholder="Enter State" name="state">
                             <option value=" ">Select</option>
                             @foreach(config('global.state') as $state)
-                            <option value="{{$state}}">{{$state}}</option>
+                            <option value="{{$state}}" {{(old('state')==$state)?"selected":($state==$res->state?'selected':'')}}>{{$state}}</option>
                             @endforeach
                         </select>
                         @error('state')

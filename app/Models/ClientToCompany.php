@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\BaseModal;
 
-class Client extends BaseModal
+class ClientToCompany extends BaseModal
 {
     use HasFactory;
+    public $table = "client_to_company";
+
 }
