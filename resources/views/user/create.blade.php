@@ -67,10 +67,10 @@
                     <div class="form-group col-md-4">
                         <label>Role</label>
                         <select class="form-control form-control-sm" placeholder="Select Role" value="{{ old('role') }}" name="role">
-                            <option value=" ">Select</option>
-                            <option>Admin</option>
-                            <option>Superwiser</option>
-                            <option>Staff</option>
+                            <option value="">Select</option>
+                            <option value="admin">Admin</option>
+                            <option value="supervisor">Supervisor</option>
+                            <option value="staff">Staff</option>
                         </select>
                         @error('role')
                         <span class="text-danger">{{ $message }}</span>

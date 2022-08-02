@@ -21,8 +21,8 @@
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <table class="table table-sm">
+                    <div class="tab-pane fade show active" id="staff" role="tabpanel" aria-labelledby="home-tab">
+                        <table class="table">
                             <thead>
                                 <th>#</th>
                                 <th>Name</th>
@@ -34,7 +34,12 @@
                                 <tr>
                                     <td>{{++$key}}</td>
                                     <td>{{ucwords($staff->name)}}</td>
-                                    <td><input type="checkbox" value="{{$staff->id}}" name="user_id"></td>
+                                    <td>
+                                        <div class="form-check form-check-success">
+                                            <label class="form-check-label">
+                                                <input type="checkbox" value="{{$staff->id}}" class="form-check-input" checked=""><i class="input-helper"></i></label>
+                                        </div>
+                                    </td>
                                 </tr>
                                 @empty
                                 <tr>
@@ -45,8 +50,8 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                        <table class="table table-sm">
+                    <div class="tab-pane fade" id="supervisor" role="tabpanel" aria-labelledby="profile-tab">
+                        <table class="table">
                             <thead>
                                 <th>#</th>
                                 <th>Name</th>
@@ -58,7 +63,12 @@
                                 <tr>
                                     <td>{{++$key}}</td>
                                     <td>{{ucwords($list->name)}}</td>
-                                    <td><input type="checkbox" value="{{$list->id}}" name="user_id"></td>
+                                    <td>
+                                        <div class="form-check form-check-success">
+                                            <label class="form-check-label">
+                                                <input type="checkbox" value="{{$list->id}}" class="form-check-input" checked=""><i class="input-helper"></i></label>
+                                        </div>
+                                    </td>
                                 </tr>
                                 @empty
                                 <tr>
