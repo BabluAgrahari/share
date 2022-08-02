@@ -24,6 +24,7 @@
                 <th>Pin No</th>
                 <th>State</th>
                 <th>Email</th>
+                <th>Create</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -38,6 +39,7 @@
                 <td>{{$list->pin}}</td>
                 <td>{{$list->state}}</td>
                 <td>{{$list->email}}</td>
+                <td>{{$list->dformat($list->created)}}</td>
                
                 <td>
                     <a href="edit/{{$list->id}}" class="btn btn-sm btn-outline-info"><span class="mdi mdi-pencil-box-outline"></span></a>

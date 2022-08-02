@@ -108,7 +108,7 @@
                     <label>Role</label>
                     <select class="form-control form-control-sm" placeholder="Select Role"  name="role">
                         <option value=" ">Select</option>
-                        <option value="{{$res->role}} ">Admin</option>
+                        <option value="{{$res->id}}">Admin</option>
                         <option value="{{$res->rol}}">Superwiser</option>
                         <option value="{{$res->rol}}">Staff</option>
                         
