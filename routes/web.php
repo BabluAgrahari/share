@@ -2,8 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
-use App\Http\Controllers\LoginController as User;
+use App\Http\Controllers\LoginController as Login;
 use App\http\Controllers\admin\ClientController as Client;
+use App\http\Controllers\admin\UserController as User;
 use App\http\Controllers\admin\ContactPersonController as ContactPerson;
 use App\http\Controllers\Admin\CompanyController as Company;
 use App\http\Controllers\Admin\TransferAgentsController as TransferAgents;
@@ -26,13 +27,17 @@ use App\http\Controllers\Admin\CourtController as Court;
 
 // Route::resource('product',Product::class);
 
-Route::get('/',         [user::class, 'index']);
-Route::get('register',  [user::class, 'register']);
-Route::POST('store',    [user::class, 'store']);
-Route::POST('login',    [user::class, 'show']);
-Route::get('dashboard', [user::class, 'dashboard']);
-Route::get('logout',    [user::class, 'logout']);
-Route::get('home',      [user::class, 'home']);
+Route::get('/',         [User::class, 'index']);
+Route::get('create',  [User::class, 'create']);
+Route::POST('store',    [User::class, 'store']);
+Route::POST('login',    [User::class, 'show']);
+Route::get('dashboard', [User::class, 'dashboard']);
+Route::get('logout',    [User::class, 'logout']);
+Route::get('home',      [User::class, 'home']);
+Route::get('list',      [User::class, 'list']);
+Route::post('update',   [User::class, 'update']);
+Route::get('edit/{id}',      [User::class, 'edit']);
+Route::get('delete6',      [User::class, 'delete']);
 
 Route::resource('client', Client::class);
 Route::get('delete/{id}',      [Client::class, 'delete']);
