@@ -60,6 +60,7 @@ class UserController extends Controller
 
         $store = new User();
         $store->name           = $request->name;
+        $store->role           = $request->role;
         $store->city            = $request->city;
         $store->state         = $request->state;
         $store->pin                 = $request->pin;
@@ -86,6 +87,7 @@ class UserController extends Controller
 
         $update =  User::find($request->id);
         $update->name           = $request->name;
+        $update->role           = $request->role;
         $update->city            = $request->city;
         $update->state         = $request->state;
         $update->pin                 = $request->pin;

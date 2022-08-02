@@ -103,6 +103,20 @@
                     </div>
 
                 </div>
+
+                <div class="form-group col-md-4">
+                    <label>Role</label>
+                    <select class="form-control form-control-sm" placeholder="Select Role"  name="role">
+                        <option value=" ">Select</option>
+                        <option value="{{$res->role}} ">Admin</option>
+                        <option value="{{$res->rol}}">Superwiser</option>
+                        <option value="{{$res->rol}}">Staff</option>
+                        
+                    </select>
+                    @error('role')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
                 <div class="form-group text-center">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>

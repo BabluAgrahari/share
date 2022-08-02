@@ -101,6 +101,20 @@
                     </div>
 
                 </div>
+
+                <div class="form-group col-md-4">
+                    <label>Role</label>
+                    <select class="form-control form-control-sm" placeholder="Select Role" value="{{ old('role') }}" name="role">
+                        <option value=" ">Select</option>
+                        <option>Admin</option>
+                        <option>Superwiser</option>
+                        <option>Staff</option>
+                        
+                    </select>
+                    @error('role')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
                 <div class="form-group text-center">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
