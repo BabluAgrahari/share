@@ -24,6 +24,8 @@
                 <th>City</th>
                 <th>State</th>
                 <th>Pin</th>
+                <th>Created</th>
+                <th>Assign</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -38,6 +40,8 @@
                 <td>{{$list->city}}</td>
                 <td>{{$list->state}}</td>
                 <td>{{$list->pin}}</td>
+                <td>{{ $list->dformat($list->created)}}</td>
+                <td> <a href="javascript:void(0);" class="btn btn-sm btn-outline-success">Assign</a></td>
                 <td>
                     <a href="client/{{$list->id}}/edit" class="btn btn-sm btn-outline-info"><span class="mdi mdi-pencil-box-outline"></span></a>
                     <a onclick="return confirm('Are you sure to detele this?')" href="delete/{{$list->id}}" class="btn btn-sm btn-outline-danger"><span class="mdi mdi-delete"></span></a>
@@ -47,4 +51,5 @@
         </tbody>
     </table>
 </div>
+@include('client.remarks')
 @endsection
