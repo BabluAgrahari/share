@@ -45,8 +45,6 @@ class ClientController extends Controller
         $store->cp_email        = $request->cp_email;
         $store->cp_phone        = $request->cp_mobile;
 
-        // echo "<pre>";
-        // print_r($request->all());die;
         if ($store->save()) {
 
             self::clientToCompany($request->company, $store->id, 'store'); //insert record into client_to_company table

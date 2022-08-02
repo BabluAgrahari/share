@@ -48,4 +48,12 @@ class BaseModal extends Model
         });
     }
     //
+
+    public function dFormat($date)
+    {
+        if (empty($date))
+            return false;
+
+        return date('d M Y', $date);
+    }
 }

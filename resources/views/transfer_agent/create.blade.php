@@ -80,6 +80,7 @@
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
+
                     <div class="form-group col-md-4">
                         <label>Pin</label>
                         <input type="text" class="form-control form-control-sm" value="{{ old('pin') }}" placeholder="Enter Pin Code" name="pin">
@@ -89,7 +90,7 @@
                     </div>
 
                 </div>
-                <div class="rows">
+                <div class="row">
 
                     <div class="form-group col-md-6">
                         <label>Address</label>

@@ -26,6 +26,7 @@
             font-size: 12px !important;
             font-weight: 600 !important;
         }
+
         hr {
             color: #d8d8d8;
             margin-bottom: 8px;
@@ -66,10 +67,17 @@
                     </form>
                 </li> -->
 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="{{url('contact')}}">
                         <i class="mdi mdi-account-circle menu-icon"></i>
                         <span class="menu-title">Contact Person</span>
+                    </a>
+                </li> -->
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url('list')}}">
+                        <i class="mdi mdi-account-circle menu-icon"></i>
+                        <span class="menu-title">User</span>
                     </a>
                 </li>
 
@@ -94,18 +102,13 @@
                     </a>
                 </li>
 
-                 <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="{{url('court')}}">
                         <i class="mdi mdi-chart-bar menu-icon"></i>
                         <span class="menu-title">Court</span>
                     </a>
                 </li>
-               <li class="nav-item">
-                    <a class="nav-link" href="{{url('list')}}">
-                        <i class="mdi mdi-table-large menu-icon"></i>
-                        <span class="menu-title">User</span>
-                    </a>
-                </li>
+
                 <!--<li class="nav-item pt-3">
                     <a class="nav-link" href="http://bootstrapdash.com/demo/plus-free/documentation/documentation.html" target="_blank">
                         <i class="mdi mdi-file-document-box menu-icon"></i>
