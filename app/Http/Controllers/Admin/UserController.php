@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -9,123 +10,133 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
+        
         return view('user.login');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function list()
+    {
+         $data['lists'] = User::all();
+        return view('user.index',$data);
+    }
+
+
     public function create()
     {
-        return view('user.register');
+        return view('user.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
-        $request->validate([
-            'firstname' =>'required',
-            'lastname' =>'required',
-            'father_name' =>'required',
-            'add' =>'required',
-            'mobile' =>'required',
-            'email'=>'required|email',
-            'password' => 'min:6 |required'
-        ],
+        // $request->validate(
+        //     [
+        //         'name' => 'required',
+        //         'city' => 'required',
+        //         'state' => 'required',
+        //         'pin' => 'required',
+        //         'address' => 'required',
+        //         'mobile' => 'required',
+        //         'email' => 'required|email',
+        //         'password' => 'min:6 |required'
+        //     ],
 
-            [   'firstname.required' => 'First Name is required',
-                'lastname.required' => 'Last Name is required',
-                'father_name.required' => 'Father Name is required',
-                'add.required' => 'Address is required',
-                'mobile.required' => 'Phone Number is required',
-                'email.required' => 'Email is required',
-                'password.required' => 'Password is required'
-            ],  
+        //     [
+        //         'name.required' => 'Name is required',
+        //         'city.required' => 'City is required',
+        //         'state.required' => 'State is required',
+        //         'pin.required' => 'PIn is required',
+        //         'address.required' => 'Address is required',
+        //         'mobile.required' => 'Phone Number is required',
+        //         'email.required' => 'Email is required',
+        //         'password.required' => 'Password is required'
+        //     ],
 
 
-        );
+        // );
 
         $store = new User();
-        $store->firstname           = $request->firstname;
-        $store->lastname            = $request->lastname;
-        $store->father_name         = $request->father_name;
-        $store->add                 = $request->add;
+        $store->name           = $request->name;
+        $store->role           = $request->role;
+        $store->city            = $request->city;
+        $store->state         = $request->state;
+        $store->pin                 = $request->pin;
+        $store->address                 = $request->address;
         $store->mobile              = $request->mobile;
         $store->email               = $request->email;
-        $store->password            = Hash::make ($request->password);
-
-        if($request->file('image'))
-        {
-            $file = $request->file('image');
-            $filename= date('ymdhi').$file->getClientOriginalName();
-            $file->move(public_path('/image'),$filename);
-            $store->image    =$filename;
-
-            if($store->save())
-            {
-                return redirect('/')->with('success','Data Insert Successfully');
-            }
-            return redirect('/')->with('error','Data Not Insert ');
+        $store->password            = Hash::make($request->password);
+        if ($store->save()) {
+            return redirect('list')->with('success', 'Data Insert Successfully');
         }
+        return redirect('create')->with('error', 'Data Not Insert ');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
+    public function edit($id)
+    {
+        $data['res'] =User::find($id);
+        return view('user.edit',$data);
+    }
+
+
+    public function update(Request $request)
+    {
+
+        $update =  User::find($request->id);
+        $update->name           = $request->name;
+        $update->role           = $request->role;
+        $update->city            = $request->city;
+        $update->state         = $request->state;
+        $update->pin                 = $request->pin;
+        $update->address                 = $request->address;
+        $update->mobile              = $request->mobile;
+        $update->email               = $request->email;
+        $update->password            = Hash::make($request->password);
+        
+        if ($update->save()) {
+            return redirect('list')->with('success', 'Data Insert Successfully');
+        }
+        return redirect("edit{id}")->with('error', 'Data Not Insert ');
+    }
+
+
+
     public function show(Request $request)
     {
-        
-        $request->validate([
-             'email'  =>'required',
-             'password'=>'required'
-         ],
 
-          [  
+        $request->validate(
+            [
+                'email'  => 'required',
+                'password' => 'required'
+            ],
+
+            [
                 'email.required' => 'Email is required',
                 'password.required' => 'Password is required'
-               
-            ],  
-     );
-        
-        if(Auth::attempt($request->only('email','password'))){
+
+            ],
+        );
+
+        if (Auth::attempt($request->only('email', 'password'))) {
 
             return redirect('home');
-           }
-           return redirect('/')->with('error','Login Details Is Not Valide');
+        }
+        return redirect('/')->with('error', 'Login Details Is Not Valide');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function dashboard() {
+
+    public function dashboard()
+    {
 
         // check if user logged in
-        if(Auth::check()) {
+        if (Auth::check()) {
             return redirect('home')->withErrors('success', 'You Login');
         }
 
         return redirect('/')->withSuccess('Oopps! You do not have access');
-
     }
 
     public function logout(Request $request)
@@ -135,20 +146,19 @@ class UserController extends Controller
         return redirect('/');
     }
 
-    
+
     public function home()
     {
-        return view('dashboard.home');
+        return view('dashboard');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+
+    public function delete($id)
     {
-        //
+        $det = User::get($id)->delete();
+        if($det)
+        {
+            return redirect('list');
+        }
     }
 }

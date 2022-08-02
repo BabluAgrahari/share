@@ -73,7 +73,7 @@
                         <select class="form-control form-control-sm" placeholder="Enter State" name="state">
                             <option value=" ">Select</option>
                             @foreach(config('global.state') as $state)
-                            <option value="{{$state}}" {{(old('state')==$state)?"selected":($state==$res->state?'selected':'')}}>{{$state}}</option>
+                            <option value="{{$state}}" {{($state==$res->state?'selected':'')}}>{{$state}}</option>
                             @endforeach
                         </select>
                         @error('state')

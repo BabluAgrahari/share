@@ -100,13 +100,13 @@
                         <span class="menu-title">Court</span>
                     </a>
                 </li>
-               <!--<li class="nav-item">
-                    <a class="nav-link" href="../../pages/tables/basic-table.html">
+               <li class="nav-item">
+                    <a class="nav-link" href="{{url('list')}}">
                         <i class="mdi mdi-table-large menu-icon"></i>
-                        <span class="menu-title">Tables</span>
+                        <span class="menu-title">User</span>
                     </a>
                 </li>
-                <li class="nav-item pt-3">
+                <!--<li class="nav-item pt-3">
                     <a class="nav-link" href="http://bootstrapdash.com/demo/plus-free/documentation/documentation.html" target="_blank">
                         <i class="mdi mdi-file-document-box menu-icon"></i>
                         <span class="menu-title">Documentation</span>

@@ -24,7 +24,7 @@
                     <div class="form-group col-md-3">
                         <label>Select Company</label>
                         <select class="form-control form-control-sm" placeholder="Enter State" name="company_id">
-                            <option value="">Select</option>
+                            <option value=" ">Select</option>
                             @foreach($companies as $list)
                             <option value="{{$list->id}}">{{ucwords($list->company_name)}}</option>
                             @endforeach
