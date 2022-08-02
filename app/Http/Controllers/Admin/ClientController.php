@@ -9,6 +9,7 @@ use App\Models\ClientToCompany;
 use App\Models\ContactPerson;
 use App\Models\Company;
 use App\Models\TransferAgent;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -18,6 +19,9 @@ class ClientController extends Controller
     {
 
         $data['lists'] = Client::all();
+        $data['staffs'] = User::where('role', 'staff')->get();
+        $data['supervisors'] = User::where('role', 'supervisor')->get();
+
         return view('client.index', $data);
     }
 
@@ -26,7 +30,6 @@ class ClientController extends Controller
         $data['companies'] = Company::select('id', 'company_name')->get();
         $data['agents']    = TransferAgent::select('id', 'agency_name')->get();
         $data['contacts']  = ContactPerson::select('id', 'name')->get();
-
         return view('client.create', $data);
     }
 

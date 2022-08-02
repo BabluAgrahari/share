@@ -11,25 +11,80 @@
                 </button>
             </div>
             <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Understood</button>
+
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#staff" role="tab" aria-controls="home" aria-selected="true">Staff</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#supervisor" role="tab" aria-controls="profile" aria-selected="false">Supervisor</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <table class="table table-sm">
+                            <thead>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Action</th>
+                            </thead>
+                            <tbody>
+
+                                @forelse($staffs as $key=>$staff)
+                                <tr>
+                                    <td>{{++$key}}</td>
+                                    <td>{{ucwords($staff->name)}}</td>
+                                    <td><input type="checkbox" value="{{$staff->id}}" name="user_id"></td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="3" class="text-center">Not Found Any Record.</td>
+                                </tr>
+                                @endforelse
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <table class="table table-sm">
+                            <thead>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Action</th>
+                            </thead>
+                            <tbody>
+
+                                @forelse($supervisors as $key=>$list)
+                                <tr>
+                                    <td>{{++$key}}</td>
+                                    <td>{{ucwords($list->name)}}</td>
+                                    <td><input type="checkbox" value="{{$list->id}}" name="user_id"></td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="3" class="text-center">Not Found Any Record.</td>
+                                </tr>
+                                @endforelse
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-@endpush
 
-@push('script')
+    <script>
+        $(document).ready(function() {
 
-<script>
+            $('.assignModal').click(function() {
 
-    $(document).ready(function(){
-
-        $().
-    })
-</script>
-
-@endpush
+                $('#assignModal').modal('show');
+            })
+        })
+    </script>
+    @endpush
