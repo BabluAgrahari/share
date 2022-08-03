@@ -13,8 +13,8 @@ class UserController extends Controller
 
     public function index()
     {
-        
-        return view('user.login');
+
+        return view('login');
     }
 
     public function list()
@@ -95,7 +95,7 @@ class UserController extends Controller
         $update->mobile              = $request->mobile;
         $update->email               = $request->email;
         $update->password            = Hash::make($request->password);
-        
+
         if ($update->save()) {
             return redirect('list')->with('success', 'Data Insert Successfully');
         }

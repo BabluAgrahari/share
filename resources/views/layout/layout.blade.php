@@ -6,6 +6,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>Plus Admin</title>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
     <!-- plugins:css -->
     <link rel="stylesheet" href="{{asset('')}}assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="{{asset('')}}assets/vendors/flag-icon-css/css/flag-icon.min.css">
@@ -15,18 +19,16 @@
     <link rel="stylesheet" href="{{asset('assets')}}/vendors/select2-bootstrap-theme/select2-bootstrap.min.css" />-
     <link rel="stylesheet" href="{{ asset('assets')}}/vendors/jquery-bar-rating/css-stars.css" />
     <link rel="stylesheet" href="{{ asset('assets')}}/vendors/font-awesome/css/font-awesome.min.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
     <!-- Plugin css for this page -->
     <!-- End Plugin css for this page -->
     <!-- inject:css -->
     <!-- endinject -->
     <!-- Layout styles -->
+
     <link rel="stylesheet" href="{{asset('')}}assets/css/demo_1/style.css" />
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="{{asset('')}}assets/images/favicon.png" />
+    <!-- <link rel="shortcut icon" href="{{asset('')}}assets/images/favicon.png" /> -->
 
     <style>
         .text-danger {
@@ -38,6 +40,10 @@
         hr {
             color: #d8d8d8;
             margin-bottom: 8px;
+        }
+
+        text {
+            display: none;
         }
     </style>
 </head>
@@ -390,7 +396,7 @@
     <!-- inject:js -->
     <script src="{{ asset('assets') }}/js/off-canvas.js"></script>
     <script src="{{ asset('assets') }}/js/hoverable-collapse.js"></script>
-    <!-- <script src="{{ asset('assets') }}/js/misc.js"></script> -->
+    <script src="{{ asset('assets') }}/js/misc.js"></script>
     <script src="{{ asset('assets') }}/js/settings.js"></script>
     <script src="{{ asset('assets') }}/js/todolist.js"></script>
     <!-- endinject -->

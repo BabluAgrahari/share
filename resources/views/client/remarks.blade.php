@@ -1,11 +1,14 @@
-@push('modal')
-
+<style>
+    #myTab {
+        margin-top: -16px;
+    }
+</style>
 <!-- Modal -->
 <div class="modal fade" id="assignModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Assign Client</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -22,79 +25,120 @@
                 </ul>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="staff" role="tabpanel" aria-labelledby="home-tab">
-                        <table class="table">
-                            <thead>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Action</th>
-                            </thead>
-                            <tbody>
+                        <form class="assign" id="staff" action="{{url('assign-user')}}" method="POST">
+                            @csrf
+                            <input type="hidden" class="client_id" name="client_id">
+                            <table class="table">
+                                <thead>
+                                    <th>Name</th>
+                                    <th>Action</th>
+                                </thead>
+                                <tbody id="staff-body">
 
-                                @forelse($staffs as $key=>$staff)
-                                <tr>
-                                    <td>{{++$key}}</td>
-                                    <td>{{ucwords($staff->name)}}</td>
-                                    <td>
-                                        <div class="form-check form-check-success">
-                                            <label class="form-check-label">
-                                                <input type="checkbox" value="{{$staff->id}}" class="form-check-input" checked=""><i class="input-helper"></i></label>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @empty
-                                <tr>
-                                    <td colspan="3" class="text-center">Not Found Any Record.</td>
-                                </tr>
-                                @endforelse
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                            <div class="form-group text-center mt-2">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
                     </div>
                     <div class="tab-pane fade" id="supervisor" role="tabpanel" aria-labelledby="profile-tab">
-                        <table class="table">
-                            <thead>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Action</th>
-                            </thead>
-                            <tbody>
+                        <form class="assign" type="supervisor" action="{{url('assign-user')}}" method="POST">
+                            @csrf
+                            <input type="hidden" class="client_id" name="client_id">
+                            <table class="table">
+                                <thead>
+                                    <th>Name</th>
+                                    <th>Action</th>
+                                </thead>
+                                <tbody id="supervisor-body">
 
-                                @forelse($supervisors as $key=>$list)
-                                <tr>
-                                    <td>{{++$key}}</td>
-                                    <td>{{ucwords($list->name)}}</td>
-                                    <td>
-                                        <div class="form-check form-check-success">
-                                            <label class="form-check-label">
-                                                <input type="checkbox" value="{{$list->id}}" class="form-check-input" checked=""><i class="input-helper"></i></label>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @empty
-                                <tr>
-                                    <td colspan="3" class="text-center">Not Found Any Record.</td>
-                                </tr>
-                                @endforelse
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                            <div class="form-group text-center mt-2">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <div class="modal-footer">
+                <!-- <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save</button>
-                </div>
+
+                </div> -->
             </div>
         </div>
     </div>
+</div>
 
     <script>
         $(document).ready(function() {
 
             $('.assignModal').click(function() {
+                var client_id = $(this).attr('client_id');
+                $.ajax({
+                    url: '{{url("assign-user")}}',
+                    type: 'GET',
+                    data: {
+                        'client_id': client_id
+                    },
+                    dataType: 'JSON',
+                    success: function(res) {
 
-                $('#assignModal').modal('show');
-            })
+                        $('#supervisor-body').html(res.supervisor);
+                        $('#staff-body').html(res.staff);
+
+                        $('.client_id').val(client_id);
+                        $('#assignModal').modal('show');
+                    }
+                })
+
+            });
+
+
+            /*start form submit functionality*/
+            $("form.assign").submit(function(e) {
+                e.preventDefault();
+                formData = new FormData(this);
+                var url = $(this).attr('action');
+                $.ajax({
+                    data: formData,
+                    type: "POST",
+                    url: url,
+                    dataType: 'json',
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function() {
+                        $('.cover-loader').removeClass('d-none');
+                        $('#outlet').hide();
+                    },
+                    success: function(res) {
+                        $('.cover-loader').addClass('d-none');
+                        $('#outlet').show();
+
+                        /*Start Status message*/
+                        if (res.status == 'success' || res.status == 'error') {
+                            Swal.fire(
+                                `${res.status}!`,
+                                res.msg,
+                                `${res.status}`,
+                            )
+                        }
+                        /*End Status message*/
+
+                        //for reset all field
+                        if (res.status == 'success') {
+                            $('form.assign')[0].reset();
+                            setTimeout(function() {
+                                location.reload();
+                            }, 1000)
+                        }
+                    }
+                });
+            });
+
+            /*end form submit functionality*/
         })
     </script>
-    @endpush

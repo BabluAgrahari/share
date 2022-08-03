@@ -39,9 +39,13 @@ Route::post('update',   [User::class, 'update']);
 Route::get('edit/{id}',      [User::class, 'edit']);
 Route::get('delete6',      [User::class, 'delete']);
 
-Route::resource('client', Client::class);
-Route::get('delete/{id}',      [Client::class, 'delete']);
+Route::resource('client',   Client::class);
+Route::get('delete/{id}',   [Client::class, 'delete']);
 Route::get('client/find-agent/{id}', [Client::class, 'findClient']);
+Route::post('assign-user',  [Client::class, 'assignUser']);
+Route::get('assign-user',   [Client::class, 'assignUserModal']);
+Route::get('find-company',  [Client::class, 'findCompany']);
+Route::post('follow-up',    [Client::class, 'followUp']);
 
 Route::resource('contact', ContactPerson::class);
 Route::get('delete2/{id}',      [ContactPerson::class, 'delete']);
