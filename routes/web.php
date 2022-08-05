@@ -3,12 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\LoginController as Login;
-use App\http\Controllers\admin\ClientController as Client;
-use App\http\Controllers\admin\UserController as User;
-use App\http\Controllers\admin\ContactPersonController as ContactPerson;
-use App\http\Controllers\Admin\CompanyController as Company;
-use App\http\Controllers\Admin\TransferAgentsController as TransferAgents;
-use App\http\Controllers\Admin\CourtController as Court;
+use App\Http\Controllers\Admin\ClientController as Client;
+use App\Http\Controllers\Admin\UserController as User;
+use App\Http\Controllers\Admin\ContactPersonController as ContactPerson;
+use App\Http\Controllers\Admin\CompanyController as Company;
+use App\Http\Controllers\Admin\TransferAgentsController as TransferAgents;
+use App\Http\Controllers\Admin\CourtController as Court;
 
 /*
 |--------------------------------------------------------------------------

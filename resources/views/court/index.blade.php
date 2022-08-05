@@ -25,6 +25,7 @@
                 <th>Contact Person Name</th>
                 <th>Email</th>
                 <th>Phone No</th>
+                <th>Created</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -40,6 +41,7 @@
                 <td>{{$list->cp_name}}</td>
                 <td>{{$list->cp_email}}</td>
                 <td>{{$list->cp_phone}}</td>
+                <td>{{$list->dformat($list->created)}}</td>
                
                 <td>
                     <a href="court/{{$list->id}}/edit" class="btn btn-sm btn-outline-info"><span class="mdi mdi-pencil-box-outline"></span></a>
