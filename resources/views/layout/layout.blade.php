@@ -60,7 +60,7 @@
                             <!--change to offline or busy as needed-->
                         </div>
                         <div class="nav-profile-text d-flex ms-0 mb-3 flex-column">
-                            <span class="font-weight-semibold mb-1 mt-2 text-center"></span>
+                            <span class="font-weight-semibold mb-1 mt-2 text-center">{{ucwords(Auth::user()->name)}}</span>
                             <!-- <span class="text-secondary icon-sm text-center">$3499.00</span> -->
                         </div>
                     </a>
@@ -89,7 +89,7 @@
                 </li> -->
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('user')}}">
+                    <a class="nav-link" href="{{url('list')}}">
                         <i class="mdi mdi-account-circle menu-icon"></i>
                         <span class="menu-title">User</span>
                     </a>
