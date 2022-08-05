@@ -15,7 +15,7 @@ class LoginController extends Controller
         return view('login');
     }
 
-     
+
     public function show(Request $request)
     {
 
@@ -39,5 +39,10 @@ class LoginController extends Controller
         return redirect('/')->with('error', 'Login Details Is Not Valide');
     }
 
+    public function logout(Request $request)
+    {
+        $request->session()->flush();
+        Auth::logout();
+        return redirect('/');
+    }
 }
-  

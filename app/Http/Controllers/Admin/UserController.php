@@ -11,12 +11,6 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
 
-    public function index()
-    {
-
-        return view('login');
-    }
-
     public function list()
     {
          $data['lists'] = User::all();
@@ -32,31 +26,6 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        // $request->validate(
-        //     [
-        //         'name' => 'required',
-        //         'city' => 'required',
-        //         'state' => 'required',
-        //         'pin' => 'required',
-        //         'address' => 'required',
-        //         'mobile' => 'required',
-        //         'email' => 'required|email',
-        //         'password' => 'min:6 |required'
-        //     ],
-
-        //     [
-        //         'name.required' => 'Name is required',
-        //         'city.required' => 'City is required',
-        //         'state.required' => 'State is required',
-        //         'pin.required' => 'PIn is required',
-        //         'address.required' => 'Address is required',
-        //         'mobile.required' => 'Phone Number is required',
-        //         'email.required' => 'Email is required',
-        //         'password.required' => 'Password is required'
-        //     ],
-
-
-        // );
 
         $store = new User();
         $store->name           = $request->name;
@@ -138,14 +107,6 @@ class UserController extends Controller
 
         return redirect('/')->withSuccess('Oopps! You do not have access');
     }
-
-    public function logout(Request $request)
-    {
-        $request->session()->flush();
-        Auth::logout();
-        return redirect('/');
-    }
-
 
     public function home()
     {

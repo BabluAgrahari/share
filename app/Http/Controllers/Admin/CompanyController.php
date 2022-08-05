@@ -7,6 +7,7 @@ use App\Http\Requests\CompanyRequest;
 use App\Models\Company;
 use App\Models\ContactPerson;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CompanyController extends Controller
 {
@@ -26,6 +27,7 @@ class CompanyController extends Controller
     public function store(CompanyRequest $request)
     {
         $store = new Company;
+        $store->user_id         = Auth::Company()->id;
         $store->cp_id   = $request->cp_id;
         $store->company_name     = $request->company_name;
         $store->phone            = $request->phone;

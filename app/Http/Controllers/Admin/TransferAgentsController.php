@@ -8,6 +8,7 @@ use App\Models\Company;
 use App\Models\TransferAgent;
 use App\Models\ContactPerson;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TransferAgentsController extends Controller
 {
@@ -26,6 +27,7 @@ class TransferAgentsController extends Controller
     public function store(TransferAgentsRequest $request)
     {
         $store = new TransferAgent;
+        $store->user_id         = Auth::TransferAgent()->id;
         $store->cp_id           = $request->cp_id;
         $store->agency_name     = $request->agency_name;
         $store->phone            = $request->phone;

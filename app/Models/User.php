@@ -23,6 +23,31 @@ class User extends Authenticatable
     protected $primaryKey = 'id';
     protected $guarded = [];
 
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+    ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+
     public static function boot()
     {
         parent::boot();
@@ -54,28 +79,11 @@ class User extends Authenticatable
         });
     }
 
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    public function dFormat($date)
+    {
+        if (empty($date))
+            return false;
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+        return date('d M Y', $date);
+    }
 }

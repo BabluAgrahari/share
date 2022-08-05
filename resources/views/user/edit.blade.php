@@ -8,7 +8,7 @@
         </div>
 
         <div class="col-md-6">
-            <a href="{{url('list')}}" class="btn btn-warning btn-sm" style="float:right;"><span class="mdi mdi-backburger"></span>&nbsp;Back</a>
+            <a href="{{url('user')}}" class="btn btn-warning btn-sm" style="float:right;"><span class="mdi mdi-backburger"></span>&nbsp;Back</a>
         </div>
     </div>
 </div>
@@ -17,9 +17,9 @@
     <div class="row">
         <div class="col-md-12">
 
-            <form action="{{url('update')}}" method="POST" enctype="multipart/form-data">
+            <form action="{{url('user/'.$res->id)}}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <!-- @method('put') -->
+                @method('put')
                 <div class="row">
                     <input type="hidden" name="id" value="{{$res->id}}">
 

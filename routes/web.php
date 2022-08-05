@@ -27,37 +27,43 @@ use App\Http\Controllers\Admin\CourtController as Court;
 
 // Route::resource('product',Product::class);
 
-Route::get('/',         [User::class, 'index']);
-Route::get('create',  [User::class, 'create']);
-Route::POST('store',    [User::class, 'store']);
-Route::POST('login',    [User::class, 'show']);
-Route::get('dashboard', [User::class, 'dashboard']);
-Route::get('logout',    [User::class, 'logout']);
-Route::get('home',      [User::class, 'home']);
-Route::get('list',      [User::class, 'list']);
-Route::post('update',   [User::class, 'update']);
-Route::get('edit/{id}',      [User::class, 'edit']);
-Route::get('delete6',      [User::class, 'delete']);
+Route::get('/',         [Login::class, 'index']);
+Route::get('logout',    [Login::class, 'logout']);
+Route::POST('login',    [Login::class, 'show']);
 
-Route::resource('client',   Client::class);
-Route::get('delete/{id}',   [Client::class, 'delete']);
+// Route::get('create',  [User::class, 'create']);
+// Route::POST('store',    [User::class, 'store']);
+// Route::get('list',      [User::class, 'list']);
+// Route::post('update',   [User::class, 'update']);
+// Route::get('edit/{id}',      [User::class, 'edit']);
+
+
+Route::get('dashboard', [User::class, 'dashboard']);
+Route::get('home',      [User::class, 'home']);
 Route::get('client/find-agent/{id}', [Client::class, 'findClient']);
 Route::post('assign-user',  [Client::class, 'assignUser']);
 Route::get('assign-user',   [Client::class, 'assignUserModal']);
 Route::get('find-company',  [Client::class, 'findCompany']);
 Route::post('follow-up',    [Client::class, 'followUp']);
-
+Route::resource('client',   Client::class);
 Route::resource('contact', ContactPerson::class);
-Route::get('delete2/{id}',      [ContactPerson::class, 'delete']);
-
 Route::resource('company', Company::class);
-Route::get('delete3/{id}',      [Company::class, 'delete']);
-
 Route::resource('transfer-agent', TransferAgents::class);
-Route::get('delete4/{id}',      [TransferAgents::class, 'delete']);
-
 Route::resource('court', Court::class);
+Route::resource('user', User::class);
+
+Route::get('delete/{id}',   [Client::class, 'delete']);
+Route::get('delete2/{id}',      [ContactPerson::class, 'delete']);
+Route::get('delete3/{id}',      [Company::class, 'delete']);
+Route::get('delete4/{id}',      [TransferAgents::class, 'delete']);
 Route::get('delete5/{id}',      [Court::class, 'delete']);
+Route::get('delete6/{id}',      [User::class, 'delete']);
+
+
+
+
+
+
 
 Route::get('/clear-cache', function () {
     Artisan::call('cache:clear');

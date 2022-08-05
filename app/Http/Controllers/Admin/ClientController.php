@@ -13,6 +13,7 @@ use App\Models\FollowUpClient;
 use App\Models\TransferAgent;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
@@ -37,6 +38,7 @@ class ClientController extends Controller
     public function store(ClientRequest $request)
     {
         $store = new Client;
+        $store->user_id         = Auth::user()->id;
         $store->file_no         = $request->file_no;
         $store->share_holder    = $request->share_holder;
         $store->survivor_name   = $request->survivor_name;
