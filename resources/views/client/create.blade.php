@@ -136,7 +136,7 @@
                         <tbody id="field_wrapper">
                             <tr>
                                 <td class="w-25">
-                                    <select id="company_name" selector="0" class="form-control form-control-sm" name="company[0][company_id]">
+                                    <select id="company_name" selector="0" class="form-control form-control-sm" required name="company[0][company_id]">
                                         <option value="">Select</option>
                                         @foreach($companies as $list)
                                         <option value="{{ $list->id }}">{{ ucwords($list->company_name)}}</option>
@@ -145,11 +145,11 @@
                                 </td>
 
                                 <td class="w-25">
-                                    <input type="number" class="form-control form-control-sm" name="company[0][unit]" placeholder="Enter Unit">
+                                    <input type="number" class="form-control form-control-sm" required name="company[0][unit]" placeholder="Enter Unit">
                                 </td>
 
                                 <td class="w-25">
-                                    <select class="form-control form-control-sm" id="agent-id-0" placeholder="Select Contant" name="company[0][agent_id]">
+                                    <select class="form-control form-control-sm" id="agent-id-0" required placeholder="Select Contant" name="company[0][agent_id]">
                                         <option value="">Select</option>
 
                                     </select>
@@ -178,7 +178,7 @@
         var vendor_id = $(this).attr('vendor_id');
         var fieldHTML = `<tr id="row-${i}">
                                 <td class="w-25">
-                                    <select id="company_name" class="form-control selector="${i}" form-control-sm" name="company[${i}][company_id]">
+                                    <select id="company_name" class="form-control selector="${i}" form-control-sm" required name="company[${i}][company_id]">
                                         <option value="">Select</option>
                                         @foreach($companies as $list)
                                         <option value="{{ $list->id }}">{{ ucwords($list->company_name)}}</option>
@@ -187,11 +187,11 @@
                                 </td>
 
                                 <td class="w-25">
-                                    <input type="number" class="form-control form-control-sm" name="company[${i}][unit]" placeholder="Enter Unit">
+                                    <input type="number" class="form-control form-control-sm" required name="company[${i}][unit]" placeholder="Enter Unit">
                                 </td>
 
                                 <td class="w-25">
-                                    <select class="form-control form-control-sm" placeholder="Select Contant" name="company[${i}][agent_id]">
+                                    <select class="form-control form-control-sm" placeholder="Select Contant" required name="company[${i}][agent_id]">
                                         <option value="">Select</option>
                                         @foreach($agents as $list)
                                         <option value="{{ $list->id }}">{{ ucwords($list->agency_name)}}</option>

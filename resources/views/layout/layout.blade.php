@@ -89,7 +89,7 @@
                 </li> -->
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('list')}}">
+                    <a class="nav-link" href="{{url('user')}}">
                         <i class="mdi mdi-account-circle menu-icon"></i>
                         <span class="menu-title">User</span>
                     </a>

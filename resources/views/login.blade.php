@@ -54,10 +54,16 @@
                             <form class="pt-3" action="{{url('login')}}" method="POST">
                                 @csrf
                                 <div class="form-group">
-                                    <input type="email" class="form-control" id="exampleInputEmail1" name="email" placeholder="Username">
+                                    <input type="email" class="form-control" id="exampleInputEmail1" value="{{ old('email') }}"  name="email" placeholder="Username">
+                                    @error('email')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Password">
+                                    @error('password')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="mt-3">
                                     <button type="submit" class="btn btn-success btn-lg w-100">SIGN IN</button>

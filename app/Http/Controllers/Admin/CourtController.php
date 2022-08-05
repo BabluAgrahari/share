@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Court;
 use App\Models\Company;
 use App\Models\client;
+use Illuminate\Support\Facades\Auth;
 
 class CourtController extends Controller
 {
@@ -28,6 +29,7 @@ class CourtController extends Controller
     public function store(Request $request)
     {
         $store = new Court;
+        $store->user_id         = Auth::user()->id;
         $store->court_name         = $request->court_name;
         $store->city               = $request->city;
         $store->state              = $request->state;

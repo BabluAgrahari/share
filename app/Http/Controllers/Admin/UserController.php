@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Contracts\Auth\UserProvider;
+use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -11,12 +13,9 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
 
-    public function index()
-    {
-        return view('login');
-    }
+  
 
-    public function list()
+    public function index()
     {
         $data['lists'] = User::all();
         return view('user.index', $data);
@@ -29,7 +28,7 @@ class UserController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
         // $request->validate(
         //     [
@@ -68,9 +67,9 @@ class UserController extends Controller
         $store->email               = $request->email;
         $store->password            = Hash::make($request->password);
         if ($store->save()) {
-            return redirect('list')->with('success', 'Data Insert Successfully');
+            return redirect('user')->with('success', 'Data Insert Successfully');
         }
-        return redirect('create')->with('error', 'Data Not Insert ');
+        return redirect()->back()->with('error', 'Data Not Insert ');
     }
 
 
@@ -81,10 +80,10 @@ class UserController extends Controller
     }
 
 
-    public function update(Request $request)
+    public function update(UserRequest $request ,$id)
     {
 
-        $update =  User::find($request->id);
+        $update =  User::find($id);
         $update->name           = $request->name;
         $update->role           = $request->role;
         $update->city            = $request->city;
@@ -96,54 +95,16 @@ class UserController extends Controller
         $update->password            = Hash::make($request->password);
 
         if ($update->save()) {
-            return redirect('list')->with('success', 'Data Insert Successfully');
+            return redirect('user')->with('success', 'Data Insert Successfully');
         }
-        return redirect("edit{id}")->with('error', 'Data Not Insert ');
+        return redirect()->back()->with('error', 'Data Not Insert ');
     }
 
 
 
-    public function show(Request $request)
-    {
+   
 
-        $request->validate(
-            [
-                'email'  => 'required',
-                'password' => 'required'
-            ],
-
-            [
-                'email.required' => 'Email is required',
-                'password.required' => 'Password is required'
-
-            ],
-        );
-
-        if (Auth::attempt($request->only('email', 'password'))) {
-
-            return redirect('home');
-        }
-        return redirect('/')->with('error', 'Login Details Is Not Valide');
-    }
-
-
-    public function dashboard()
-    {
-
-        // check if user logged in
-        if (Auth::check()) {
-            return redirect('home')->withErrors('success', 'You Login');
-        }
-
-        return redirect('/')->withSuccess('Oopps! You do not have access');
-    }
-
-    public function logout(Request $request)
-    {
-        $request->session()->flush();
-        Auth::logout();
-        return redirect('/');
-    }
+   
 
 
     public function home()
@@ -156,7 +117,7 @@ class UserController extends Controller
     {
         $det = User::get($id)->delete();
         if ($det) {
-            return redirect('list');
+            return redirect('user');
         }
     }
 }

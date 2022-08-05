@@ -27,17 +27,19 @@ use App\Http\Controllers\Admin\CourtController as Court;
 
 // Route::resource('product',Product::class);
 Route::get('/',         [Login::class, 'index']);
-Route::POST('login',    [User::class, 'show']);
+Route::POST('login',    [Login::class, 'show']);
+Route::get('dashboard', [Login::class, 'dashboard']);
+Route::get('logout',    [Login::class, 'logout']);
 
-Route::get('create',    [User::class, 'create']);
-Route::POST('store',    [User::class, 'store']);
+// Route::get('create',    [User::class, 'create']);
+// Route::POST('store',    [User::class, 'store']);
+// Route::get('list',      [User::class, 'list']);
+// Route::post('update',   [User::class, 'update']);
+// Route::get('edit/{id}',      [User::class, 'edit']);
 
-Route::get('dashboard', [User::class, 'dashboard']);
-Route::get('logout',    [User::class, 'logout']);
+
 Route::get('home',      [User::class, 'home']);
-Route::get('list',      [User::class, 'list']);
-Route::post('update',   [User::class, 'update']);
-Route::get('edit/{id}',      [User::class, 'edit']);
+
 Route::get('delete6',      [User::class, 'delete']);
 
 Route::group(['middleware' => 'auth'], function () {
@@ -45,6 +47,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     Route::resource('client',   Client::class);
+    Route::resource('user',   User::class);
     Route::get('delete/{id}',   [Client::class, 'delete']);
     Route::get('client/find-agent/{id}', [Client::class, 'findClient']);
     Route::post('assign-user',  [Client::class, 'assignUser']);
