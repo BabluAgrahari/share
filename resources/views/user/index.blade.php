@@ -8,7 +8,7 @@
         </div>
 
         <div class="col-md-6">
-            <a href="{{url('create')}} " class="btn btn-success btn-sm" style="float:right;"><span class="mdi mdi-plus"></span>&nbsp;Add</a>
+            <a href="{{url('user/create')}} " class="btn btn-success btn-sm" style="float:right;"><span class="mdi mdi-plus"></span>&nbsp;Add</a>
         </div>
     </div>
 </div>
@@ -39,7 +39,7 @@
                 <td>{{$list->state}}</td>
                 <td>{{$list->address}}</td>
                 <td>
-                    <a href="edit/{{$list->id}}" class="btn btn-sm btn-outline-info"><span class="mdi mdi-pencil-box-outline"></span></a>
+                    <a href="user/{{$list->id}}/edit" class="btn btn-sm btn-outline-info"><span class="mdi mdi-pencil-box-outline"></span></a>
                     <a onclick="return confirm('Are you sure to detele this?')" href="delete6/{{$list->id}}" class="btn btn-sm btn-outline-danger"><span class="mdi mdi-delete"></span></a>
                 </td>
             </tr>

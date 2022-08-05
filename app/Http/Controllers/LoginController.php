@@ -16,48 +16,7 @@ class LoginController extends Controller
     }
 
 
-    public function register()
-    {
-        return view('register');
-    }
-
-
-    public function store(Request $request)
-    {
-
-        $request->validate(
-            [
-                'firstname' => 'required',
-                'lastname' => 'required',
-                'email' => 'required|email',
-                'password' => 'min:6 |required'
-            ],
-
-            [
-                'firstname.required' => 'First Name is required',
-                'lastname.required' => 'Last Name is required',
-                'email.required' => 'Email is required',
-                'password.required' => 'Password is required'
-            ],
-
-
-        );
-
-        $store = new User();
-        $store->firstname           = $request->firstname;
-        $store->lastname            = $request->lastname;
-        $store->father_name         = $request->father_name;
-        $store->add                 = $request->add;
-        $store->mobile              = $request->mobile;
-        $store->email               = $request->email;
-        $store->password            = Hash::make($request->password);
-
-        if ($store->save())
-            return redirect('/')->with('success', 'Data Insert Successfully');
-
-        return redirect('/')->with('error', 'Data Not Insert ');
-    }
-
+  
     public function show(Request $request)
     {
 

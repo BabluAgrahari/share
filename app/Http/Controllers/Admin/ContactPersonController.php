@@ -7,6 +7,7 @@ use App\Http\Requests\ClientRequest;
 use App\Models\ContactPerson;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ContactPersonController extends Controller
 {
@@ -26,6 +27,7 @@ class ContactPersonController extends Controller
     public function store(Request $request)
     {
         $store = new ContactPerson;
+        $store->user_id         = Auth::user()->id;
         $store->name         = $request->name;
         $store->mobile        = $request->mobile;
         $store->email        = $request->email;
