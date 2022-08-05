@@ -55,7 +55,7 @@ class ClientController extends Controller
 
             self::clientToCompany($request->company, $store->id, 'store'); //insert record into client_to_company table
 
-            $this->storeContactPerson(request: $request, ref_id: $store->id,ref_by:'client'); //for insert record into contact_person table
+            $this->storeContactPerson(request: $request, ref_id: $store->id, ref_by: 'client'); //for insert record into contact_person table
 
             return redirect()->back()->with('success', 'Client Created Successfully');
         }
@@ -97,7 +97,7 @@ class ClientController extends Controller
 
             self::clientToCompany($request->company, $update->id, 'update'); //update record into client_to_company table
 
-            $this->updateContactPerson($request, $id); //for update record into contact_person table
+            $this->updateContactPerson(request: $request, ref_id: $id, ref_by: 'client'); //for update record into contact_person table
 
             return redirect('/client')->with('success', 'Client Update successfully');
         }
@@ -235,6 +235,7 @@ class ClientController extends Controller
         $save->client_id = $request->client_id;
         $save->follow_up_date = strtotime($request->follow_up_date);
         $save->type = $request->type;
+
         if ($request->type == 'company') {
             $save->company_id = $request->company_id;
         } else if ($request->type == 'agent') {
@@ -246,6 +247,50 @@ class ClientController extends Controller
 
         if ($save->save())
             return response(['status' => 'success', 'msg' => 'Follow Up Created Successfully!']);
+
+        return response(['status' => 'error', 'msg' => 'Something went wrong!']);
+    }
+
+
+    public function findContactPerson(Request $request)
+    {
+        $ref_id = $request->ref_id;
+        $ref_by = $request->ref_by;
+
+        $record = ContactPerson::where('ref_id', $ref_id)->where('ref_by', $ref_by)->get();
+
+        $res = '<table class="table mb-3"><tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        </tr>';
+        if (!$record->isEmpty()) {
+            foreach ($record as $key => $list) {
+                $res .= '<tr><td>' . ucwords($list->name) . '</td><td>' . $list->email . '</td><td>' . $list->mobile . '</td></tr>';
+            }
+        } else {
+            $res .= '<tr><td colspan="3" class="text-center">Not found any Record</td></tr>';
+        }
+        $res .= '</table>';
+
+        $res .= '<div id="add-new-btn" class="text-right"><a id="add-new" ref_id="' . $ref_id . '" ref_by="' . $ref_by . '" href="javascript:void(0);" class="btn btn-outline-primary btn-sm"><span class="mdi mdi-plus"></span>&nbsp;Add</a></div> <hr>';
+
+        return response(['status' => 'success', 'record' => $res]);
+    }
+
+
+    public function saveCP(Request $request)
+    {
+        $ref_id = $request->ref_id;
+        $ref_by = $request->ref_by;
+        $save = new ContactPerson();
+        $save->name   = $request->name;
+        $save->email  = $request->email;
+        $save->mobile = $request->mobile;
+        $save->ref_id = $ref_id;
+        $save->ref_by = $ref_by;
+        if ($save->save())
+            return response(['status' => 'success', 'msg' => 'Created Successfully!']);
 
         return response(['status' => 'error', 'msg' => 'Something went wrong!']);
     }

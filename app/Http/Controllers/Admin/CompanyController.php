@@ -42,6 +42,9 @@ class CompanyController extends Controller
         // echo "<pre>";
         // print_r($request->all());die;
         if ($store->save()) {
+
+            $this->storeContactPerson(request: $request, ref_id: $store->id, ref_by: 'company'); //for insert record into contact_person table
+
             return redirect()->back()->with('success', 'company Created Successfully');
         }
         return redirect()->back()->with('error', 'company not Created');
@@ -77,6 +80,9 @@ class CompanyController extends Controller
         $update->remarks         = $request->remarks;
 
         if ($update->save()) {
+
+            $this->updateContactPerson(request: $request, ref_id: $id, ref_by: 'company'); //for update record into contact_person table
+
             return redirect('/company')->with('success', 'Company Update successfully');
         }
         return redirect()->back()->with('error', 'Company not Update');

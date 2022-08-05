@@ -51,6 +51,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('assign-user',   [Client::class, 'assignUserModal']);
     Route::get('find-company',  [Client::class, 'findCompany']);
     Route::post('follow-up',    [Client::class, 'followUp']);
+    Route::get('find-contact-person', [Client::class, 'findContactPerson']);
+    Route::post('save-cp',      [Client::class, 'saveCP']);
+
 
     Route::resource('contact', ContactPerson::class);
     Route::get('delete2/{id}',      [ContactPerson::class, 'delete']);

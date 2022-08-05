@@ -41,6 +41,9 @@ class TransferAgentsController extends Controller
         $store->remarks         = $request->remarks;
 
         if ($store->save()) {
+
+            $this->storeContactPerson(request: $request, ref_id: $store->id, ref_by: 'agent'); //for insert record into contact_person table
+
             return redirect()->back()->with('success', 'Transfer Agent Created Successfully');
         }
         return redirect()->back()->with('error', 'Transfer Agent not Created');
@@ -77,6 +80,9 @@ class TransferAgentsController extends Controller
         $update->remarks         = $request->remarks;
 
         if ($update->save()) {
+
+            $this->updateContactPerson(request: $request, ref_id: $id, ref_by: 'agent'); //for update record into contact_person table
+
             return redirect('/transfer-agent')->with('success', 'Transfer Agent Update successfully');
         }
         return redirect()->back()->with('error', 'Transfer Agent not Update');
