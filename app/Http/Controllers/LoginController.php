@@ -18,7 +18,6 @@ class LoginController extends Controller
 
     public function show(Request $request)
     {
-
         $request->validate(
             [
                 'email'  => 'required',

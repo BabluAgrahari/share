@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
 
-    public function list()
+    public function index()
     {
          $data['lists'] = User::all();
         return view('user.index',$data);
