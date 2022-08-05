@@ -13,14 +13,13 @@ class UserController extends Controller
 
     public function index()
     {
-
         return view('login');
     }
 
     public function list()
     {
-         $data['lists'] = User::all();
-        return view('user.index',$data);
+        $data['lists'] = User::all();
+        return view('user.index', $data);
     }
 
 
@@ -61,8 +60,8 @@ class UserController extends Controller
         $store = new User();
         $store->name           = $request->name;
         $store->role           = $request->role;
-        $store->city            = $request->city;
-        $store->state         = $request->state;
+        $store->city           = $request->city;
+        $store->state          = $request->state;
         $store->pin                 = $request->pin;
         $store->address                 = $request->address;
         $store->mobile              = $request->mobile;
@@ -77,8 +76,8 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $data['res'] =User::find($id);
-        return view('user.edit',$data);
+        $data['res'] = User::find($id);
+        return view('user.edit', $data);
     }
 
 
@@ -156,8 +155,7 @@ class UserController extends Controller
     public function delete($id)
     {
         $det = User::get($id)->delete();
-        if($det)
-        {
+        if ($det) {
             return redirect('list');
         }
     }
