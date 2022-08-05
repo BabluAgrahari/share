@@ -13,6 +13,7 @@ use App\Models\FollowUpClient;
 use App\Models\TransferAgent;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
@@ -37,6 +38,7 @@ class ClientController extends Controller
     public function store(ClientRequest $request)
     {
         $store = new Client;
+        $store->user_id         = Auth::user()->id;
         $store->file_no         = $request->file_no;
         $store->share_holder    = $request->share_holder;
         $store->survivor_name   = $request->survivor_name;
@@ -52,6 +54,8 @@ class ClientController extends Controller
         if ($store->save()) {
 
             self::clientToCompany($request->company, $store->id, 'store'); //insert record into client_to_company table
+
+            $this->storeContactPerson(request: $request, ref_id: $store->id,ref_by:'client'); //for insert record into contact_person table
 
             return redirect()->back()->with('success', 'Client Created Successfully');
         }
@@ -91,7 +95,9 @@ class ClientController extends Controller
 
         if ($update->save()) {
 
-            self::clientToCompany($request->company, $update->id, 'update'); //insert record into client_to_company table
+            self::clientToCompany($request->company, $update->id, 'update'); //update record into client_to_company table
+
+            $this->updateContactPerson($request, $id); //for update record into contact_person table
 
             return redirect('/client')->with('success', 'Client Update successfully');
         }
