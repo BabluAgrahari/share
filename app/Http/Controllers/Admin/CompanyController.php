@@ -16,7 +16,7 @@ class CompanyController extends Controller
     {
         $query = Company::query();
 
-        if ($request->name)
+        if (!empty($request->name))
             $query->where('company_name', 'LIKE', "%$request->name%");
 
         if (!empty($request->email))
