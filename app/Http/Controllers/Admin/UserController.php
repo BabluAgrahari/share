@@ -22,8 +22,8 @@ class UserController extends Controller
         if (!empty($request->email))
             $query->where('email', $request->email);
 
-        if (!empty($request->phone))
-            $query->where('phone', $request->phone);
+        if (!empty($request->mobile))
+            $query->where('mobile', $request->mobile);
 
         if (!empty($request->status))
             $query->where('status', $request->status);
@@ -44,6 +44,7 @@ class UserController extends Controller
         $request->request->remove('page');
         $request->request->remove('perPage');
         $data['filter']  = $request->all();
+
         return view('user.index', $data);
     }
 
