@@ -12,9 +12,38 @@ use Illuminate\Support\Facades\Auth;
 
 class TransferAgentsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data['lists'] = TransferAgent::paginate($this->perPage);
+        $query = TransferAgent::query();
+
+        if (!empty($request->transfer_name))
+            $query->where('transfer_name', 'LIKE', "%$request->transfer_name%");
+
+        if (!empty($request->email))
+            $query->where('email', $request->email);
+
+        if (!empty($request->phone))
+            $query->where('phone', $request->phone);
+
+        if (!empty($request->status))
+            $query->where('status', $request->status);
+
+        if (!empty($request->date_range)) {
+            list($start_date, $end_date) = explode('-', $request->date_range);
+            $start_date = strtotime(trim($start_date) . " 00:00:00");
+            $end_date   = strtotime(trim($end_date) . " 23:59:59");
+        } else {
+            $start_date = $this->start_date;
+            $end_date   = $this->end_date;
+        }
+        $query->whereBetween('created', [$start_date, $end_date]);
+
+        $data['lists'] = $query->orderBy('created', 'DESC')->paginate($this->perPage);
+
+        $request->request->remove('page');
+        $request->request->remove('perPage');
+        $data['filter']  = $request->all();
+
         return view('transfer_agent.index', $data);
     }
 
@@ -29,7 +58,7 @@ class TransferAgentsController extends Controller
         $store = new TransferAgent;
         $store->user_id         = Auth::user()->id;
         $store->cp_id           = $request->cp_id;
-        $store->agency_name     = $request->agency_name;
+        $store->transfer_name     = $request->transfer_name;
         $store->phone            = $request->phone;
         $store->email            = $request->email;
         $store->address         = $request->address;
@@ -68,7 +97,7 @@ class TransferAgentsController extends Controller
     {
         $update =  TransferAgent::find($id);
         $update->cp_id          = $request->cp_id;
-        $update->agency_name     = $request->agency_name;
+        $update->transfer_name     = $request->transfer_name;
         $update->phone            = $request->phone;
         $update->email            = $request->email;
         $update->address         = $request->address;

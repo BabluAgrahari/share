@@ -17,7 +17,7 @@ class UserRequest extends FormRequest
         return [
             'name'              => 'required|min:2|max:80',
             'mobile'            => 'required|digits:10|not_in:0|numeric',
-            'email'             => 'required|email|unique:users,email,'.Rule::unique('users')->ignore($user->id)
+            // 'email'             => 'required|email|unique:users,email,'.Rule::unique('users')->ignore($user->id),
             'address'           => 'nullable|string|max:1000',
             'city'              => 'required',
             'state'             => 'required',
