@@ -14,7 +14,7 @@ class ContactPersonController extends Controller
 
     public function index()
     {
-        $data['lists'] = ContactPerson::all();
+        $data['lists'] = ContactPerson::paginate($this->perPage);
         return view('contact.index', $data);
     }
 

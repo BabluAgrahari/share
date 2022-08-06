@@ -45,12 +45,12 @@
                 <td>
                     <a href="javascript:void(0);" client_id="{{$list->id}}" class="followUpModal btn btn-sm btn-outline-warning">Follow Up</a>
                     <a href="client/{{$list->id}}/edit" class="btn btn-sm btn-outline-info"><span class="mdi mdi-pencil-box-outline"></span></a>
-                    <a onclick="return confirm('Are you sure to detele this?')" href="delete/{{$list->id}}" class="btn btn-sm btn-outline-danger"><span class="mdi mdi-delete"></span></a>
                 </td>
             </tr>
             @endforeach
         </tbody>
     </table>
+    {{ $lists->appends($_GET)->links()}}
 </div>
 @push('modal')
 @include('client.remarks')

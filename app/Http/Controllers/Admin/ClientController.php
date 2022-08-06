@@ -21,7 +21,7 @@ class ClientController extends Controller
     public function index(Request $request)
     {
 
-        $data['lists'] = Client::all();
+        $data['lists'] = Client::paginate($this->perPage);
         $data['couts'] = Court::get();
 
         return view('client.index', $data);

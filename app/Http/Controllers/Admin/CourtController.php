@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CourtRequest;
 use Illuminate\Http\Request;
 use App\Models\Court;
 use App\Models\Company;
@@ -14,7 +15,7 @@ class CourtController extends Controller
 
     public function index()
     {
-        $data['lists'] = Court::all();
+        $data['lists'] = Court::paginate($this->perPage);
         return view('court.index', $data);
     }
 
@@ -26,7 +27,7 @@ class CourtController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(CourtRequest $request)
     {
         $store = new Court;
         $store->user_id         = Auth::user()->id;
@@ -61,7 +62,7 @@ class CourtController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function update(CourtRequest $request, $id)
     {
         $update = Court::find($id);
         $update->court_name         = $request->court_name;
