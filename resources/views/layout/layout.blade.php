@@ -45,6 +45,10 @@
         text {
             display: none;
         }
+
+        .f-right {
+            float: right !important;
+        }
     </style>
 </head>
 
@@ -411,8 +415,29 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
+    <script>
+        //filter open and close
+        $('#filter-btn').click(function() {
+            $('#filter').toggle();
+            if ($(this).text().trim() === "Filter") {
+                $(this).html('<span class="mdi mdi-filter-remove-outline"></span>&nbsp;Close').addClass('btn-outline-warning').removeClass('btn-outline-primary');
+            } else if ($(this).text().trim() === 'Close') {
+                $(this).html('<span class="mdi mdi-filter-outline"></span>&nbsp;Filter').addClass('btn-outline-primary').removeClass('btn-outline-warning');
+            }
+        });
+
+        $(function() {
+            $('.daterange').daterangepicker({
+                opens: 'left'
+            }, function(start, end, label) {});
+
+            $(".multiple-select1").select2({});
+            $(".multiple-select2").select2({});
+        });
+    </script>
     @stack('script')
     @stack('modal');
+
 </body>
 
 </html>
