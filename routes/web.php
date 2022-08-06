@@ -30,22 +30,9 @@ Route::get('/',         [Login::class, 'index']);
 Route::POST('login',    [Login::class, 'show']);
 Route::get('dashboard', [Login::class, 'dashboard']);
 Route::get('logout',    [Login::class, 'logout']);
-
-// Route::get('create',    [User::class, 'create']);
-// Route::POST('store',    [User::class, 'store']);
-// Route::get('list',      [User::class, 'list']);
-// Route::post('update',   [User::class, 'update']);
-// Route::get('edit/{id}',      [User::class, 'edit']);
-
-
 Route::get('home',      [User::class, 'home']);
-
 Route::get('delete6',      [User::class, 'delete']);
-
 Route::group(['middleware' => 'auth'], function () {
-
-
-
     Route::resource('client',   Client::class);
     Route::resource('user',   User::class);
     Route::get('delete/{id}',   [Client::class, 'delete']);
