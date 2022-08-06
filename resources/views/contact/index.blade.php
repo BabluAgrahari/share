@@ -40,5 +40,6 @@
             @endforeach
         </tbody>
     </table>
+    {{ $lists->appends($_GET)->links()}}
 </div>
 @endsection

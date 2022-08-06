@@ -15,7 +15,7 @@ class CourtController extends Controller
 
     public function index()
     {
-        $data['lists'] = Court::all();
+        $data['lists'] = Court::paginate($this->perPage);
         return view('court.index', $data);
     }
 

@@ -21,8 +21,7 @@
                 <th>Email</th>
                 <th>Mobile No.</th>
                 <th>City</th>
-                <th>Pin No</th>
-                <th>State</th>
+                <th>Status</th>
                 <th>Address</th>
                 <th>Action</th>
             </tr>
@@ -35,8 +34,7 @@
                 <td>{{$list->email}}</td>
                 <td>{{$list->mobile}}</td>
                 <td>{{$list->city}}</td>
-                <td>{{$list->pin}}</td>
-                <td>{{$list->state}}</td>
+                <td>{!!$list->status == 1 ? '<span class="badge badge-success">Avtive</span>' : '<span class="badge badge-warning">In Active</span>'!!}</td>
                 <td>{{$list->address}}</td>
                 <td>
                     <a href="user/{{$list->id}}/edit" class="btn btn-sm btn-outline-info"><span class="mdi mdi-pencil-box-outline"></span></a>
@@ -47,5 +45,6 @@
         </tbody>
 
     </table>
+    {{ $lists->appends($_GET)->links()}}
 </div>
 @endsection

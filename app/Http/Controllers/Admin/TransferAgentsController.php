@@ -14,7 +14,7 @@ class TransferAgentsController extends Controller
 {
     public function index()
     {
-        $data['lists'] = TransferAgent::all();
+        $data['lists'] = TransferAgent::paginate($this->perPage);
         return view('transfer_agent.index', $data);
     }
 
