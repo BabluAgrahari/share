@@ -14,7 +14,7 @@ class CompanyController extends Controller
 
     public function index()
     {
-        $data['lists'] = Company::all();
+        $data['lists'] = Company::paginate($this->perPage);
         return view('company.index', $data);
     }
 

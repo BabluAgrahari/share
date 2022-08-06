@@ -54,7 +54,7 @@
                             <form class="pt-3" action="{{url('login')}}" method="POST">
                                 @csrf
                                 <div class="form-group">
-                                    <input type="email" class="form-control" id="exampleInputEmail1" value="{{ old('email') }}"  name="email" placeholder="Username">
+                                    <input type="email" class="form-control invalid" id="exampleInputEmail1" value="{{ old('email') }}" name="email" placeholder="Username">
                                     @error('email')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror

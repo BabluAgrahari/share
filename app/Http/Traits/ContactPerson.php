@@ -24,7 +24,7 @@ trait ContactPerson
         return false;
     }
 
-    public function updateContactPerson($request, $ref_id,$ref_by=false)
+    public function updateContactPerson($request, $ref_id, $ref_by = false)
     {
         if (empty($request) || !$ref_id || !$ref_by)
             return false;
