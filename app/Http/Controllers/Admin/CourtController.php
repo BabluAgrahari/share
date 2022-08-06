@@ -17,11 +17,8 @@ class CourtController extends Controller
     {
         $query = Court::query();
 
-        if (!empty($request->name))
-            $query->where('company_name', 'LIKE', "%$request->name%");
-
-        if (!empty($request->email))
-            $query->where('email', $request->email);
+        if (!empty($request->court_name))
+            $query->where('court_name', $request->court_name);
 
         if (!empty($request->status))
             $query->where('status', $request->status);

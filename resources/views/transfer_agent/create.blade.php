@@ -35,9 +35,9 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label>Agency Name</label>
-                        <input type="text" class="form-control form-control-sm" value="{{ old('agency_name') }}" placeholder="Enter Agency Name" name="agency_name">
-                        @error('agency_name')
+                        <label>Transfer Name</label>
+                        <input type="text" class="form-control form-control-sm" value="{{ old('transfer_name') }}" placeholder="Enter Transfer Name" name="transfer_name">
+                        @error('transfer_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>

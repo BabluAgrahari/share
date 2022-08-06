@@ -12,9 +12,38 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data['lists'] = User::paginate($this->perPage);
+        $query = User::query();
+
+        if (!empty($request->name))
+            $query->where('name', $request->name);
+
+        if (!empty($request->email))
+            $query->where('email', $request->email);
+
+        if (!empty($request->phone))
+            $query->where('phone', $request->phone);
+
+        if (!empty($request->status))
+            $query->where('status', $request->status);
+
+        if (!empty($request->date_range)) {
+            list($start_date, $end_date) = explode('-', $request->date_range);
+            $start_date = strtotime(trim($start_date) . " 00:00:00");
+            $end_date   = strtotime(trim($end_date) . " 23:59:59");
+        } else {
+            $start_date = $this->start_date;
+            $end_date   = $this->end_date;
+        }
+
+        $query->whereBetween('created', [$start_date, $end_date]);
+
+        $data['lists'] = $query->orderBy('created', 'DESC')->paginate($this->perPage);
+
+        $request->request->remove('page');
+        $request->request->remove('perPage');
+        $data['filter']  = $request->all();
         return view('user.index', $data);
     }
 

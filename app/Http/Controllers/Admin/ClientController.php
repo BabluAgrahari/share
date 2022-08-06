@@ -21,7 +21,33 @@ class ClientController extends Controller
     public function index(Request $request)
     {
 
-        $data['lists'] = Client::paginate($this->perPage);
+        $query = Client::query();
+
+        if (!empty($request->file_no))
+        $query->where('file_no', 'LIKE', "%$request->file_no%");
+
+    if (!empty($request->share_holder))
+        $query->where('share_holder', $request->share_holder);
+
+    if (!empty($request->status))
+        $query->where('status', $request->status);
+
+    if (!empty($request->date_range)) {
+        list($start_date, $end_date) = explode('-', $request->date_range);
+        $start_date = strtotime(trim($start_date) . " 00:00:00");
+        $end_date   = strtotime(trim($end_date) . " 23:59:59");
+    } else {
+        $start_date = $this->start_date;
+        $end_date   = $this->end_date;
+    }
+        $query->whereBetween('created', [$start_date, $end_date]);
+
+        $data['lists'] = $query->orderBy('created', 'DESC')->paginate($this->perPage);
+
+        $request->request->remove('page');
+        $request->request->remove('perPage');
+        $data['filter']  = $request->all();
+
         $data['couts'] = Court::get();
 
         return view('client.index', $data);
