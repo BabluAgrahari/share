@@ -34,7 +34,6 @@
                 <td>{!!$list->status == 1 ? '<span class="badge badge-success">Avtive</span>' : '<span class="badge badge-warning">In Active</span>'!!}</td>
                 <td>
                     <a href="contact/{{$list->id}}/edit" class="btn btn-sm btn-outline-info"><span class="mdi mdi-pencil-box-outline"></span></a>
-                    <a onclick="return confirm('Are you sure to detele this?')" href="delete2/{{$list->id}}" class="btn btn-sm btn-outline-danger"><span class="mdi mdi-delete"></span></a>
                 </td>
             </tr>
             @endforeach

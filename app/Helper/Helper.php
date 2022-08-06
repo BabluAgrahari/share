@@ -8,3 +8,14 @@ function dateRange()
     // 07/01/2022 - 08/31/2022
     return $start_date . ' - ' . $end_date;
 }
+
+
+if (!function_exists('pr')) {
+    function pr($data)
+    {
+        echo "<pre>";
+        print_r($data);
+        echo '</pre>';
+        die;
+    }
+}

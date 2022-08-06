@@ -40,15 +40,14 @@
                 <td>{{$list->cp_name}}</td>
                 <td>{{$list->cp_email}}</td>
                 <td>{{$list->cp_phone}}</td>
-               
+
                 <td>
                     <a href="court/{{$list->id}}/edit" class="btn btn-sm btn-outline-info"><span class="mdi mdi-pencil-box-outline"></span></a>
-                    <a onclick="return confirm('Are you sure to detele this?')" href="delete5/{{$list->id}}" class="btn btn-sm btn-outline-danger"><span class="mdi mdi-delete"></span></a>
                 </td>
             </tr>
             @endforeach
         </tbody>
-       
+
     </table>
     {{ $lists->appends($_GET)->links()}}
 </div>

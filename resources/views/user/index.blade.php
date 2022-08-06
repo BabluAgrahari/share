@@ -34,11 +34,10 @@
                 <td>{{$list->email}}</td>
                 <td>{{$list->mobile}}</td>
                 <td>{{$list->city}}</td>
-                <td>{!!$list->status == 1 ? '<span class="badge badge-success">Avtive</span>' : '<span class="badge badge-warning">In Active</span>'!!}</td>
+                <td>{!!$list->status == 1 ? '<span class="badge badge-outline-success">Avtive</span>' : '<span class="badge badge-outline-warning">In Active</span>'!!}</td>
                 <td>{{$list->address}}</td>
                 <td>
                     <a href="user/{{$list->id}}/edit" class="btn btn-sm btn-outline-info"><span class="mdi mdi-pencil-box-outline"></span></a>
-                    <a onclick="return confirm('Are you sure to detele this?')" href="delete6/{{$list->id}}" class="btn btn-sm btn-outline-danger"><span class="mdi mdi-delete"></span></a>
                 </td>
             </tr>
             @endforeach

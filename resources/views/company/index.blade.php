@@ -15,10 +15,11 @@
             @endif
             <a href="{{url('company/create')}} " class="btn btn-success btn-sm"><span class="mdi mdi-plus"></span>&nbsp;Add</a>
         </div>
+
     </div>
 </div>
 
-<div class="row mt-2 pl-2 pr-2" id="filter" <?= (empty($filter)) ? "style='display:block'" : "" ?>>
+<div class="row mt-2 pl-2 pr-2" id="filter" <?= (empty($filter)) ? "style='display:none'" : "" ?>>
     <div class="col-md-12 ml-auto">
         <form action="{{ url('company') }}">
             <div class="form-row">
@@ -84,7 +85,6 @@
                 <td>{{$list->pin}}</td>
                 <td>
                     <a href="company/{{$list->id}}/edit" class="btn btn-sm btn-outline-info"><span class="mdi mdi-pencil-box-outline"></span></a>
-                    <a onclick="return confirm('Are you sure to detele this?')" href="delete3/{{$list->id}}" class="btn btn-sm btn-outline-danger"><span class="mdi mdi-delete"></span></a>
                 </td>
             </tr>
             @endforeach

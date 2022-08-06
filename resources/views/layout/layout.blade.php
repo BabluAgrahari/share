@@ -113,11 +113,30 @@
                     </a>
                 </li>
 
+
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('client')}}">
+                    <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                         <i class="mdi mdi-account-multiple menu-icon"></i>
                         <span class="menu-title">Client</span>
+                        <i class="menu-arrow"></i>
                     </a>
+                    <div class="collapse" id="ui-basic">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{url('client')}}">
+                                    <i class="mdi mdi-account-multiple menu-icon"></i>
+                                    <span class="menu-title">Client List</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('follow-up') }}">
+                                    <i class="mdi mdi-account-multiple menu-icon"></i>
+                                    <span class="menu-title"> Follow Up</span></a>
+                            </li>
+
+                        </ul>
+                    </div>
                 </li>
 
                 <li class="nav-item">
@@ -416,6 +435,11 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
     <script>
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+
         //filter open and close
         $('#filter-btn').click(function() {
             $('#filter').toggle();
