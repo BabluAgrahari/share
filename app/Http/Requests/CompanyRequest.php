@@ -25,7 +25,8 @@ class CompanyRequest extends FormRequest
             'remarks'               => 'nullable|string|max:1000',
             'cp_name'               => 'required',
             'cp_email'              => 'required|email',
-            'cp_phone'              => 'required|digits:10|not_in:0|numeric'
+            'cp_phone'              => 'required|digits:10|not_in:0|numeric',
+            'designation'           => 'required'
 
             
         ];

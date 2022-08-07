@@ -48,7 +48,7 @@
                     <select class="form-control form-control-sm" name="status">
                         <option value="">All</option>
                         <option value="1" <?= (!empty($filter['status']) && $filter['status'] == '1') ? 'selected' : '' ?>>Active</option>
-                        <option value="0" <?= (!empty($filter['status']) && $filter['status'] == '0') ? 'selected' : '' ?>>Inactive</option>
+                        <option value="0" <?= (isset($filter['status']) && $filter['status'] == '0') ? 'selected' : '' ?>>Inactive</option>
                     </select>
                 </div>
 

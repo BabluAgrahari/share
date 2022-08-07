@@ -69,8 +69,9 @@
                 <th>Email</th>
                 <th>Mobile No.</th>
                 <th>City</th>
-                <th>Status</th>
+                <th>Role</th>
                 <th>Address</th>
+                <th>Status</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -82,8 +83,10 @@
                 <td>{{$list->email}}</td>
                 <td>{{$list->mobile}}</td>
                 <td>{{$list->city}}</td>
-                <td>{!!$list->status == 1 ? '<span class="badge badge-outline-success">Avtive</span>' : '<span class="badge badge-outline-warning">In Active</span>'!!}</td>
+                <td>{{$list->role}}</td>
                 <td>{{$list->address}}</td>
+                <td>{!!$list->status == 1 ? '<span class="badge badge-outline-success">Avtive</span>' : '<span class="badge badge-outline-warning">In Active</span>'!!}</td>
+                
                 <td>
                     <a href="user/{{$list->id}}/edit" class="btn btn-sm btn-outline-info"><span class="mdi mdi-pencil-box-outline"></span></a>
                 </td>
