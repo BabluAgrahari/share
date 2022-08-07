@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Contracts\Auth\UserProvider;
 use App\Http\Requests\UserRequest;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -113,6 +114,22 @@ class UserController extends Controller
         $det = User::get($id)->delete();
         if ($det) {
             return redirect('user');
+        }
+    }
+
+
+    public function status(Request $request)
+    {
+        try {
+            $save = User::find($request->id);
+            $save->status = (int)$request->status;
+            $save->save();
+            if ($save->status == 1)
+                return response(['status' => 'success', 'msg' => 'This User is Active!', 'val' => $save->status]);
+
+            return response(['status' => 'success', 'msg' => 'This User is Inactive!', 'val' => $save->status]);
+        } catch (Exception $e) {
+            return response(['status' => 'error', 'msg' => 'Something went wrong!!']);
         }
     }
 }

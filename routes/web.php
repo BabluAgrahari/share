@@ -36,6 +36,7 @@ Route::get('home',      [User::class, 'home']);
 Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('user',   User::class);
+    Route::post('user-status', [User::class, 'status']);
 
     Route::resource('client',   Client::class);
     Route::post('assign-user',  [Client::class, 'assignUser']);
@@ -43,6 +44,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('find-company',  [Client::class, 'findCompany']);
     Route::post('follow-up',    [Client::class, 'followUp']);
     Route::post('save-cp',      [Client::class, 'saveCP']);
+    Route::post('client-status',  [Client::class, 'status']);
 
     Route::get('client/find-agent/{id}', [Client::class, 'findClient']);
     Route::get('find-contact-person',    [Client::class, 'findContactPerson']);

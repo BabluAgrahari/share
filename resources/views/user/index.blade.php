@@ -82,7 +82,14 @@
                 <td>{{$list->email}}</td>
                 <td>{{$list->mobile}}</td>
                 <td>{{$list->city}}</td>
-                <td>{!!$list->status == 1 ? '<span class="badge badge-outline-success">Avtive</span>' : '<span class="badge badge-outline-warning">In Active</span>'!!}</td>
+                <td>
+                    <?= $list->status == 1 ? '<a href="javascript:void(0)">
+                <span class="activeVer badge badge-outline-success" _id="' . $list->id . '" val="0">Active</span>
+                </a>'
+                        : '<a href="javascript:void(0);">
+                <span class="activeVer badge badge-outline-warning" _id="' . $list->id . '" val="1">Inactive</span>
+                </a>' ?>
+                </td>
                 <td>{{$list->address}}</td>
                 <td>
                     <a href="user/{{$list->id}}/edit" class="btn btn-sm btn-outline-info"><span class="mdi mdi-pencil-box-outline"></span></a>
@@ -94,4 +101,36 @@
     </table>
     {{ $lists->appends($_GET)->links()}}
 </div>
+@push('script')
+<script>
+    $(document).on('click', '.activeVer', function() {
+        var id = $(this).attr('_id');
+        var val = $(this).attr('val');
+        var selector = $(this);
+        $.ajax({
+            'url': "{{ url('user-status') }}",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                'id': id,
+                'status': val
+            },
+            type: 'POST',
+            dataType: 'json',
+            success: function(res) {
+                if (res.val == 1) {
+                    $(selector).text('Active').attr('val', '0').removeClass('badge-outline-warning').addClass('badge-outline-success');
+                } else {
+                    $(selector).text('Inactive').attr('val', '1').removeClass('badge-outline-success').addClass('badge-outline-warning');
+                }
+                Swal.fire(
+                    `${res.status}!`,
+                    res.msg,
+                    `${res.status}`,
+                )
+            }
+        })
+
+    })
+</script>
+@endpush
 @endsection

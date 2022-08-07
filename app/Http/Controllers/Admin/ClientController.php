@@ -12,6 +12,7 @@ use App\Models\Court;
 use App\Models\FollowUpClient;
 use App\Models\TransferAgent;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,22 +25,22 @@ class ClientController extends Controller
         $query = Client::query();
 
         if (!empty($request->file_no))
-        $query->where('file_no', 'LIKE', "%$request->file_no%");
+            $query->where('file_no', 'LIKE', "%$request->file_no%");
 
-    if (!empty($request->share_holder))
-        $query->where('share_holder', $request->share_holder);
+        if (!empty($request->share_holder))
+            $query->where('share_holder', $request->share_holder);
 
-    if (!empty($request->status))
-        $query->where('status', $request->status);
+        if (!empty($request->status))
+            $query->where('status', $request->status);
 
-    if (!empty($request->date_range)) {
-        list($start_date, $end_date) = explode('-', $request->date_range);
-        $start_date = strtotime(trim($start_date) . " 00:00:00");
-        $end_date   = strtotime(trim($end_date) . " 23:59:59");
-    } else {
-        $start_date = $this->start_date;
-        $end_date   = $this->end_date;
-    }
+        if (!empty($request->date_range)) {
+            list($start_date, $end_date) = explode('-', $request->date_range);
+            $start_date = strtotime(trim($start_date) . " 00:00:00");
+            $end_date   = strtotime(trim($end_date) . " 23:59:59");
+        } else {
+            $start_date = $this->start_date;
+            $end_date   = $this->end_date;
+        }
         $query->whereBetween('created', [$start_date, $end_date]);
 
         $data['lists'] = $query->orderBy('created', 'DESC')->paginate($this->perPage);
@@ -139,6 +140,22 @@ class ClientController extends Controller
             return redirect()->back()->with('success', 'Client Removed Successfully');
         }
         return redirect()->back()->with('error', 'Client not Removed');
+    }
+
+
+    public function status(Request $request)
+    {
+        try {
+            $save = Client::find($request->id);
+            $save->status = (int)$request->status;
+            $save->save();
+            if ($save->status == 1)
+                return response(['status' => 'success', 'msg' => 'This Client is Active!', 'val' => $save->status]);
+
+            return response(['status' => 'success', 'msg' => 'This Client is Inactive!', 'val' => $save->status]);
+        } catch (Exception $e) {
+            return response(['status' => 'error', 'msg' => 'Something went wrong!!']);
+        }
     }
 
 
