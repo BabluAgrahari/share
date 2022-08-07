@@ -97,6 +97,7 @@
                 </td>
                 <td>
                     <a href="transfer-agent/{{$list->id}}/edit" class="btn btn-sm btn-outline-info"><span class="mdi mdi-pencil-box-outline"></span></a>
+
                 </td>
             </tr>
             @endforeach

@@ -55,7 +55,7 @@ class CourtController extends Controller
     public function store(CourtRequest $request)
     {
         $store = new Court;
-        $store->user_id         = Auth::user()->id;
+        $store->user_id            = Auth::user()->id;
         $store->court_name         = $request->court_name;
         $store->city               = $request->city;
         $store->state              = $request->state;
@@ -64,6 +64,7 @@ class CourtController extends Controller
         $store->cp_name            = $request->cp_name;
         $store->cp_email           = $request->cp_email;
         $store->cp_phone           = $request->cp_phone;
+        $store->cp_designation     = $request->cp_designation;
 
         if ($store->save()) {
 
@@ -98,6 +99,7 @@ class CourtController extends Controller
         $update->cp_name            = $request->cp_name;
         $update->cp_email           = $request->cp_email;
         $update->cp_phone           = $request->cp_phone;
+        $update->cp_designation     = $request->cp_designation;
 
 
         if ($update->save()) {
@@ -107,15 +109,6 @@ class CourtController extends Controller
             return redirect()->back()->with('success', 'Court Created Successfully');
         }
         return redirect()->back()->with('error', 'Court not Created');
-    }
-
-
-    public function delete($id)
-    {
-        $det = Court::find($id)->delete();
-        if ($det) {
-            return redirect('court');
-        }
     }
 
     public function status(Request $request)

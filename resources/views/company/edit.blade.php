@@ -137,8 +137,8 @@
 
                     <div class="form-group col-md-3">
                     <label>Designation </label>
-                    <input type="text" class="form-control form-control-sm" value="{{ old('designation')??$res->designation }}" placeholder=" Enter Designation	" name="designation">
-                    @error('designation')
+                    <input type="text" class="form-control form-control-sm" value="{{ old('cp_designation')??$res->cp_designation }}" placeholder=" Enter Designation	" name="cp_designation">
+                    @error('cp_designation')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>

@@ -67,7 +67,7 @@ class CompanyController extends Controller
         $store->cp_name        = $request->cp_name;
         $store->cp_email       = $request->cp_email;
         $store->cp_phone       = $request->cp_phone;
-        $store->designation    = $request->designation;
+        $store->cp_designation    = $request->cp_designation;
         $store->remarks        = $request->remarks;
 
         // echo "<pre>";
@@ -108,7 +108,7 @@ class CompanyController extends Controller
         $update->cp_name         = $request->cp_name;
         $update->cp_email         = $request->cp_email;
         $update->cp_phone         = $request->cp_phone;
-        $update->designation      = $request->designation;
+        $update->cp_designation      = $request->cp_designation;
         $update->remarks         = $request->remarks;
 
         if ($update->save()) {
