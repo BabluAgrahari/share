@@ -19,7 +19,7 @@
 </div>
 <div class="row mt-2 pl-2 pr-2" id="filter" <?= (empty($filter)) ? "style='display:block'" : "" ?>>
     <div class="col-md-12 ml-auto">
-        <form action="{{ url('company') }}">
+        <form action="{{ url('court') }}">
             <div class="form-row">
 
                 <div class="form-group col-md-2">
@@ -29,7 +29,7 @@
 
                 <div class="form-group col-md-3">
                     <label>Court Name</label>
-                    <input type="text" class="form-control form-control-sm" name="court_name" value="{{ !empty($filter['court_name']) ? $filter['court_name'] : ''}}" placeholder="Enter Company Court Name">
+                    <input type="text" class="form-control form-control-sm" name="court_name" value="{{ !empty($filter['court_name']) ? $filter['court_name'] : ''}}" placeholder="Enter Court Name">
                 </div>
 
                 <div class="form-group col-md-2">
@@ -43,7 +43,7 @@
 
                 <div class="form-group mt-4">
                     <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
-                    <a href="{{ url('company') }}" class="btn btn-warning btn-sm"><i class="mdi mdi-eraser-variant"></i>&nbsp;Clear</a>
+                    <a href="{{ url('court') }}" class="btn btn-warning btn-sm"><i class="mdi mdi-eraser-variant"></i>&nbsp;Clear</a>
                 </div>
             </div>
         </form>
