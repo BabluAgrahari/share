@@ -54,20 +54,20 @@ class CompanyController extends Controller
     public function store(CompanyRequest $request)
     {
         $store = new Company;
-        $store->user_id         = Auth::user()->id;
-        $store->cp_id   = $request->cp_id;
-        $store->company_name     = $request->company_name;
-        $store->phone            = $request->phone;
-        $store->email            = $request->email;
-        $store->address         = $request->address;
-        $store->city            = $request->city;
-        $store->state           = $request->state;
-        $store->pin             = $request->pin;
-        $store->cp_name         = $request->cp_name;
-        $store->cp_email         = $request->cp_email;
-        $store->cp_phone         = $request->cp_phone;
-        $store->designation      = $request->designation;
-        $store->remarks         = $request->remarks;
+        $store->user_id        = Auth::user()->id;
+        $store->cp_id          = $request->cp_id;
+        $store->company_name   = $request->company_name;
+        $store->phone          = $request->phone;
+        $store->email          = $request->email;
+        $store->address        = $request->address;
+        $store->city           = $request->city;
+        $store->state          = $request->state;
+        $store->pin            = $request->pin;
+        $store->cp_name        = $request->cp_name;
+        $store->cp_email       = $request->cp_email;
+        $store->cp_phone       = $request->cp_phone;
+        $store->designation    = $request->designation;
+        $store->remarks        = $request->remarks;
 
         // echo "<pre>";
         // print_r($request->all());die;

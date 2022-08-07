@@ -13,11 +13,11 @@
             @else
             <a href="javascript:void(0);" class="btn btn-sm btn-outline-primary" id="filter-btn"><span class="mdi mdi-filter-outline"></span>&nbsp;Filter</a>
             @endif
-            <a href="{{url('transfer-agent/create')}} " class="btn btn-success btn-sm" style="float:right;"><span class="mdi mdi-plus"></span>&nbsp;Add</a>
+            <a href="{{url('transfer-agent/create')}} " class="btn btn-success btn-sm"><span class="mdi mdi-plus"></span>&nbsp;Add</a>
         </div>
     </div>
 </div>
-<div class="row mt-2 pl-2 pr-2" id="filter" <?= (empty($filter)) ? "style='display:block'" : "" ?>>
+<div class="row mt-2 pl-2 pr-2" id="filter" <?= (empty($filter)) ? "style='display:none'" : "" ?>>
     <div class="col-md-12 ml-auto">
         <form action="{{ url('transfer-agent') }}">
             <div class="form-row">
@@ -27,17 +27,17 @@
                     <input type="text" class="form-control form-control-sm daterange" value="<?= !empty($filter['date_range']) ? $filter['date_range'] : dateRange() ?>" name="date_range" />
                 </div>
 
-                <div class="form-group col-md-3">
-                    <label>Transfer Name:</label>
-                    <input type="text" class="form-control form-control-sm" name="transfer_name" value="{{ !empty($filter['transfer_name']) ? $filter['transfer_name'] : ''}}" placeholder="Enter Transfer Name">
+                <div class="form-group col-md-2">
+                    <label>Transfer Agent:</label>
+                    <input type="text" class="form-control form-control-sm" name="transfer_agent" value="{{ !empty($filter['transfer_agent']) ? $filter['transfer_agent'] : ''}}" placeholder="Enter Transfer Name">
                 </div>
 
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-2">
                     <label>Email:</label>
                     <input type="text" class="form-control form-control-sm" name="email" value="{{ !empty($filter['email']) ? $filter['email'] : ''}}" placeholder="Enter Email">
                 </div>
 
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-2">
                     <label>Phone No:</label>
                     <input type="text" class="form-control form-control-sm" name="phone" value="{{ !empty($filter['phone']) ? $filter['phone'] : ''}}" placeholder="Enter Phone No">
                 </div>
@@ -65,7 +65,7 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th>Transfer Name</th>
+                <th>Transfer Agent</th>
                 <th>Phone No.</th>
                 <th>Email</th>
                 <th>Address</th>
@@ -79,7 +79,7 @@
             @foreach($lists as $key => $list)
             <tr>
                 <td>{{ ++$key }}</td>
-                <td>{{$list->transfer_name}}</td>
+                <td>{{$list->transfer_agent}}</td>
                 <td>{{$list->phone}}</td>
                 <td>{{$list->email}}</td>
                 <td>{{$list->address}}</td>

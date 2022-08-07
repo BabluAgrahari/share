@@ -202,7 +202,7 @@
                                     <select class="form-control form-control-sm" placeholder="Select Contant" required name="company[${i}][agent_id]">
                                         <option value="">Select</option>
                                         @foreach($agents as $list)
-                                        <option value="{{ $list->id }}">{{ ucwords($list->agency_name)}}</option>
+                                        <option value="{{ $list->id }}">{{ ucwords($list->transfer_agent)}}</option>
                                         @endforeach
                                     </select>
                                 </td>

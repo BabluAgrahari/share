@@ -13,11 +13,12 @@ trait ContactPerson
 
         $request = (object)$request;
         $save = new ModelsContactPerson();
-        $save->name   = $request->cp_name;
-        $save->email  = $request->cp_email;
-        $save->mobile  = $request->cp_mobile;
-        $save->ref_id = $ref_id;
-        $save->ref_by = $ref_by;
+        $save->name        = $request->cp_name;
+        $save->email       = $request->cp_email;
+        $save->mobile      = $request->cp_mobile;
+        $save->designation = $request->cp_designation;
+        $save->ref_id      = $ref_id;
+        $save->ref_by      = $ref_by;
         if ($save->save())
             return true;
 
@@ -31,9 +32,10 @@ trait ContactPerson
 
         $request = (object)$request;
         $save = ModelsContactPerson::where('ref_id', $ref_id)->first();
-        $save->name  = $request->cp_name;
-        $save->email = $request->cp_email;
-        $save->mobile = $request->cp_mobile;
+        $save->name        = $request->cp_name;
+        $save->email       = $request->cp_email;
+        $save->mobile      = $request->cp_mobile;
+        $save->designation = $request->cp_designation;
         if ($save->save())
             return true;
 

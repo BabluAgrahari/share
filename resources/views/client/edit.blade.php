@@ -123,12 +123,12 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                    <label>Designation </label>
-                    <input type="text" class="form-control form-control-sm" value="{{ old('designation')??$res->designation}}" placeholder=" Enter Designation" name="designation">
-                    @error('designation')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
+                        <label>Designation </label>
+                        <input type="text" class="form-control form-control-sm" value="{{ old('designation')??$res->designation}}" placeholder=" Enter Designation" name="designation">
+                        @error('designation')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
                 </div>
 
                 <div class="row mb-2">
@@ -144,7 +144,7 @@
                             </tr>
                         </thead>
                         <tbody id="field_wrapper">
-                            @php $key = 1;@endphp
+                            @php $key = 1; $i=0; @endphp
                             @forelse($client_to_company as $key=>$val)
                             <tr id="row-{{$key}}">
                                 <td class="w-25">
@@ -161,10 +161,27 @@
                                 </td>
 
                                 <td class="w-25">
-                                    <select class="form-control form-control-sm" id="agent-id-{{$key}}" placeholder="Select Contant" required name="company[{{$key}}][agent_id]">
+                                    <select class="form-control form-control-sm" id="agent-id-{{$key}}" required name="company[{{$key}}][agent_id]">
                                         <option value="">Select</option>
 
                                     </select>
+                                    @push('script')
+                                    <script>
+                                        var key = '{{$key}}';
+                                        $.ajax({
+                                            url: "{{url('client/find-agent')}}/" + <?= $val->company_id ?>,
+                                            data: {
+                                                'agent_id': <?= !empty($val->agent_id) ? $val->agent_id : '' ?>
+                                            },
+                                            type: "GET",
+                                            dataType: "JSON",
+                                            success: function(res) {
+
+                                                $('#agent-id-' + key).html(res);
+                                            }
+                                        })
+                                    </script>
+                                    @endpush
                                 </td>
                                 <td>
                                     @if($key <= 0) <a href="javascript:void(0)" id="add_more" class="btn btn-xs btn-success"><span class="mdi mdi-plus"></span></a>
@@ -173,7 +190,10 @@
                                         @endif
                                 </td>
                             </tr>
+
+                            <?php $i++ ?>
                             @empty
+                            <?php $i =1;?>
                             <tr id="row-0">
                                 <td class="w-25">
                                     <select id="company_name" selector="0" class="form-control form-control-sm" required name="company[0][company_id]">
@@ -212,7 +232,7 @@
 
 @push('script')
 <script>
-    var i = '{{$key}}';
+    var i = '{{$i}}';
     $('#add_more').click(function() {
         var vendor_id = $(this).attr('vendor_id');
         var fieldHTML = `<tr id="row-${i}">
@@ -249,6 +269,7 @@
     $(document).on('change', '#company_name', function() {
         let company_id = $(this).val();
         let selector = $(this).attr('selector');
+        alert(selector);
         $.ajax({
             url: "{{url('client/find-agent')}}/" + company_id,
             type: "GET",

@@ -7,11 +7,56 @@
             <h6 class="m-0 font-weight-bold text-primary">Follow Up List</h6>
         </div>
 
-        <div class="col-md-6">
-
+        <div class="col-md-6 text-right">
+            @if(!empty($filter))
+            <a href="javascript:void(0);" class="btn btn-sm btn-outline-warning" id="filter-btn"><span class="mdi mdi-filter-remove-outline"></span>&nbsp;Close</a>
+            @else
+            <a href="javascript:void(0);" class="btn btn-sm btn-outline-primary" id="filter-btn"><span class="mdi mdi-filter-outline"></span>&nbsp;Filter</a>
+            @endif
         </div>
     </div>
 </div>
+
+<div class="row mt-2 pl-2 pr-2" id="filter" <?= (empty($filter)) ? "style='display:none'" : "" ?>>
+    <div class="col-md-12 ml-auto">
+        <form action="{{ url('follow-up-list') }}">
+            <div class="form-row">
+
+                <div class="form-group col-md-2">
+                    <label>Date Range</label>
+                    <input type="text" class="form-control form-control-sm daterange" value="<?= !empty($filter['date_range']) ? $filter['date_range'] : dateRange() ?>" name="date_range" />
+                </div>
+
+
+                <div class="form-group col-md-2">
+                    <label>Client</label>
+                    <select class="form-control form-control-sm" name="client">
+                        <option value="">All</option>
+                        @foreach($clients as $client)
+                        <option value="{{$client->id}}" <?= (!empty($filter['client']) && $filter['client'] == $client->id) ? 'selected' : '' ?>>{{ucwords($client->share_holder)}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group col-md-2">
+                    <label>Status</label>
+                    <select class="form-control form-control-sm" name="status">
+                        <option value="">All</option>
+                        <option value="pending" <?= (!empty($filter['status']) && $filter['status'] == 'pending') ? 'selected' : '' ?>>Pending</option>
+                        <option value="completed" <?= (isset($filter['status']) && $filter['status'] == 'completed') ? 'selected' : '' ?>>Completed</option>
+                        <option value="rejected" <?= (isset($filter['status']) && $filter['status'] == 'rejected') ? 'selected' : '' ?>>Rejected</option>
+                    </select>
+                </div>
+
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
+                    <a href="{{ url('follow-up-list') }}" class="btn btn-warning btn-sm"><i class="mdi mdi-eraser-variant"></i>&nbsp;Clear</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 <div class="p-2 table-responsive">
     <table class="w-100 table table-striped">
         <thead>
@@ -87,6 +132,7 @@
                             <option value="pending">Pending</option>
                             <option value="completed">Completed</option>
                             <option value="rejected">Rejected</option>
+                            <option value="pending">Revert</option>
                         </select>
                     </div>
                     <div class="form-group text-center">

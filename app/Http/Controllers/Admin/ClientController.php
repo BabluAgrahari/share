@@ -57,7 +57,7 @@ class ClientController extends Controller
     public function create(Request $request)
     {
         $data['companies'] = Company::select('id', 'company_name')->get();
-        $data['agents']    = TransferAgent::select('id', 'transfer_name')->get();
+        $data['agents']    = TransferAgent::select('id', 'transfer_agent')->get();
         $data['contacts']  = ContactPerson::select('id', 'name')->get();
         return view('client.create', $data);
     }
@@ -77,7 +77,7 @@ class ClientController extends Controller
         $store->cp_name         = $request->cp_name;
         $store->cp_email        = $request->cp_email;
         $store->cp_phone        = $request->cp_mobile;
-        $store->designation     =$request->designation;
+        $store->designation     = $request->designation;
 
         if ($store->save()) {
 
@@ -99,6 +99,7 @@ class ClientController extends Controller
     public function edit($id)
     {
         $data['companies'] = Company::select('id', 'company_name')->get();
+        $data['agents']    = TransferAgent::select('id', 'transfer_agent')->get();
 
         $data['res'] = Client::find($id);
 
@@ -182,16 +183,17 @@ class ClientController extends Controller
         }
     }
 
-    public function findClient($id = false)
+    public function findClient(Request $request, $id = false)
     {
         if (!$id)
             return false;
 
-        $results = TransferAgent::where('company_id', $id)->get();
+        $results = TransferAgent::select('id', 'transfer_agent')->whereRaw("FIND_IN_SET($id, company_id)")->get();
 
         $option = '<option value="">Select</option>';
         foreach ($results as $res) {
-            $option .= '<option value="' . $res->id . '">' . ucwords($res->agency_name) . '</option>';
+            $selected = !empty($request->agent_id) && $request->agent_id == $res->id ? 'selected' : '';
+            $option .= '<option value="' . $res->id . '" '.$selected.'>' . ucwords($res->transfer_agent) . '</option>';
         }
 
         die(json_encode($option));
@@ -263,12 +265,12 @@ class ClientController extends Controller
             $option .= '<option value="' . $list->id . '">' . ucwords($list->company_name) . '</option>';
         }
 
-        $agents = ClientToCompany::select('transfer_agents.id', 'transfer_agents.agency_name')->join('transfer_agents', 'client_to_company.agent_id', '=', 'transfer_agents.id')
+        $agents = ClientToCompany::select('transfer_agents.id', 'transfer_agents.transfer_agent')->join('transfer_agents', 'client_to_company.agent_id', '=', 'transfer_agents.id')
             ->where('client_to_company.client_id', $client_id)->get();
 
         $optionAgent = '<option value="">Select</option>';
         foreach ($agents as $list) {
-            $optionAgent .= '<option value="' . $list->id . '">' . ucwords($list->transfer_name) . '</option>';
+            $optionAgent .= '<option value="' . $list->id . '">' . ucwords($list->transfer_agent) . '</option>';
         }
 
         return response(['status' => 'error', 'company' => $option, 'agent' => $optionAgent]);
@@ -329,13 +331,14 @@ class ClientController extends Controller
         $ref_id = $request->ref_id;
         $ref_by = $request->ref_by;
         $save = new ContactPerson();
-        $save->name   = $request->name;
-        $save->email  = $request->email;
-        $save->mobile = $request->mobile;
-        $save->ref_id = $ref_id;
-        $save->ref_by = $ref_by;
+        $save->name        = $request->name;
+        $save->email       = $request->email;
+        $save->mobile      = $request->mobile;
+        $save->designation = $request->designation;
+        $save->ref_id      = $ref_id;
+        $save->ref_by      = $ref_by;
         if ($save->save())
-            return response(['status' => 'success', 'msg' => 'Created Successfully!']);
+            return response(['status' => 'success', 'msg' => 'Added Successfully!']);
 
         return response(['status' => 'error', 'msg' => 'Something went wrong!']);
     }

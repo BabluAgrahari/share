@@ -23,7 +23,7 @@
 
                     <div class="form-group col-md-3">
                         <label>Select Company</label>
-                        <select class="form-control form-control-sm" placeholder="Enter State" name="company_id">
+                        <select class="form-control form-control-sm multiple-select1" multiple placeholder="Enter State" name="company_id[]">
                             <option value=" ">Select</option>
                             @foreach($companies as $list)
                             <option value="{{$list->id}}">{{ucwords($list->company_name)}}</option>
@@ -35,9 +35,9 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label>Transfer Name</label>
-                        <input type="text" class="form-control form-control-sm" value="{{ old('transfer_name') }}" placeholder="Enter Transfer Name" name="transfer_name">
-                        @error('transfer_name')
+                        <label>Transfer Agent</label>
+                        <input type="text" class="form-control form-control-sm" value="{{ old('transfer_agent') }}" placeholder="Enter Transfer Agent" name="transfer_agent">
+                        @error('transfer_agent')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -73,7 +73,7 @@
                         <select class="form-control form-control-sm" placeholder="Enter State" name="state">
                             <option value=" ">Select</option>
                             @foreach(config('global.state') as $state)
-                            <option value="{{$state}}">{{$state}}</option>
+                            <option value="{{$state}}" {{(old('state')==$state)?"selected":''}}>{{$state}}</option>
                             @endforeach
                         </select>
                         @error('state')
@@ -137,12 +137,12 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                    <label>Designation </label>
-                    <input type="text" class="form-control form-control-sm" value="{{ old('designation')}}" placeholder=" Enter Designation	" name="designation">
-                    @error('designation')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
+                        <label>Designation </label>
+                        <input type="text" class="form-control form-control-sm" value="{{ old('cp_designation')}}" placeholder=" Enter Designation" name="cp_designation">
+                        @error('cp_designation')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
                 </div>
 
                 <div class="form-group text-center">

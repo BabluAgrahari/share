@@ -16,8 +16,8 @@ class TransferAgentsController extends Controller
     {
         $query = TransferAgent::query();
 
-        if (!empty($request->transfer_name))
-            $query->where('transfer_name', 'LIKE', "%$request->transfer_name%");
+        if (!empty($request->transfer_agent))
+            $query->where('transfer_agent', 'LIKE', "%$request->transfer_agent%");
 
         if (!empty($request->email))
             $query->where('email', $request->email);
@@ -57,21 +57,20 @@ class TransferAgentsController extends Controller
     {
         $store = new TransferAgent;
         $store->user_id         = Auth::user()->id;
-        $store->cp_id           = $request->cp_id;
-        $store->transfer_name     = $request->transfer_name;
-        $store->phone            = $request->phone;
-        $store->email            = $request->email;
+        $store->transfer_agent   = $request->transfer_agent;
+        $store->phone           = $request->phone;
+        $store->email           = $request->email;
         $store->address         = $request->address;
         $store->city            = $request->city;
         $store->state           = $request->state;
         $store->pin             = $request->pin;
-        $store->company_id      = $request->company_id;
+        $store->company_id      = (!empty($request->company_id) && is_array($request->company_id)) ? implode(',', $request->company_id) : '';
         $store->cp_name         = $request->cp_name;
-        $store->cp_email         = $request->cp_email;
-        $store->cp_phone         = $request->cp_phone;
-        $store->designation      = $request->designation;
+        $store->cp_email        = $request->cp_email;
+        $store->cp_phone        = $request->cp_phone;
+        $store->cp_designation  = $request->cp_designation;
         $store->remarks         = $request->remarks;
-       
+
         if ($store->save()) {
 
             $this->storeContactPerson(request: $request, ref_id: $store->id, ref_by: 'agent'); //for insert record into contact_person table
@@ -97,21 +96,21 @@ class TransferAgentsController extends Controller
     public function update(TransferAgentsRequest $request, $id)
     {
         $update =  TransferAgent::find($id);
-        $update->cp_id          = $request->cp_id;
-        $update->transfer_name     = $request->transfer_name;
-        $update->phone            = $request->phone;
-        $update->email            = $request->email;
+        $update->cp_id           = $request->cp_id;
+        $update->transfer_agent   = $request->transfer_agent;
+        $update->phone           = $request->phone;
+        $update->email           = $request->email;
         $update->address         = $request->address;
         $update->city            = $request->city;
         $update->state           = $request->state;
         $update->pin             = $request->pin;
-        $update->company_id      = $request->company_id;
+        $update->company_id      = (!empty($request->company_id) && is_array($request->company_id)) ? implode(',', $request->company_id) : '';
         $update->cp_name         = $request->cp_name;
-        $update->cp_email         = $request->cp_email;
-        $update->cp_phone         = $request->cp_phone;
-        $update->designation      = $request->designation;
+        $update->cp_email        = $request->cp_email;
+        $update->cp_phone        = $request->cp_phone;
+        $update->cp_designation  = $request->cp_designation;
         $update->remarks         = $request->remarks;
-       
+
         if ($update->save()) {
 
             $this->updateContactPerson(request: $request, ref_id: $id, ref_by: 'agent'); //for update record into contact_person table

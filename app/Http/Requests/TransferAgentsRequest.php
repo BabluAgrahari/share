@@ -15,8 +15,8 @@ class TransferAgentsRequest extends FormRequest
     public function rules()
     {
         return [
-            'company_id'            =>'required',
-            'transfer_name'         => 'required|min:2|max:200',
+            'company_id'            => 'required',
+            'transfer_agent'         => 'required|min:2|max:200',
             'phone'                 => 'required|digits:10|not_in:0|numeric',
             'email'                 => 'required|email|unique:users',
             'address'               => 'nullable|string|max:1000',
@@ -29,7 +29,6 @@ class TransferAgentsRequest extends FormRequest
             'cp_phone'              => 'required|digits:10|not_in:0|numeric',
             // 'designation'           => 'required'
 
-        ];  
-
+        ];
     }
 }

@@ -19,11 +19,8 @@ class FollowUpController extends Controller
     {
         $query = FollowUpClient::query();
 
-        if (!empty($request->name))
-            $query->where('company_name', 'LIKE', "%$request->name%");
-
-        if (!empty($request->email))
-            $query->where('email', $request->email);
+        if (!empty($request->client))
+            $query->where('client_id', $request->client);
 
         if (!empty($request->status))
             $query->where('status', $request->status);
@@ -45,6 +42,8 @@ class FollowUpController extends Controller
         $request->request->remove('perPage');
         $data['filter']  = $request->all();
 
+        $data['clients'] = Client::select('share_holder','id')->get();
+
         return view('client.follow_up_list', $data);
     }
 
@@ -59,15 +58,19 @@ class FollowUpController extends Controller
             $clientsToC = ClientToCompany::where('client_id', $client_id)->get();
 
             $company_ids = [];
+            $flag = true;
             foreach ($clientsToC as $id) {
                 $company_ids[] = $id->id;
+
+                $ext_follow_up = FollowUpClient::where('company_id', $id->id)->count();
+                if (!$ext_follow_up)
+                    $flag = false;
             }
             $followUp = FollowUpClient::whereIn('company_id', $company_ids)->where('status', 'completed')->count();
 
             $client = Client::find($client_id);
-
             $client->follow_up_status = 0;
-            if ($followUp <= 0)
+            if ($followUp <= 0 && $flag)
                 $client->follow_up_status = 1;
 
             $client->save();

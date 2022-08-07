@@ -166,11 +166,15 @@
             <input type="email" required name="email" id="email" class="form-control form-control-xs" placeholder="Enter Email">
             </div>
 
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
             <input type="number" required name="mobile" id="mobile" class="form-control form-control-xs" placeholder="Enter Phone">
             </div>
 
             <div class="form-group col-md-6">
+            <input type="text" name="designation" id="designation" class="form-control form-control-xs" placeholder="Enter Designation">
+            </div>
+
+            <div class="form-group col-md-2">
            <button class="btn btn-sm btn-outline-success" id="save-cp">
           save</button>
             </div>
@@ -190,7 +194,8 @@
                 'ref_by': $('#ref_by').val(),
                 'name': $('#name').val(),
                 'email': $('#email').val(),
-                'mobile': $('#mobile').val()
+                'mobile': $('#mobile').val(),
+                'designation': $('#designation').val()
             };
             var url = '{{url("save-cp")}}';
             $.ajax({
