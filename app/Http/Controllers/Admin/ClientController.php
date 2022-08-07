@@ -58,15 +58,19 @@ class ClientController extends Controller
     {
         $data['companies'] = Company::select('id', 'company_name')->get();
         $data['agents']    = TransferAgent::select('id', 'transfer_agent')->get();
+        $data['courts'] = Court::select('id', 'court_name')->get();
         $data['contacts']  = ContactPerson::select('id', 'name')->get();
         return view('client.create', $data);
     }
 
-    public function store(ClientRequest $request)
+    public function store(Request $request)
     {
         $store = new Client;
         $store->user_id         = Auth::user()->id;
         $store->file_no         = $request->file_no;
+        $store->court_id        = $request->court_id;
+        $store->srn             = $request->srn;
+        $store->date            = strtotime($request->date);
         $store->share_holder    = $request->share_holder;
         $store->survivor_name   = $request->survivor_name;
         $store->address         = $request->address;
@@ -77,7 +81,7 @@ class ClientController extends Controller
         $store->cp_name         = $request->cp_name;
         $store->cp_email        = $request->cp_email;
         $store->cp_phone        = $request->cp_mobile;
-        $store->designation     = $request->designation;
+        $store->cp_designation  = $request->cp_designation;
 
         if ($store->save()) {
 
@@ -100,17 +104,21 @@ class ClientController extends Controller
     {
         $data['companies'] = Company::select('id', 'company_name')->get();
         $data['agents']    = TransferAgent::select('id', 'transfer_agent')->get();
+        $data['courts'] = Court::select('id', 'court_name')->get();
+        $data['client_to_company'] = ClientToCompany::where('client_id', $id)->get();
 
         $data['res'] = Client::find($id);
 
-        $data['client_to_company'] = ClientToCompany::where('client_id', $id)->get();
         return view('client.edit', $data);
     }
 
-    public function update(ClientRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $update =  Client::find($id);
         $update->file_no         = $request->file_no;
+        $update->court_id        = $request->court_id;
+        $update->srn             = $request->srn;
+        $update->date            = $request->date;
         $update->share_holder    = $request->share_holder;
         $update->survivor_name   = $request->survivor_name;
         $update->address         = $request->address;
@@ -121,7 +129,7 @@ class ClientController extends Controller
         $update->cp_name         = $request->cp_name;
         $update->cp_email        = $request->cp_email;
         $update->cp_phone        = $request->cp_mobile;
-        $update->designation     = $request->designation;
+        $update->cp_designation  = $request->cp_designation;
 
         if ($update->save()) {
 
@@ -193,7 +201,7 @@ class ClientController extends Controller
         $option = '<option value="">Select</option>';
         foreach ($results as $res) {
             $selected = !empty($request->agent_id) && $request->agent_id == $res->id ? 'selected' : '';
-            $option .= '<option value="' . $res->id . '" '.$selected.'>' . ucwords($res->transfer_agent) . '</option>';
+            $option .= '<option value="' . $res->id . '" ' . $selected . '>' . ucwords($res->transfer_agent) . '</option>';
         }
 
         die(json_encode($option));
