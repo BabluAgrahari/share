@@ -59,7 +59,7 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th>File No</th>
+                <th>File No(Manual)</th>
                 <th>Share Holder</th>
                 <th>Survivor Name</th>
                 <th>Address</th>

@@ -17,7 +17,7 @@
         </div>
     </div>
 </div>
-<div class="row mt-2 pl-2 pr-2" id="filter" <?= (empty($filter)) ? "style='display:block'" : "" ?>>
+<div class="row mt-2 pl-2 pr-2" id="filter" <?= (empty($filter)) ? "style='display:none'" : "" ?>>
     <div class="col-md-12 ml-auto">
         <form action="{{ url('transfer-agent') }}">
             <div class="form-row">

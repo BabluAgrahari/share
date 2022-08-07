@@ -57,16 +57,20 @@ class ClientController extends Controller
     public function create(Request $request)
     {
         $data['companies'] = Company::select('id', 'company_name')->get();
+        $data['courts'] = Court::select('id', 'court_name')->get();
         $data['agents']    = TransferAgent::select('id', 'transfer_name')->get();
         $data['contacts']  = ContactPerson::select('id', 'name')->get();
         return view('client.create', $data);
     }
 
-    public function store(ClientRequest $request)
+    public function store(Request $request)
     {
         $store = new Client;
         $store->user_id         = Auth::user()->id;
         $store->file_no         = $request->file_no;
+        $store->court_id        = $request->court_id;
+        $store->srn             = $request->srn;
+        $store->date            = strtotime($request->date);
         $store->share_holder    = $request->share_holder;
         $store->survivor_name   = $request->survivor_name;
         $store->address         = $request->address;
@@ -77,8 +81,9 @@ class ClientController extends Controller
         $store->cp_name         = $request->cp_name;
         $store->cp_email        = $request->cp_email;
         $store->cp_phone        = $request->cp_mobile;
-        $store->designation     =$request->designation;
-
+        $store->cp_designation  =$request->cp_designation;
+        //echo "<pre>";
+       // print_r(strtotime($request->date));die;
         if ($store->save()) {
 
             self::clientToCompany($request->company, $store->id, 'store'); //insert record into client_to_company table
@@ -99,6 +104,7 @@ class ClientController extends Controller
     public function edit($id)
     {
         $data['companies'] = Company::select('id', 'company_name')->get();
+        $data['courts'] = Court::select('id', 'court_name')->get();
 
         $data['res'] = Client::find($id);
 
@@ -106,10 +112,13 @@ class ClientController extends Controller
         return view('client.edit', $data);
     }
 
-    public function update(ClientRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $update =  Client::find($id);
         $update->file_no         = $request->file_no;
+        $update->court_id        = $request->court_id;
+        $update->srn             = $request->srn;
+        $update->date            = $request->date;
         $update->share_holder    = $request->share_holder;
         $update->survivor_name   = $request->survivor_name;
         $update->address         = $request->address;
@@ -120,7 +129,7 @@ class ClientController extends Controller
         $update->cp_name         = $request->cp_name;
         $update->cp_email        = $request->cp_email;
         $update->cp_phone        = $request->cp_mobile;
-        $update->designation     = $request->designation;
+        $update->cp_designation  = $request->cp_designation;
 
         if ($update->save()) {
 

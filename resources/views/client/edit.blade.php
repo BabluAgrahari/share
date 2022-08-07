@@ -48,6 +48,37 @@
                         @enderror
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label>SRN</label>
+                        <input type="text" class="form-control form-control-sm" value="{{ old('srn')??$res->srn}}" placeholder="Enter SRN" name="srn">
+                        @error('srn')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label>Date</label>
+                        <input type="text" class="form-control form-control-sm" value="{{ old('date')??$res->date}}" placeholder="Enter Date" name="date">
+                        @error('date')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label value="">Court Name</label>
+                        <select class="form-control form-control-sm" placeholder="Enter Court Name" name="court_id">
+                            <option value="">Select</option>
+                            @foreach($courts as $list)
+                            <option value="{{ $list->id }} {{(old('court_id')==$list->id)?"selected":($list->id==$res->court_id?'selected':'')}}">{{ ucwords($list->court_name)}}</option>
+                            @endforeach
+                        </select>
+                        @error('court_id')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="form-group col-md-3">
                         <label>City</label>
@@ -124,8 +155,8 @@
 
                     <div class="form-group col-md-3">
                     <label>Designation </label>
-                    <input type="text" class="form-control form-control-sm" value="{{ old('designation')??$res->designation}}" placeholder=" Enter Designation" name="designation">
-                    @error('designation')
+                    <input type="text" class="form-control form-control-sm" value="{{ old('cp_designation')??$res->cp_designation}}" placeholder=" Enter Designation" name="cp_designation">
+                    @error('cp_designation')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
