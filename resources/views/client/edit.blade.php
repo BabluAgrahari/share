@@ -24,7 +24,7 @@
                 <div class="row">
                     <!-- <h6>Client Details</h6>
                     <hr> -->
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label>File No</label>
                         <input type="text" class="form-control form-control-sm" value="{{ old('file_no')??$res->file_no}}" placeholder="Enter File No" name="file_no">
                         @error('file_no')
@@ -32,7 +32,15 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
+                        <label>Folio No</label>
+                        <input type="text" class="form-control form-control-sm" value="{{ old('folio_no')??$res->folio_no }}" placeholder="Enter Folio No" name="folio_no">
+                        @error('folio_no')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col-md-3">
                         <label>Share Holder</label>
                         <input type="text" class="form-control form-control-sm" value="{{ old('share_holder')??$res->share_holder}}" placeholder="Enter Share Holder" name="share_holder">
                         @error('share_holder')
@@ -40,7 +48,7 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label>Survivor Name</label>
                         <input type="text" class="form-control form-control-sm" value="{{ old('survivor_name')??$res->survivor_name}}" placeholder=" Enter Survivor Name" name="survivor_name">
                         @error('survivor_name')
@@ -165,114 +173,116 @@
                 <div class="row mb-2">
                     <!-- <h6>Company Details</h6> -->
                     <!-- <hr> -->
-                    <table class="table table-sm">
-                        <thead>
-                            <tr>
-                                <th>Company Name</th>
-                                <th>Share Qty</th>
-                                <th>Type</th>
-                                <th>Transfer Agent</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody id="field_wrapper">
-                            @php $key = 1; $i=0; @endphp
-                            @forelse($client_to_company as $key=>$val)
-                            <tr id="row-{{$key}}">
-                                <td class="w-25">
-                                    <select id="company_name" selector="{{$key}}" class="form-control form-control-xs" required name="company[{{$key}}][company_id]">
-                                        <option value="">Select</option>
-                                        @foreach($companies as $list)
-                                        <option value="{{ $list->id }}" {{$val->company_id==$list->id?'selected':''}}>{{ ucwords($list->company_name)}}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
+                    <div class="company-table">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Company Name</th>
+                                    <th>Share Qty</th>
+                                    <th>Type</th>
+                                    <th>Transfer Agent</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="field_wrapper">
+                                @php $key = 1; $i=0; @endphp
+                                @forelse($client_to_company as $key=>$val)
+                                <tr id="row-{{$key}}">
+                                    <td class="w-25">
+                                        <select id="company_name" selector="{{$key}}" class="form-control form-control-xs" required name="company[{{$key}}][company_id]">
+                                            <option value="">Select</option>
+                                            @foreach($companies as $list)
+                                            <option value="{{ $list->id }}" {{$val->company_id==$list->id?'selected':''}}>{{ ucwords($list->company_name)}}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
 
-                                <td class="w-25">
-                                    <input type="number" class="form-control form-control-xs" name="company[{{$key}}][unit]" value="{{$val->unit}}" placeholder="Enter Unit">
-                                </td>
+                                    <td class="w-25">
+                                        <input type="number" class="form-control form-control-xs" name="company[{{$key}}][unit]" value="{{$val->unit}}" placeholder="Enter Unit">
+                                    </td>
 
-                                <td class="w-20">
-                                    <select class="form-control form-control-xs" required name="company[{{$key}}][type]">
-                                        <option value="">Select</option>
-                                        <option value="type1" {{$val->type =='type1'?'selected':''}}>Type1</option>
-                                        <option value="type2" {{$val->type =='type2'?'selected':''}}>Type2</option>
-                                        <option value="type3" {{$val->type =='type3'?'selected':''}}>Type3</option>
-                                        <option value="type4" {{$val->type =='type4'?'selected':''}}>Type4</option>
-                                        <option value="type5" {{$val->type =='type5'?'selected':''}}>Type5</option>
-                                    </select>
-                                </td>
+                                    <td class="w-20">
+                                        <select class="form-control form-control-xs" required name="company[{{$key}}][type]">
+                                            <option value="">Select</option>
+                                            <option value="type1" {{$val->type =='type1'?'selected':''}}>Type1</option>
+                                            <option value="type2" {{$val->type =='type2'?'selected':''}}>Type2</option>
+                                            <option value="type3" {{$val->type =='type3'?'selected':''}}>Type3</option>
+                                            <option value="type4" {{$val->type =='type4'?'selected':''}}>Type4</option>
+                                            <option value="type5" {{$val->type =='type5'?'selected':''}}>Type5</option>
+                                        </select>
+                                    </td>
 
-                                <td class="w-25">
-                                    <select class="form-control form-control-xs" id="agent-id-{{$key}}" required name="company[{{$key}}][agent_id]">
-                                        <option value="">Select</option>
+                                    <td class="w-25">
+                                        <select class="form-control form-control-xs" id="agent-id-{{$key}}" required name="company[{{$key}}][agent_id]">
+                                            <option value="">Select</option>
 
-                                    </select>
-                                    @push('script')
-                                    <script>
-                                        var key = '{{$key}}';
-                                        $.ajax({
-                                            url: "{{url('client/find-agent')}}/" + <?= $val->company_id ?>,
-                                            data: {
-                                                'agent_id': <?= !empty($val->agent_id) ? $val->agent_id : '' ?>
-                                            },
-                                            type: "GET",
-                                            dataType: "JSON",
-                                            success: function(res) {
+                                        </select>
+                                        @push('script')
+                                        <script>
+                                            var key = '{{$key}}';
+                                            $.ajax({
+                                                url: "{{url('client/find-agent')}}/" + <?= $val->company_id ?>,
+                                                data: {
+                                                    'agent_id': <?= !empty($val->agent_id) ? $val->agent_id : '' ?>
+                                                },
+                                                type: "GET",
+                                                dataType: "JSON",
+                                                success: function(res) {
 
-                                                $('#agent-id-' + key).html(res);
-                                            }
-                                        })
-                                    </script>
-                                    @endpush
-                                </td>
-                                <td>
-                                    @if($key <= 0) <a href="javascript:void(0)" id="add_more" class="btn btn-xs btn-success"><span class="mdi mdi-plus"></span></a>
-                                        @else
-                                        <a href="javascript:void(0)" onClick="removeRow('{{$key}}');" class="btn btn-xs btn-danger"><span class="mdi mdi-delete-forever"></span></a>
-                                        @endif
-                                </td>
-                            </tr>
+                                                    $('#agent-id-' + key).html(res);
+                                                }
+                                            })
+                                        </script>
+                                        @endpush
+                                    </td>
+                                    <td>
+                                        @if($key <= 0) <a href="javascript:void(0)" id="add_more" class="btn btn-xs btn-success"><span class="mdi mdi-plus"></span></a>
+                                            @else
+                                            <a href="javascript:void(0)" onClick="removeRow('{{$key}}');" class="btn btn-xs btn-danger"><span class="mdi mdi-delete-forever"></span></a>
+                                            @endif
+                                    </td>
+                                </tr>
 
-                            <?php $i++ ?>
-                            @empty
-                            <?php $i = 1; ?>
-                            <tr id="row-0">
-                                <td class="w-25">
-                                    <select id="company_name" selector="0" class="form-control form-control-xs" required name="company[0][company_id]">
-                                        <option value="">Select</option>
-                                        @foreach($companies as $list)
-                                        <option value="{{ $list->id }}">{{ ucwords($list->company_name)}}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
+                                <?php $i++ ?>
+                                @empty
+                                <?php $i = 1; ?>
+                                <tr id="row-0">
+                                    <td class="w-25">
+                                        <select id="company_name" selector="0" class="form-control form-control-xs" required name="company[0][company_id]">
+                                            <option value="">Select</option>
+                                            @foreach($companies as $list)
+                                            <option value="{{ $list->id }}">{{ ucwords($list->company_name)}}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
 
-                                <td class="w-25">
-                                    <input type="number" class="form-control form-control-xs" required name="company[0][unit]" value="{{old('unit')}}" placeholder="Enter Unit">
-                                </td>
+                                    <td class="w-25">
+                                        <input type="number" class="form-control form-control-xs" required name="company[0][unit]" value="{{old('unit')}}" placeholder="Enter Unit">
+                                    </td>
 
-                                <td class="w-20">
-                                    <select class="form-control form-control-xs" required name="company[0][type]">
-                                        <option value="">Select</option>
-                                        <option value="type1">Type1</option>
-                                        <option value="type2">Type2</option>
-                                        <option value="type3">Type3</option>
-                                        <option value="type4">Type4</option>
-                                        <option value="type5">Type5</option>
-                                    </select>
-                                </td>
+                                    <td class="w-20">
+                                        <select class="form-control form-control-xs" required name="company[0][type]">
+                                            <option value="">Select</option>
+                                            <option value="type1">Type1</option>
+                                            <option value="type2">Type2</option>
+                                            <option value="type3">Type3</option>
+                                            <option value="type4">Type4</option>
+                                            <option value="type5">Type5</option>
+                                        </select>
+                                    </td>
 
-                                <td class="w-25">
-                                    <select class="form-control form-control-xs" id="agent-id-0" placeholder="Select Contant" required name="company[0][agent_id]">
-                                        <option value="">Select</option>
+                                    <td class="w-25">
+                                        <select class="form-control form-control-xs" id="agent-id-0" placeholder="Select Contant" required name="company[0][agent_id]">
+                                            <option value="">Select</option>
 
-                                    </select>
-                                </td>
-                                <td><a href="javascript:void(0)" id="add_more" class="btn btn-xs btn-success"><span class="mdi mdi-plus"></span></a></td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                                        </select>
+                                    </td>
+                                    <td><a href="javascript:void(0)" id="add_more" class="btn btn-xs btn-success"><span class="mdi mdi-plus"></span></a></td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <div class="form-group text-center">

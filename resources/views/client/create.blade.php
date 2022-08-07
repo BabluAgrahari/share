@@ -22,15 +22,23 @@
                 <div class="row">
                     <!-- <h6>Client Details</h6>
                     <hr> -->
-                    <div class="form-group col-md-4">
-                        <label>File No</label>
+                    <div class="form-group col-md-3">
+                        <label>File No(Manual)</label>
                         <input type="text" class="form-control form-control-sm" value="{{ old('file_no') }}" placeholder="Enter File No" name="file_no">
                         @error('file_no')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
+                        <label>Folio No</label>
+                        <input type="text" class="form-control form-control-sm" value="{{ old('folio_no') }}" placeholder="Enter Folio No" name="folio_no">
+                        @error('folio_no')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col-md-3">
                         <label>Share Holder</label>
                         <input type="text" class="form-control form-control-sm" value="{{ old('share_holder') }}" placeholder="Enter Share Holder" name="share_holder">
                         @error('share_holder')
@@ -38,7 +46,7 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label>Survivor Name</label>
                         <input type="text" class="form-control form-control-sm" value="{{ old('survivor_name') }}" placeholder=" Enter Survivor Name" name="survivor_name">
                         @error('survivor_name')
@@ -166,6 +174,7 @@
                             <tr>
                                 <th>Company Name</th>
                                 <th>Share Qty</th>
+                                <th>Type</th>
                                 <th>Transfer Agent</th>
                                 <th></th>
                             </tr>

@@ -68,6 +68,7 @@ class ClientController extends Controller
         $store = new Client;
         $store->user_id         = Auth::user()->id;
         $store->file_no         = $request->file_no;
+        $store->folio_no        = $request->folio_no;
         $store->court_id        = $request->court_id;
         $store->srn             = $request->srn;
         $store->date            = strtotime($request->date);
@@ -116,6 +117,7 @@ class ClientController extends Controller
     {
         $update =  Client::find($id);
         $update->file_no         = $request->file_no;
+        $update->folio_no        = $request->folio_no;
         $update->court_id        = $request->court_id;
         $update->srn             = $request->srn;
         $update->date            = $request->date;

@@ -69,28 +69,28 @@
                         </div>
                     </a>
                 </li>
-                <!-- <li class="nav-item pt-3">
-                    <a class="nav-link d-block" href="../../index.html">
-                        <img class="sidebar-brand-logo" src="{{asset('')}}assets/images/logo.svg" alt="" />
-                        <img class="sidebar-brand-logomini" src="{{asset('')}}assets/images/logo-mini.svg" alt="" />
-                        <div class="small font-weight-light pt-1">Responsive Dashboard</div>
-                    </a>
-                    <form class="d-flex align-items-center" action="#">
+                <li class="nav-item pt-3">
+                    <!-- <a class="nav-link d-block" href="{{url('home')}}"> -->
+                        <!-- <img class="sidebar-brand-logo" src="{{asset('')}}assets/images/logo.svg" alt="" /> -->
+                        <!-- <img class="sidebar-brand-logomini" src="{{asset('')}}assets/images/logo-mini.svg" alt="" /> -->
+                        <!-- <div class="small font-weight-light pt-1">Responsive Dashboard</div> -->
+                    <!-- </a> -->
+                    <!-- <form class="d-flex align-items-center" action="#">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <i class="input-group-text border-0 mdi mdi-magnify"></i>
                             </div>
                             <input type="text" class="form-control border-0" placeholder="Search" />
                         </div>
-                    </form>
-                </li> -->
+                    </form> -->
+                </li>
 
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="{{url('contact')}}">
-                        <i class="mdi mdi-account-circle menu-icon"></i>
-                        <span class="menu-title">Contact Person</span>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url('home')}}">
+                      <i class="mdi mdi-compass-outline menu-icon"></i>
+                        <span class="menu-title">Dashboard</span>
                     </a>
-                </li> -->
+                </li>
 
                 <li class="nav-item">
                     <a class="nav-link" href="{{url('user')}}">
@@ -124,14 +124,12 @@
                         <ul class="nav flex-column sub-menu">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{url('client')}}">
-                                    <i class="mdi mdi-account-multiple menu-icon"></i>
                                     <span class="menu-title">Client List</span>
                                 </a>
                             </li>
 
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url('follow-up-list') }}">
-                                    <i class="mdi mdi-account-multiple menu-icon"></i>
                                     <span class="menu-title"> Follow Up</span></a>
                             </li>
 

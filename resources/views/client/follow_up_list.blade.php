@@ -58,7 +58,7 @@
 </div>
 
 <div class="p-2 table-responsive">
-    <table class="w-100 table table-striped">
+    <table class="w-100 table table-hover">
         <thead>
             <tr>
                 <th>#</th>
