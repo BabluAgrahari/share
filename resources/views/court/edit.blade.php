@@ -71,7 +71,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label>Contact Person Name</label>
                         <input type="text" class="form-control form-control-sm" value="{{ old('cp_name')??$res->cp_name }}" placeholder="Enter Contact Person Name" name="cp_name">
                         @error('cp_name')
@@ -79,7 +79,7 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label>Email.</label>
                         <input type="text" class="form-control form-control-sm" value="{{ old('cp_email')??$res->cp_email }}" placeholder="Enter cp_email" name="cp_email">
                         @error('cp_email')
@@ -87,10 +87,18 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label>Phone.</label>
                         <input type="text" class="form-control form-control-sm" value="{{ old('cp_phone')??$res->cp_phone }}" placeholder=" Enter Phone" name="cp_phone">
                         @error('cp_phone')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label>Designation </label>
+                        <input type="text" class="form-control form-control-sm" value="{{ old('cp_designation')??$res->cp_designation }}" placeholder=" Enter Designation	" name="cp_designation">
+                        @error('cp_designation')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>

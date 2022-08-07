@@ -120,13 +120,5 @@ class TransferAgentsController extends Controller
         return redirect()->back()->with('error', 'Transfer Agent not Update');
     }
 
-    public function delete($id)
-    {
-        $res = TransferAgent::find($id)->delete();
-
-        if ($res) {
-            return redirect()->back()->with('success', 'Transfer Agent Removed Successfully');
-        }
-        return redirect()->back()->with('error', 'Transfer Agent not Removed');
-    }
+ 
 }
