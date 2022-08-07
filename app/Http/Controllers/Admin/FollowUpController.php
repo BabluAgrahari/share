@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CourtRequest;
+use App\Models\Client;
+use App\Models\ClientToCompany;
+use App\Models\Company;
 use Illuminate\Http\Request;
 use App\Models\Court;
 use App\Models\FollowUpClient;
@@ -46,33 +49,32 @@ class FollowUpController extends Controller
     }
 
 
-    public function create()
+    public function store(Request $request)
     {
-
-        return view('court.create');
-    }
-
-
-    public function store(CourtRequest $request)
-    {
-        $store = new Court;
-        $store->user_id         = Auth::user()->id;
-        $store->court_name         = $request->court_name;
-        $store->city               = $request->city;
-        $store->state              = $request->state;
-        $store->pin                = $request->pin;
-        $store->address            = $request->address;
-        $store->cp_name            = $request->cp_name;
-        $store->cp_email           = $request->cp_email;
-        $store->cp_phone           = $request->cp_phone;
-
+        $store = FollowUpClient::find($request->id);
+        $store->status = $request->status;
         if ($store->save()) {
+            $client_id = $store->client_id;
 
-            $this->storeContactPerson(request: $request, ref_id: $store->id, ref_by: 'court'); //for insert record into contact_person table
+            $clientsToC = ClientToCompany::where('client_id', $client_id)->get();
 
-            return redirect()->back()->with('success', 'Court Created Successfully');
+            $company_ids = [];
+            foreach ($clientsToC as $id) {
+                $company_ids[] = $id->id;
+            }
+            $followUp = FollowUpClient::whereIn('company_id', $company_ids)->where('status', 'completed')->count();
+
+            $client = Client::find($client_id);
+
+            $client->follow_up_status = 0;
+            if ($followUp <= 0)
+                $client->follow_up_status = 1;
+
+            $client->save();
+
+            return response(['status' => 'success', 'msg' => 'Status Updated Successfully']);
         }
-        return redirect()->back()->with('error', 'Court not Created');
+        return response(['status' => 'error', 'Court not Created']);
     }
 
     public function show($id)

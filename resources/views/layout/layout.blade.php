@@ -130,7 +130,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('follow-up') }}">
+                                <a class="nav-link" href="{{ url('follow-up-list') }}">
                                     <i class="mdi mdi-account-multiple menu-icon"></i>
                                     <span class="menu-title"> Follow Up</span></a>
                             </li>

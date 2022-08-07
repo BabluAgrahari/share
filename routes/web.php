@@ -49,7 +49,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('client/find-agent/{id}', [Client::class, 'findClient']);
     Route::get('find-contact-person',    [Client::class, 'findContactPerson']);
 
-    Route::resource('follow-up', FollowUp::class);
+    Route::resource('follow-up-list', FollowUp::class);
 
     Route::resource('company', Company::class);
     Route::resource('transfer-agent', TransferAgents::class);

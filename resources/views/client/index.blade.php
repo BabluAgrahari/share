@@ -55,7 +55,7 @@
     </div>
 </div>
 <div class="p-2 table-responsive">
-    <table class="w-100 table table-striped">
+    <table class="w-100 table table-hover">
         <thead>
             <tr>
                 <th>#</th>
@@ -66,6 +66,7 @@
                 <th>City</th>
                 <th>State</th>
                 <th>Pin</th>
+                <th>Follow Up Status</th>
                 <th>Created</th>
                 <th>Status</th>
                 <th>Assign</th>
@@ -83,6 +84,12 @@
                 <td>{{$list->city}}</td>
                 <td>{{$list->state}}</td>
                 <td>{{$list->pin}}</td>
+                <td> @if($list->status)
+                    <span class="badge badge-outline-success">Completed</span>
+                    @else
+                    <span class="badge badge-outline-warning">Pending</span>
+                    @endif
+                </td>
                 <td>{{ $list->dformat($list->created)}}</td>
                 <td>
                     <?= $list->status == 1 ? '<a href="javascript:void(0)">
@@ -92,10 +99,10 @@
                 <span class="activeVer badge badge-outline-warning" _id="' . $list->id . '" val="1">Inactive</span>
                 </a>' ?>
                 </td>
-                <td> <a href="javascript:void(0);" client_id="{{$list->id}}" class="assignModal btn btn-sm btn-outline-success">Assign</a></td>
+                <td> <a href="javascript:void(0);" client_id="{{$list->id}}" class="assignModal btn btn-sm btn-outline-primary" data-toggle="tooltip" data-html="true" title="Assign"><span class="mdi mdi-account-switch"></span></a></td>
                 <td>
-                    <a href="javascript:void(0);" client_id="{{$list->id}}" class="followUpModal btn btn-sm btn-outline-warning">Follow Up</a>
-                    <a href="client/{{$list->id}}/edit" class="btn btn-sm btn-outline-info"><span class="mdi mdi-pencil-box-outline"></span></a>
+                    <a href="javascript:void(0);" client_id="{{$list->id}}" class="followUpModal btn btn-sm btn-outline-warning" data-toggle="tooltip" data-html="true" title="Follow Up"><span class="mdi mdi-note-text"></span></a>
+                    <a href="client/{{$list->id}}/edit" class="btn btn-sm btn-outline-info" data-toggle="tooltip" data-html="true" title="Edit"><span class="mdi mdi-pencil-box-outline"></span></a>
                 </td>
             </tr>
             @endforeach

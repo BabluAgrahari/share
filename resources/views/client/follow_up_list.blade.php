@@ -23,6 +23,7 @@
                 <th>Name</th>
                 <th>Remarks</th>
                 <th>Created</th>
+                <th>Status</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -45,7 +46,16 @@
                 <td>{{$list->remarks}}</td>
                 <td>{{ $list->dformat($list->created)}}</td>
                 <td>
-                    <a href="javascript:void(0);" class="btn btn-sm btn-outline-info" data-toggle="tooltip" data-html="true" title="Update Status"><span class="mdi mdi-pencil-box-outline"></span></a>
+                    @if($list->status =='rejected')
+                    <span class="badge badge-outline-danger">Rejected</span>
+                    @elseif($list->status=='completed')
+                    <span class="badge badge-outline-success">Completed</span>
+                    @else
+                    <span class="badge badge-outline-warning">Pending</span>
+                    @endif
+                </td>
+                <td>
+                    <a href="javascript:void(0);" class="btn btn-sm btn-outline-info edit" _id="{{$list->id}}" data-toggle="tooltip" data-html="true" title="Update Status"><span class="mdi mdi-pencil-box-outline"></span></a>
                 </td>
             </tr>
             @endforeach
@@ -53,4 +63,89 @@
     </table>
     {{ $lists->appends($_GET)->links()}}
 </div>
+
+@push('modal')
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Update Status
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form id="follow-up" action="{{ url('follow-up-list')}}" method="post">
+                    @csrf
+                    <input type="hidden" name="id" value="" id="id">
+                    <div class="form-group">
+                        <label>Select Status</label>
+                        <select class="form-control form-control-sm" name="status" id="status">
+                            <option value="select">Select</option>
+                            <option value="pending">Pending</option>
+                            <option value="completed">Completed</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                    </div>
+                    <div class="form-group text-center">
+                        <input type="submit" class="btn btn-sm btn-primary" value="Save">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('.edit').click(function() {
+        $('#id').val($(this).attr('_id'));
+        $('#myModal').modal('show');
+    });
+
+    /*start form submit functionality*/
+    $("form#follow-up").submit(function(e) {
+        e.preventDefault();
+        formData = new FormData(this);
+        var url = $(this).attr('action');
+        $.ajax({
+            data: formData,
+            type: "POST",
+            url: url,
+            dataType: 'json',
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function() {
+                $('.cover-loader').removeClass('d-none');
+                $('#outlet').hide();
+            },
+            success: function(res) {
+                $('.cover-loader').addClass('d-none');
+                $('#outlet').show();
+
+                /*Start Status message*/
+                if (res.status == 'success' || res.status == 'error') {
+                    Swal.fire(
+                        `${res.status}!`,
+                        res.msg,
+                        `${res.status}`,
+                    )
+                }
+                /*End Status message*/
+
+                //for reset all field
+                if (res.status == 'success') {
+                    $('form#follow-up')[0].reset();
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000)
+                }
+            }
+        });
+    });
+    /*end form submit functionality*/
+</script>
+@endpush
+
 @endsection
