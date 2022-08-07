@@ -7,6 +7,7 @@ use App\Http\Requests\TransferAgentsRequest;
 use App\Models\Company;
 use App\Models\TransferAgent;
 use App\Models\ContactPerson;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -128,5 +129,21 @@ class TransferAgentsController extends Controller
             return redirect()->back()->with('success', 'Transfer Agent Removed Successfully');
         }
         return redirect()->back()->with('error', 'Transfer Agent not Removed');
+    }
+
+
+    public function status(Request $request)
+    {
+        try {
+            $save = TransferAgent::find($request->id);
+            $save->status = (int)$request->status;
+            $save->save();
+            if ($save->status == 1)
+                return response(['status' => 'success', 'msg' => 'This Agent is Active!', 'val' => $save->status]);
+
+            return response(['status' => 'success', 'msg' => 'This Agent is Inactive!', 'val' => $save->status]);
+        } catch (Exception $e) {
+            return response(['status' => 'error', 'msg' => 'Something went wrong!!']);
+        }
     }
 }

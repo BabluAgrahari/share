@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CompanyRequest;
 use App\Models\Company;
 use App\Models\ContactPerson;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -127,5 +128,21 @@ class CompanyController extends Controller
             return redirect()->back()->with('success', 'Company Removed Successfully');
         }
         return redirect()->back()->with('error', 'Company not Removed');
+    }
+
+
+    public function status(Request $request)
+    {
+        try {
+            $save = Company::find($request->id);
+            $save->status = (int)$request->status;
+            $save->save();
+            if ($save->status == 1)
+                return response(['status' => 'success', 'msg' => 'This Company is Active!', 'val' => $save->status]);
+
+            return response(['status' => 'success', 'msg' => 'This Company is Inactive!', 'val' => $save->status]);
+        } catch (Exception $e) {
+            return response(['status' => 'error', 'msg' => 'Something went wrong!!']);
+        }
     }
 }

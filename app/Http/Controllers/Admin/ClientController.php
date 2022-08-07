@@ -186,6 +186,7 @@ class ClientController extends Controller
             $save->client_id = $client_id;
             $save->company_id = $request->company_id;
             $save->unit = $request->unit;
+            $save->type = $request->type;
             $save->agent_id = $request->agent_id;
             $save->save();
         }

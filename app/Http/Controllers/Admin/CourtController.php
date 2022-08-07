@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Court;
 use App\Models\Company;
 use App\Models\client;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 
 class CourtController extends Controller
@@ -114,6 +115,21 @@ class CourtController extends Controller
         $det = Court::find($id)->delete();
         if ($det) {
             return redirect('court');
+        }
+    }
+
+    public function status(Request $request)
+    {
+        try {
+            $save = Court::find($request->id);
+            $save->status = (int)$request->status;
+            $save->save();
+            if ($save->status == 1)
+                return response(['status' => 'success', 'msg' => 'This Court is Active!', 'val' => $save->status]);
+
+            return response(['status' => 'success', 'msg' => 'This Court is Inactive!', 'val' => $save->status]);
+        } catch (Exception $e) {
+            return response(['status' => 'error', 'msg' => 'Something went wrong!!']);
         }
     }
 }

@@ -52,8 +52,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('follow-up-list', FollowUp::class);
 
     Route::resource('company', Company::class);
+    Route::post('company-status', [Company::class, 'status']);
+
     Route::resource('transfer-agent', TransferAgents::class);
+    Route::post('transfer-agent-status', [TransferAgents::class, 'status']);
+
     Route::resource('court', Court::class);
+    Route::post('court-status', [Court::class, 'status']);
 });
 
 Route::get('/clear-cache', function () {

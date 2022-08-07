@@ -61,7 +61,7 @@
     </div>
 </div>
 <div class="p-2 table-responsive">
-    <table class="w-100 table table-striped">
+    <table class="w-100 table table-hover">
         <thead>
             <tr>
                 <th>#</th>
@@ -83,6 +83,8 @@
                 <td>{{$list->email}}</td>
                 <td>{{$list->mobile}}</td>
                 <td>{{$list->city}}</td>
+                <td>{{ucwords($list->role)}}</td>
+                <td>{{$list->address}}</td>
                 <td>
                     <?= $list->status == 1 ? '<a href="javascript:void(0)">
                 <span class="activeVer badge badge-outline-success" _id="' . $list->id . '" val="0">Active</span>
@@ -91,10 +93,6 @@
                 <span class="activeVer badge badge-outline-warning" _id="' . $list->id . '" val="1">Inactive</span>
                 </a>' ?>
                 </td>
-                <td>{{ucwords($list->role)}}</td>
-                <td>{{$list->address}}</td>
-                <td>{!!$list->status == 1 ? '<span class="badge badge-outline-success">Avtive</span>' : '<span class="badge badge-outline-warning">In Active</span>'!!}</td>
-
                 <td>
                     <a href="user/{{$list->id}}/edit" class="btn btn-sm btn-outline-info"><span class="mdi mdi-pencil-box-outline"></span></a>
                 </td>

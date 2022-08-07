@@ -8,7 +8,7 @@
         </div>
 
         <div class="col-md-6 text-right">
-        @if(!empty($filter))
+            @if(!empty($filter))
             <a href="javascript:void(0);" class="btn btn-sm btn-outline-warning" id="filter-btn"><span class="mdi mdi-filter-outline-remove"></span>&nbsp;Close</a>
             @else
             <a href="javascript:void(0);" class="btn btn-sm btn-outline-primary" id="filter-btn"><span class="mdi mdi-filter-outline"></span>&nbsp;Filter</a>
@@ -72,6 +72,7 @@
                 <th>City</th>
                 <th>State</th>
                 <th>Pin Code</th>
+                <th>Status</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -87,8 +88,15 @@
                 <td>{{$list->state}}</td>
                 <td>{{$list->pin}}</td>
                 <td>
+                    <?= $list->status == 1 ? '<a href="javascript:void(0)">
+                <span class="activeVer badge badge-outline-success" _id="' . $list->id . '" val="0">Active</span>
+                </a>'
+                        : '<a href="javascript:void(0);">
+                <span class="activeVer badge badge-outline-warning" _id="' . $list->id . '" val="1">Inactive</span>
+                </a>' ?>
+                </td>
+                <td>
                     <a href="transfer-agent/{{$list->id}}/edit" class="btn btn-sm btn-outline-info"><span class="mdi mdi-pencil-box-outline"></span></a>
-                    <a onclick="return confirm('Are you sure to detele this?')" href="delete4/{{$list->id}}" class="btn btn-sm btn-outline-danger"><span class="mdi mdi-delete"></span></a>
                 </td>
             </tr>
             @endforeach
@@ -96,4 +104,36 @@
     </table>
     {{ $lists->appends($_GET)->links()}}
 </div>
+@push('script')
+<script>
+    $(document).on('click', '.activeVer', function() {
+        var id = $(this).attr('_id');
+        var val = $(this).attr('val');
+        var selector = $(this);
+        $.ajax({
+            'url': "{{ url('transfer-agent-status') }}",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                'id': id,
+                'status': val
+            },
+            type: 'POST',
+            dataType: 'json',
+            success: function(res) {
+                if (res.val == 1) {
+                    $(selector).text('Active').attr('val', '0').removeClass('badge-outline-warning').addClass('badge-outline-success');
+                } else {
+                    $(selector).text('Inactive').attr('val', '1').removeClass('badge-outline-success').addClass('badge-outline-warning');
+                }
+                Swal.fire(
+                    `${res.status}!`,
+                    res.msg,
+                    `${res.status}`,
+                )
+            }
+        })
+
+    })
+</script>
+@endpush
 @endsection
