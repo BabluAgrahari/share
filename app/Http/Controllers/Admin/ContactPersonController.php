@@ -32,6 +32,7 @@ class ContactPersonController extends Controller
         $store->mobile        = $request->mobile;
         $store->email        = $request->email;
         $store->status       = $request->status;
+      	
 
         if ($store->save()) {
             return redirect()->back()->with('success', 'Contact Person Created Successfully');
@@ -58,6 +59,7 @@ class ContactPersonController extends Controller
         $update->mobile        = $request->mobile;
         $update->email        = $request->email;
         $update->status       = $request->status;
+      
 
         if ($update->save()) {
             return redirect('/contact')->with('success', 'Contact Person  Update successfully');

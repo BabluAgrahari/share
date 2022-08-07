@@ -19,7 +19,7 @@
 </div>
 <div class="row mt-2 pl-2 pr-2" id="filter" <?= (empty($filter)) ? "style='display:none'" : "" ?>>
     <div class="col-md-12 ml-auto">
-        <form action="{{ url('company') }}">
+        <form action="{{ url('client') }}">
             <div class="form-row">
 
                 <div class="form-group col-md-2">
@@ -29,12 +29,12 @@
 
                 <div class="form-group col-md-3">
                     <label>File NO:</label>
-                    <input type="text" class="form-control form-control-sm" name="file_no" value="{{ !empty($filter['file_no']) ? $filter['file_no'] : ''}}" placeholder="Enter Company Name">
+                    <input type="text" class="form-control form-control-sm" name="file_no" value="{{ !empty($filter['file_no']) ? $filter['file_no'] : ''}}" placeholder="Enter File NO">
                 </div>
 
                 <div class="form-group col-md-2">
                     <label>Share Holder:</label>
-                    <input type="text" class="form-control form-control-sm" name="share_holder" value="{{ !empty($filter['share_holder']) ? $filter['share_holder'] : ''}}" placeholder="Enter Email">
+                    <input type="text" class="form-control form-control-sm" name="share_holder" value="{{ !empty($filter['share_holder']) ? $filter['share_holder'] : ''}}" placeholder="Enter Share Holder">
                 </div>
 
                 <div class="form-group col-md-2">
@@ -42,13 +42,13 @@
                     <select class="form-control form-control-sm" name="status">
                         <option value="">All</option>
                         <option value="1" <?= (!empty($filter['status']) && $filter['status'] == '1') ? 'selected' : '' ?>>Active</option>
-                        <option value="0" <?= (!empty($filter['status']) && $filter['status'] == '0') ? 'selected' : '' ?>>Inactive</option>
+                        <option value="0" <?= (isset($filter['status']) && $filter['status'] == '0') ? 'selected' : '' ?>>Inactive</option>
                     </select>
                 </div>
 
                 <div class="form-group mt-4">
                     <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
-                    <a href="{{ url('company') }}" class="btn btn-warning btn-sm"><i class="mdi mdi-eraser-variant"></i>&nbsp;Clear</a>
+                    <a href="{{ url('client') }}" class="btn btn-warning btn-sm"><i class="mdi mdi-eraser-variant"></i>&nbsp;Clear</a>
                 </div>
             </div>
         </form>

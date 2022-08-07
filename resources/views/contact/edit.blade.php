@@ -57,7 +57,6 @@
                     @enderror
                 </div>
 
-
                 <div class="form-group text-center">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>

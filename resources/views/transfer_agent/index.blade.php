@@ -19,7 +19,7 @@
 </div>
 <div class="row mt-2 pl-2 pr-2" id="filter" <?= (empty($filter)) ? "style='display:block'" : "" ?>>
     <div class="col-md-12 ml-auto">
-        <form action="{{ url('company') }}">
+        <form action="{{ url('transfer-agent') }}">
             <div class="form-row">
 
                 <div class="form-group col-md-2">
@@ -29,17 +29,17 @@
 
                 <div class="form-group col-md-3">
                     <label>Transfer Name:</label>
-                    <input type="text" class="form-control form-control-sm" name="transfer_name" value="{{ !empty($filter['transfer_name']) ? $filter['transfer_name'] : ''}}" placeholder="Enter Company Court Name">
+                    <input type="text" class="form-control form-control-sm" name="transfer_name" value="{{ !empty($filter['transfer_name']) ? $filter['transfer_name'] : ''}}" placeholder="Enter Transfer Name">
                 </div>
 
                 <div class="form-group col-md-3">
                     <label>Email:</label>
-                    <input type="text" class="form-control form-control-sm" name="email" value="{{ !empty($filter['court_email']) ? $filter['court_email'] : ''}}" placeholder="Enter Company Court Name">
+                    <input type="text" class="form-control form-control-sm" name="email" value="{{ !empty($filter['email']) ? $filter['email'] : ''}}" placeholder="Enter Email">
                 </div>
 
                 <div class="form-group col-md-3">
                     <label>Phone No:</label>
-                    <input type="text" class="form-control form-control-sm" name="court_name" value="{{ !empty($filter['court_name']) ? $filter['court_name'] : ''}}" placeholder="Enter Company Court Name">
+                    <input type="text" class="form-control form-control-sm" name="phone" value="{{ !empty($filter['phone']) ? $filter['phone'] : ''}}" placeholder="Enter Phone No">
                 </div>
 
 
@@ -48,13 +48,13 @@
                     <select class="form-control form-control-sm" name="status">
                         <option value="">All</option>
                         <option value="1" <?= (!empty($filter['status']) && $filter['status'] == '1') ? 'selected' : '' ?>>Active</option>
-                        <option value="0" <?= (!empty($filter['status']) && $filter['status'] == '0') ? 'selected' : '' ?>>Inactive</option>
+                        <option value="0" <?= (isset($filter['status']) && $filter['status'] == '0') ? 'selected' : '' ?>>Inactive</option>
                     </select>
                 </div>
 
                 <div class="form-group mt-4">
                     <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
-                    <a href="{{ url('company') }}" class="btn btn-warning btn-sm"><i class="mdi mdi-eraser-variant"></i>&nbsp;Clear</a>
+                    <a href="{{ url('transfer-agent') }}" class="btn btn-warning btn-sm"><i class="mdi mdi-eraser-variant"></i>&nbsp;Clear</a>
                 </div>
             </div>
         </form>
@@ -81,7 +81,7 @@
                 <td>{{ ++$key }}</td>
                 <td>{{$list->transfer_name}}</td>
                 <td>{{$list->phone}}</td>
-                <td>{{$list->eamil}}</td>
+                <td>{{$list->email}}</td>
                 <td>{{$list->address}}</td>
                 <td>{{$list->city}}</td>
                 <td>{{$list->state}}</td>

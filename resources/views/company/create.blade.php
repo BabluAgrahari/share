@@ -98,7 +98,7 @@
                 <div class="row">
                     <!-- <h6><i class="mdi mdi-account-circle menu-icon"></i>Contact Person Details</h6>
                     <hr> -->
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label>Contant Person Name</label>
                         <input type="text" class="form-control form-control-sm" value="{{ old('cp_name') }}" name="cp_name" placeholder="Contact Person Name">
                         @error('cp_name')
@@ -106,7 +106,7 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label> Email</label>
                         <input type="email" class="form-control form-control-sm" value="{{ old('cp_email') }}" name="cp_email" placeholder="Enter Email">
                         @error('cp_email')
@@ -114,13 +114,21 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label> Mobile</label>
                         <input type="text" class="form-control form-control-sm" value="{{ old('cp_phone') }}" name="cp_phone" placeholder="Enter Mobile">
                         @error('cp_phone')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
+
+                    <div class="form-group col-md-3">
+                    <label>Designation </label>
+                    <input type="text" class="form-control form-control-sm" value="{{ old('designation') }}" placeholder=" Enter Designation	" name="designation">
+                    @error('designation')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
                 </div>
 
 

@@ -26,7 +26,7 @@
                     <hr> -->
                     <div class="form-group col-md-4">
                         <label>File No</label>
-                        <input type="text" class="form-control form-control-sm" value="{{ old('file_no')??$res->file_no }}" placeholder="Enter File No" name="file_no">
+                        <input type="text" class="form-control form-control-sm" value="{{ old('file_no')??$res->file_no}}" placeholder="Enter File No" name="file_no">
                         @error('file_no')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -34,7 +34,7 @@
 
                     <div class="form-group col-md-4">
                         <label>Share Holder</label>
-                        <input type="text" class="form-control form-control-sm" value="{{ old('share_holder')??$res->share_holder }}" placeholder="Enter Share Holder" name="share_holder">
+                        <input type="text" class="form-control form-control-sm" value="{{ old('share_holder')??$res->share_holder}}" placeholder="Enter Share Holder" name="share_holder">
                         @error('share_holder')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -42,7 +42,7 @@
 
                     <div class="form-group col-md-4">
                         <label>Survivor Name</label>
-                        <input type="text" class="form-control form-control-sm" value="{{ old('survivor_name')??$res->survivor_name }}" placeholder=" Enter Survivor Name" name="survivor_name">
+                        <input type="text" class="form-control form-control-sm" value="{{ old('survivor_name')??$res->survivor_name}}" placeholder=" Enter Survivor Name" name="survivor_name">
                         @error('survivor_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -72,7 +72,7 @@
 
                     <div class="form-group col-md-2">
                         <label>Pin</label>
-                        <input type="text" class="form-control form-control-sm" value="{{ old('pin')??$res->pin }}" placeholder="Enter Pin Code" name="pin">
+                        <input type="text" class="form-control form-control-sm" value="{{ old('pin')??$res->pin}}" placeholder="Enter Pin Code" name="pin">
                         @error('pin')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -80,7 +80,7 @@
 
                     <div class="form-group col-md-5">
                         <label>Address</label>
-                        <textarea type="text" class="form-control form-control-sm" placeholder="Enter Address" name="address">{{ old('address')??$res->address }}</textarea>
+                        <textarea type="text" class="form-control form-control-sm" placeholder="Enter Address" name="address">{{ old('address')??$res->address}}</textarea>
                         @error('address')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -91,16 +91,16 @@
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label>Remark</label>
-                        <textarea name="remarks" class="form-control form-control-sm" placeholder="Enter Remark" rows="3">{{ old('remarks')??$res->remarks }}</textarea>
+                        <textarea name="remarks" class="form-control form-control-sm" placeholder="Enter Remark" rows="3">{{ old('remarks')??$res->remarks}}</textarea>
                     </div>
                 </div>
 
                 <div class="row">
                     <!-- <h6><i class="mdi mdi-account-circle menu-icon"></i>Contact Person Details</h6>
                     <hr> -->
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label>Contant Person Name</label>
-                        <input type="text" class="form-control form-control-sm" value="{{ old('cp_name')??$res->cp_name }}" name="cp_name" placeholder="Contact Person Name">
+                        <input type="text" class="form-control form-control-sm" value="{{ old('cp_name')??$res->cp_name}}" name="cp_name" placeholder="Contact Person Name">
                         @error('cp_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -108,7 +108,7 @@
 
                     <div class="form-group col-md-3">
                         <label>Email</label>
-                        <input type="email" class="form-control form-control-sm" value="{{ old('cp_email')??$res->cp_email }}" name="cp_email" placeholder="Enter Email">
+                        <input type="email" class="form-control form-control-sm" value="{{ old('cp_email')??$res->cp_email}}" name="cp_email" placeholder="Enter Email">
                         @error('cp_email')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -116,11 +116,19 @@
 
                     <div class="form-group col-md-3">
                         <label>Mobile</label>
-                        <input type="text" class="form-control form-control-sm" value="{{ old('cp_mobile')??$res->cp_mobile }}" name="cp_mobile" placeholder="Enter Mobile">
+                        <input type="text" class="form-control form-control-sm" value="{{ old('cp_mobile')??$res->cp_phone}}" name="cp_mobile" placeholder="Enter Mobile">
                         @error('cp_mobile')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
+
+                    <div class="form-group col-md-3">
+                    <label>Designation </label>
+                    <input type="text" class="form-control form-control-sm" value="{{ old('designation')??$res->designation}}" placeholder=" Enter Designation" name="designation">
+                    @error('designation')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
                 </div>
 
                 <div class="row mb-2">

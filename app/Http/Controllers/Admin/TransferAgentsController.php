@@ -69,8 +69,9 @@ class TransferAgentsController extends Controller
         $store->cp_name         = $request->cp_name;
         $store->cp_email         = $request->cp_email;
         $store->cp_phone         = $request->cp_phone;
+        $store->designation      = $request->designation;
         $store->remarks         = $request->remarks;
-
+       
         if ($store->save()) {
 
             $this->storeContactPerson(request: $request, ref_id: $store->id, ref_by: 'agent'); //for insert record into contact_person table
@@ -108,8 +109,9 @@ class TransferAgentsController extends Controller
         $update->cp_name         = $request->cp_name;
         $update->cp_email         = $request->cp_email;
         $update->cp_phone         = $request->cp_phone;
+        $update->designation      = $request->designation;
         $update->remarks         = $request->remarks;
-
+       
         if ($update->save()) {
 
             $this->updateContactPerson(request: $request, ref_id: $id, ref_by: 'agent'); //for update record into contact_person table

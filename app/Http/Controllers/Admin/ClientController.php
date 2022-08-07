@@ -57,7 +57,7 @@ class ClientController extends Controller
     public function create(Request $request)
     {
         $data['companies'] = Company::select('id', 'company_name')->get();
-        $data['agents']    = TransferAgent::select('id', 'agency_name')->get();
+        $data['agents']    = TransferAgent::select('id', 'transfer_name')->get();
         $data['contacts']  = ContactPerson::select('id', 'name')->get();
         return view('client.create', $data);
     }
@@ -77,6 +77,7 @@ class ClientController extends Controller
         $store->cp_name         = $request->cp_name;
         $store->cp_email        = $request->cp_email;
         $store->cp_phone        = $request->cp_mobile;
+        $store->designation     =$request->designation;
 
         if ($store->save()) {
 
@@ -119,6 +120,7 @@ class ClientController extends Controller
         $update->cp_name         = $request->cp_name;
         $update->cp_email        = $request->cp_email;
         $update->cp_phone        = $request->cp_mobile;
+        $update->designation     = $request->designation;
 
         if ($update->save()) {
 
@@ -266,7 +268,7 @@ class ClientController extends Controller
 
         $optionAgent = '<option value="">Select</option>';
         foreach ($agents as $list) {
-            $optionAgent .= '<option value="' . $list->id . '">' . ucwords($list->agency_name) . '</option>';
+            $optionAgent .= '<option value="' . $list->id . '">' . ucwords($list->transfer_name) . '</option>';
         }
 
         return response(['status' => 'error', 'company' => $option, 'agent' => $optionAgent]);
