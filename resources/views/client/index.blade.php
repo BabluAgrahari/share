@@ -13,11 +13,11 @@
             @else
             <a href="javascript:void(0);" class="btn btn-sm btn-outline-primary" id="filter-btn"><span class="mdi mdi-filter-outline"></span>&nbsp;Filter</a>
             @endif
-            <a href="{{url('client/create')}} " class="btn btn-success btn-sm" style="float:right;"><span class="mdi mdi-plus"></span>&nbsp;Add</a>
+            <a href="{{url('client/create')}} " class="btn btn-success btn-sm"><span class="mdi mdi-plus"></span>&nbsp;Add</a>
         </div>
     </div>
 </div>
-<div class="row mt-2 pl-2 pr-2" id="filter" <?= (empty($filter)) ? "style='display:block'" : "" ?>>
+<div class="row mt-2 pl-2 pr-2" id="filter" <?= (empty($filter)) ? "style='display:none'" : "" ?>>
     <div class="col-md-12 ml-auto">
         <form action="{{ url('company') }}">
             <div class="form-row">
