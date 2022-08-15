@@ -112,6 +112,14 @@
                     <!-- <h6><i class="mdi mdi-account-circle menu-icon"></i>Contact Person Details</h6>
                     <hr> -->
                     <div class="form-group col-md-3">
+                        <label>Designation </label>
+                        <input type="text" class="form-control form-control-sm" value="{{ old('cp_designation')??$res->cp_designation }}" placeholder=" Enter Designation	" name="cp_designation">
+                        @error('cp_designation')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col-md-3">
                         <label>Contant Person Name</label>
                         <input type="text" class="form-control form-control-sm" name="cp_name" value="{{ old('cp_name')??$res->cp_name }}" placeholder="Contact Person Name">
                         @error('cp_name')
@@ -134,14 +142,6 @@
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-
-                    <div class="form-group col-md-3">
-                    <label>Designation </label>
-                    <input type="text" class="form-control form-control-sm" value="{{ old('cp_designation')??$res->cp_designation }}" placeholder=" Enter Designation	" name="cp_designation">
-                    @error('cp_designation')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
                 </div>
 
                 <div class="form-group text-center">

@@ -59,7 +59,7 @@
                         <select class="form-control form-control-sm" placeholder="Enter State" name="state">
                             <option value=" ">Select</option>
                             @foreach(config('global.state') as $state)
-                            <option value="{{$state}}">{{$state}}</option>
+                            <option value="{{$state}}"  {{(old('state')==$state)?"selected":''}}>{{$state}}</option>
                             @endforeach
                         </select>
                         @error('state')
@@ -99,6 +99,14 @@
                     <!-- <h6><i class="mdi mdi-account-circle menu-icon"></i>Contact Person Details</h6>
                     <hr> -->
                     <div class="form-group col-md-3">
+                        <label>Designation </label>
+                        <input type="text" class="form-control form-control-sm" value="{{ old('cp_designation') }}" placeholder=" Enter Designation	" name="cp_designation">
+                        @error('cp_designation')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col-md-3">
                         <label>Contant Person Name</label>
                         <input type="text" class="form-control form-control-sm" value="{{ old('cp_name') }}" name="cp_name" placeholder="Contact Person Name">
                         @error('cp_name')
@@ -121,14 +129,6 @@
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-
-                    <div class="form-group col-md-3">
-                    <label>Designation </label>
-                    <input type="text" class="form-control form-control-sm" value="{{ old('cp_designation') }}" placeholder=" Enter Designation	" name="cp_designation">
-                    @error('cp_designation')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
                 </div>
 
 

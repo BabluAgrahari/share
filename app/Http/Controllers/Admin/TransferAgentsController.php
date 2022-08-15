@@ -29,15 +29,15 @@ class TransferAgentsController extends Controller
         if (!empty($request->status))
             $query->where('status', $request->status);
 
-        if (!empty($request->date_range)) {
-            list($start_date, $end_date) = explode('-', $request->date_range);
-            $start_date = strtotime(trim($start_date) . " 00:00:00");
-            $end_date   = strtotime(trim($end_date) . " 23:59:59");
-        } else {
-            $start_date = $this->start_date;
-            $end_date   = $this->end_date;
-        }
-        $query->whereBetween('created', [$start_date, $end_date]);
+        // if (!empty($request->date_range)) {
+        //     list($start_date, $end_date) = explode('-', $request->date_range);
+        //     $start_date = strtotime(trim($start_date) . " 00:00:00");
+        //     $end_date   = strtotime(trim($end_date) . " 23:59:59");
+        // } else {
+        //     $start_date = $this->start_date;
+        //     $end_date   = $this->end_date;
+        // }
+        // $query->whereBetween('created', [$start_date, $end_date]);
 
         $data['lists'] = $query->orderBy('created', 'DESC')->paginate($this->perPage);
 
@@ -50,7 +50,7 @@ class TransferAgentsController extends Controller
 
     public function create(Request $request)
     {
-        $data['companies'] = Company::select('id', 'company_name')->get();
+        $data['companies'] = Company::select('id', 'company_name')->where('status',1)->get();
         return view('transfer_agent.create', $data);
     }
 
@@ -90,7 +90,7 @@ class TransferAgentsController extends Controller
     public function edit($id)
     {
         $data['res'] = TransferAgent::find($id);
-        $data['companies'] = Company::select('id', 'company_name')->get();
+        $data['companies'] = Company::select('id', 'company_name')->where('status',1)->get();
         return view('transfer_agent.edit', $data);
     }
 

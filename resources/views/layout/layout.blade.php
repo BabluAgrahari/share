@@ -43,16 +43,26 @@
         }
 
         text {
-            display: none;
+            display: none !important;
         }
 
         .f-right {
             float: right !important;
         }
+
+        .badge {
+            font-size: 10px !important;
+            padding: 4px !important;
+        }
+
+        .filter {
+            position: relative;
+            top: -15px;
+        }
     </style>
 </head>
 
-<body>
+<body class="sidebar-icon-only">
     <div class="container-scroller">
         <!-- partial:../../partials/_sidebar.html -->
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
@@ -64,16 +74,16 @@
                             <!--change to offline or busy as needed-->
                         </div>
                         <div class="nav-profile-text d-flex ms-0 mb-3 flex-column">
-                            <span class="font-weight-semibold mb-1 mt-2 text-center">{{ucwords(Auth::user()->name)}}</span>
+                            <span class="font-weight-semibold mb-1 mt-2 text-center">{{!empty(Auth::user()->name)?ucwords(Auth::user()->name):''}}</span>
                             <!-- <span class="text-secondary icon-sm text-center">$3499.00</span> -->
                         </div>
                     </a>
                 </li>
                 <li class="nav-item pt-3">
                     <!-- <a class="nav-link d-block" href="{{url('home')}}"> -->
-                        <!-- <img class="sidebar-brand-logo" src="{{asset('')}}assets/images/logo.svg" alt="" /> -->
-                        <!-- <img class="sidebar-brand-logomini" src="{{asset('')}}assets/images/logo-mini.svg" alt="" /> -->
-                        <!-- <div class="small font-weight-light pt-1">Responsive Dashboard</div> -->
+                    <!-- <img class="sidebar-brand-logo" src="{{asset('')}}assets/images/logo.svg" alt="" /> -->
+                    <!-- <img class="sidebar-brand-logomini" src="{{asset('')}}assets/images/logo-mini.svg" alt="" /> -->
+                    <!-- <div class="small font-weight-light pt-1">Responsive Dashboard</div> -->
                     <!-- </a> -->
                     <!-- <form class="d-flex align-items-center" action="#">
                         <div class="input-group">
@@ -86,12 +96,13 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('home')}}">
-                      <i class="mdi mdi-compass-outline menu-icon"></i>
+                    <a class="nav-link" href="{{url('dashboard')}}">
+                        <i class="mdi mdi-compass-outline menu-icon"></i>
                         <span class="menu-title">Dashboard</span>
                     </a>
                 </li>
 
+                @if(Auth::user()->role=='admin')
                 <li class="nav-item">
                     <a class="nav-link" href="{{url('user')}}">
                         <i class="mdi mdi-account-circle menu-icon"></i>
@@ -113,6 +124,13 @@
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url('court')}}">
+                        <i class="mdi mdi-home-variant menu-icon"></i>
+                        <span class="menu-title">Court</span>
+                    </a>
+                </li>
+                @endif
 
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
@@ -129,7 +147,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('follow-up-list') }}">
+                                <a class="nav-link" href="{{ url('follow-up-list/all') }}">
                                     <span class="menu-title"> Follow Up</span></a>
                             </li>
 
@@ -137,12 +155,14 @@
                     </div>
                 </li>
 
+                @if(Auth::user()->role=='admin')
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('court')}}">
-                        <i class="mdi mdi-chart-bar menu-icon"></i>
-                        <span class="menu-title">Court</span>
+                    <a class="nav-link" href="{{url('contact-person')}}">
+                        <i class="mdi mdi-account-circle menu-icon"></i>
+                        <span class="menu-title">Contact Person</span>
                     </a>
                 </li>
+                @endif
 
                 <!--<li class="nav-item pt-3">
                     <a class="nav-link" href="http://bootstrapdash.com/demo/plus-free/documentation/documentation.html" target="_blank">
@@ -184,7 +204,7 @@
                         <span class="mdi mdi-chevron-double-left"></span>
                     </button>
                     <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                        <a class="navbar-brand brand-logo-mini" href="../../index.html"><img src="{{asset('')}}assets/images/logo-mini.svg" alt="logo" /></a>
+                        <a class="navbar-brand brand-logo-mini" href=""><img src="{{asset('')}}assets/images/logo-mini.svg" alt="logo" /></a>
                     </div>
                     <!-- <ul class="navbar-nav">
                         <li class="nav-item dropdown">
@@ -402,7 +422,7 @@
     <script src="{{ asset('assets') }}/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
-    <script src="{{ asset('assets')}}/vendors/select2/select2.min.js"></script>
+    <script src="{{ asset('assets') }}/vendors/select2/select2.min.js"></script>
     <script src="{{ asset('assets') }}/vendors/jquery-bar-rating/jquery.barrating.min.js"></script>
     <script src="{{ asset('assets') }}/vendors/chart.js/Chart.min.js"></script>
     <script src="{{ asset('assets') }}/vendors/flot/jquery.flot.js"></script>
@@ -455,6 +475,10 @@
 
             $(".multiple-select1").select2({});
             $(".multiple-select2").select2({});
+
+            $(document).on('click', '.modal-header button', function() {
+                $(this).closest('.modal').modal('hide');
+            })
         });
     </script>
     @stack('script')

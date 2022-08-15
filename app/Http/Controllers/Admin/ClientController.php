@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\ClientExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientRequest;
 use App\Models\Client;
@@ -15,6 +16,7 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ClientController extends Controller
 {
@@ -43,23 +45,29 @@ class ClientController extends Controller
         }
         $query->whereBetween('created', [$start_date, $end_date]);
 
-        $data['lists'] = $query->orderBy('created', 'DESC')->paginate($this->perPage);
+        if (Auth::user()->role == 'staff' || Auth::user()->role == 'supervisor') {
+            $client_ids = !empty(Auth::user()->client_id) ? json_decode(Auth::user()->client_id) : array();
+            $query->whereIn('id', $client_ids);
+        }
+
+        $data['lists'] = $query->orderBy('created', 'DESC')->with(['Company'])->paginate($this->perPage);
 
         $request->request->remove('page');
         $request->request->remove('perPage');
         $data['filter']  = $request->all();
 
-        $data['couts'] = Court::get();
+        $data['couts'] = Court::where('status', 1)->get();
+        $data['clients'] = Client::where('status', 1)->get();
 
         return view('client.index', $data);
     }
 
     public function create(Request $request)
     {
-        $data['companies'] = Company::select('id', 'company_name')->get();
-        $data['agents']    = TransferAgent::select('id', 'transfer_agent')->get();
-        $data['courts'] = Court::select('id', 'court_name')->get();
-        $data['contacts']  = ContactPerson::select('id', 'name')->get();
+        $data['companies'] = Company::select('id', 'company_name')->where('status', 1)->get();
+        $data['agents']    = TransferAgent::select('id', 'transfer_agent')->where('status', 1)->get();
+        $data['courts'] = Court::select('id', 'court_name')->where('status', 1)->get();
+        $data['contacts']  = ContactPerson::select('id', 'name')->where('status', 1)->get();
         return view('client.create', $data);
     }
 
@@ -70,7 +78,7 @@ class ClientController extends Controller
         $store->file_no         = $request->file_no;
         $store->folio_no        = $request->folio_no;
         $store->court_id        = $request->court_id;
-        $store->srn             = $request->srn;
+        // $store->srn             = $request->srn;
         $store->date            = strtotime($request->date);
         $store->share_holder    = $request->share_holder;
         $store->survivor_name   = $request->survivor_name;
@@ -83,6 +91,9 @@ class ClientController extends Controller
         $store->cp_email        = $request->cp_email;
         $store->cp_phone        = $request->cp_mobile;
         $store->cp_designation  = $request->cp_designation;
+
+        if (!empty($request->file('image')))
+            $store->image  = singleFile($request->file('image'), 'client_image');
 
         if ($store->save()) {
 
@@ -103,9 +114,9 @@ class ClientController extends Controller
 
     public function edit($id)
     {
-        $data['companies'] = Company::select('id', 'company_name')->get();
-        $data['agents']    = TransferAgent::select('id', 'transfer_agent')->get();
-        $data['courts'] = Court::select('id', 'court_name')->get();
+        $data['companies'] = Company::select('id', 'company_name')->where('status', 1)->get();
+        $data['agents']    = TransferAgent::select('id', 'transfer_agent')->where('status', 1)->get();
+        $data['courts'] = Court::select('id', 'court_name')->where('status', 1)->get();
         $data['client_to_company'] = ClientToCompany::where('client_id', $id)->get();
 
         $data['res'] = Client::find($id);
@@ -119,7 +130,7 @@ class ClientController extends Controller
         $update->file_no         = $request->file_no;
         $update->folio_no        = $request->folio_no;
         $update->court_id        = $request->court_id;
-        $update->srn             = $request->srn;
+        // $update->srn             = $request->srn;
         $update->date            = $request->date;
         $update->share_holder    = $request->share_holder;
         $update->survivor_name   = $request->survivor_name;
@@ -132,6 +143,9 @@ class ClientController extends Controller
         $update->cp_email        = $request->cp_email;
         $update->cp_phone        = $request->cp_mobile;
         $update->cp_designation  = $request->cp_designation;
+
+        if (!empty($request->file('image')))
+            $update->image  = singleFile($request->file('image'), 'client_image');
 
         if ($update->save()) {
 
@@ -189,6 +203,7 @@ class ClientController extends Controller
             $save->company_id = $request->company_id;
             $save->unit = $request->unit;
             $save->type = $request->type;
+            $save->srn  = !empty($request->srn) ? $request->srn : '';
             $save->agent_id = $request->agent_id;
             $save->save();
         }
@@ -212,7 +227,7 @@ class ClientController extends Controller
 
     public function assignUserModal(Request $request)
     {
-        $users = User::whereIn('role', ['staff', 'supervisor'])->get();
+        $users = User::whereIn('role', ['staff', 'supervisor'])->where('status', 1)->get();
 
         $staff = '';
         $supervisor = '';
@@ -249,7 +264,13 @@ class ClientController extends Controller
     {
         foreach ($request->user as $id) {
             $save = User::find($id);
-            $save->client_id = $request->client_id;
+
+            $client_ids = [];
+            if (!empty($save->client_id))
+                $client_ids = json_decode($save->client_id);
+            $client_ids[] = $request->client_id;
+
+            $save->client_id = json_encode($client_ids);
             $res = $save->save();
         }
 
@@ -264,93 +285,8 @@ class ClientController extends Controller
     }
 
 
-    public function findCompany(Request $request)
+    public function export(Request $request)
     {
-        $client_id = $request->client_id;
-
-        $copmanies = ClientToCompany::select('companies.id', 'companies.company_name')->join('companies', 'client_to_company.company_id', '=', 'companies.id')
-            ->where('client_to_company.client_id', $client_id)->get();
-
-        $option = '<option value="">Select</option>';
-        foreach ($copmanies as $list) {
-            $option .= '<option value="' . $list->id . '">' . ucwords($list->company_name) . '</option>';
-        }
-
-        $agents = ClientToCompany::select('transfer_agents.id', 'transfer_agents.transfer_agent')->join('transfer_agents', 'client_to_company.agent_id', '=', 'transfer_agents.id')
-            ->where('client_to_company.client_id', $client_id)->get();
-
-        $optionAgent = '<option value="">Select</option>';
-        foreach ($agents as $list) {
-            $optionAgent .= '<option value="' . $list->id . '">' . ucwords($list->transfer_agent) . '</option>';
-        }
-
-        return response(['status' => 'error', 'company' => $option, 'agent' => $optionAgent]);
-    }
-
-    public function followUp(Request $request)
-    {
-        $save = new FollowUpClient();
-        $save->client_id = $request->client_id;
-        $save->follow_up_date = strtotime($request->follow_up_date);
-        $save->type = $request->type;
-
-        if ($request->type == 'company') {
-            $save->company_id = $request->company_id;
-        } else if ($request->type == 'agent') {
-            $save->agent_id = $request->agent_id;
-        } else if ($request->type == 'court') {
-            $save->court_id = $request->court_id;
-        }
-        $save->remarks = $request->remarks;
-
-        if ($save->save())
-            return response(['status' => 'success', 'msg' => 'Follow Up Created Successfully!']);
-
-        return response(['status' => 'error', 'msg' => 'Something went wrong!']);
-    }
-
-
-    public function findContactPerson(Request $request)
-    {
-        $ref_id = $request->ref_id;
-        $ref_by = $request->ref_by;
-
-        $record = ContactPerson::where('ref_id', $ref_id)->where('ref_by', $ref_by)->get();
-
-        $res = '<table class="table mb-3"><tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Phone</th>
-        </tr>';
-        if (!$record->isEmpty()) {
-            foreach ($record as $key => $list) {
-                $res .= '<tr><td>' . ucwords($list->name) . '</td><td>' . $list->email . '</td><td>' . $list->mobile . '</td></tr>';
-            }
-        } else {
-            $res .= '<tr><td colspan="3" class="text-center">Not found any Record</td></tr>';
-        }
-        $res .= '</table>';
-
-        $res .= '<div id="add-new-btn" class="text-right"><a id="add-new" ref_id="' . $ref_id . '" ref_by="' . $ref_by . '" href="javascript:void(0);" class="btn btn-outline-primary btn-sm"><span class="mdi mdi-plus"></span>&nbsp;Add</a></div> <hr>';
-
-        return response(['status' => 'success', 'record' => $res]);
-    }
-
-
-    public function saveCP(Request $request)
-    {
-        $ref_id = $request->ref_id;
-        $ref_by = $request->ref_by;
-        $save = new ContactPerson();
-        $save->name        = $request->name;
-        $save->email       = $request->email;
-        $save->mobile      = $request->mobile;
-        $save->designation = $request->designation;
-        $save->ref_id      = $ref_id;
-        $save->ref_by      = $ref_by;
-        if ($save->save())
-            return response(['status' => 'success', 'msg' => 'Added Successfully!']);
-
-        return response(['status' => 'error', 'msg' => 'Something went wrong!']);
+        return Excel::download(new ClientExport($request), 'client.xlsx');
     }
 }

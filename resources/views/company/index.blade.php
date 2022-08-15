@@ -24,10 +24,10 @@
         <form action="{{ url('company') }}">
             <div class="form-row">
 
-                <div class="form-group col-md-2">
+                <!-- <div class="form-group col-md-2">
                     <label>Date Range</label>
                     <input type="text" class="form-control form-control-sm daterange" value="<?= !empty($filter['date_range']) ? $filter['date_range'] : dateRange() ?>" name="date_range" />
-                </div>
+                </div> -->
 
                 <div class="form-group col-md-3">
                     <label>Name</label>
@@ -65,12 +65,11 @@
                 <th>Company Name</th>
                 <th>Phone No.</th>
                 <th>Email</th>
-                <th>Address</th>
                 <th>City</th>
                 <th>State</th>
-                <th>Pin Code</th>
-                <th>Status</th>
-                <th>Action</th>
+                <th>Pin</th>
+                <th>Address</th>
+                <th colspan="2" class="text-center">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -80,10 +79,11 @@
                 <td>{{$list->company_name}}</td>
                 <td>{{$list->phone}}</td>
                 <td>{{$list->email}}</td>
-                <td>{{$list->address}}</td>
                 <td>{{$list->city}}</td>
                 <td>{{$list->state}}</td>
                 <td>{{$list->pin}}</td>
+                <td>{{$list->address}}</td>
+
                 <td>
                     <?= $list->status == 1 ? '<a href="javascript:void(0)">
                 <span class="activeVer badge badge-outline-success" _id="' . $list->id . '" val="0">Active</span>

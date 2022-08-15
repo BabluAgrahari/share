@@ -11,9 +11,14 @@ class FollowUpClient extends BaseModal
     use HasFactory;
     public $table = "client_follow_up";
 
+    public function User()
+    {
+        return $this->hasOne('App\Models\User', 'id', 'user_id')->select('id', 'name');
+    }
+
     public function Client()
     {
-        return $this->hasOne('App\Models\Client', 'id', 'client_id')->select('id', 'share_holder');
+        return $this->hasOne('App\Models\Client', 'id', 'client_id')->select('*');
     }
 
     public function Company()

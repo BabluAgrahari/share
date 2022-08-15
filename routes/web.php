@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\CompanyController as Company;
 use App\Http\Controllers\Admin\TransferAgentsController as TransferAgents;
 use App\Http\Controllers\Admin\CourtController as Court;
 use App\Http\Controllers\Admin\FollowUpController as FollowUp;
+use App\Http\Controllers\Admin\DashboardController as Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,29 +28,35 @@ use App\Http\Controllers\Admin\FollowUpController as FollowUp;
 // });
 
 // Route::resource('product',Product::class);
-Route::get('/',         [Login::class, 'index']);
-Route::POST('login',    [Login::class, 'show']);
-Route::get('dashboard', [Login::class, 'dashboard']);
-Route::get('logout',    [Login::class, 'logout']);
-Route::get('home',      [User::class, 'home']);
+Route::group(['middleware' => 'guest'], function () {
+    Route::get('/',         [Login::class, 'index']);
+    Route::POST('login',    [Login::class, 'show']);
+});
 
 Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('user',   User::class);
+
+    Route::resource('contact-person',   ContactPerson::class);
+
     Route::post('user-status', [User::class, 'status']);
 
     Route::resource('client',   Client::class);
+
     Route::post('assign-user',  [Client::class, 'assignUser']);
     Route::get('assign-user',   [Client::class, 'assignUserModal']);
-    Route::get('find-company',  [Client::class, 'findCompany']);
-    Route::post('follow-up',    [Client::class, 'followUp']);
-    Route::post('save-cp',      [Client::class, 'saveCP']);
     Route::post('client-status',  [Client::class, 'status']);
-
     Route::get('client/find-agent/{id}', [Client::class, 'findClient']);
-    Route::get('find-contact-person',    [Client::class, 'findContactPerson']);
+    Route::get('client-export', [Client::class, 'export']);
 
+    Route::get('follow-up-list/{status}', [FollowUp::class, 'index']);
     Route::resource('follow-up-list', FollowUp::class);
+    Route::get('find-company',        [FollowUp::class, 'findCompany']);
+    Route::post('follow-up',          [FollowUp::class, 'followUp']);
+    Route::post('save-cp',            [FollowUp::class, 'saveCP']);
+    Route::get('find-contact-person', [FollowUp::class, 'findContactPerson']);
+    Route::get('revert-follow-up/{status}/{id}',    [FollowUp::class, 'revertFollowUp']);
+    Route::get('follow-up-export', [FollowUp::class, 'export']);
 
     Route::resource('company', Company::class);
     Route::post('company-status', [Company::class, 'status']);
@@ -59,6 +66,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('court', Court::class);
     Route::post('court-status', [Court::class, 'status']);
+
+    Route::get('dashboard', [Dashboard::class, 'index']);
+    Route::get('logout',    [Login::class, 'logout']);
 });
 
 Route::get('/clear-cache', function () {

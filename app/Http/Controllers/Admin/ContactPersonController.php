@@ -12,9 +12,31 @@ use Illuminate\Support\Facades\Auth;
 class ContactPersonController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $data['lists'] = ContactPerson::paginate($this->perPage);
+        $query = ContactPerson::query();
+
+        if (!empty($request->designation))
+            $query->where('designation', 'LIKE', "%$request->designation%");
+
+        if (!empty($request->name))
+            $query->where('name', 'LIKE', "%$request->name%");
+
+        if (!empty($request->email))
+            $query->where('email', 'LIKE', "%$request->email%");
+
+        if (!empty($request->phone))
+            $query->where('mobile', 'LIKE', "%$request->phone%");
+
+        if (!empty($request->ref_by))
+            $query->where('ref_by', $request->ref_by);
+
+        $data['lists'] = $query->orderBy('created', 'DESC')->paginate($this->perPage);
+
+        $request->request->remove('page');
+        $request->request->remove('perPage');
+        $data['filter']  = $request->all();
+
         return view('contact.index', $data);
     }
 
@@ -32,7 +54,7 @@ class ContactPersonController extends Controller
         $store->mobile        = $request->mobile;
         $store->email        = $request->email;
         $store->status       = $request->status;
-      	
+
 
         if ($store->save()) {
             return redirect()->back()->with('success', 'Contact Person Created Successfully');
@@ -59,7 +81,7 @@ class ContactPersonController extends Controller
         $update->mobile        = $request->mobile;
         $update->email        = $request->email;
         $update->status       = $request->status;
-      
+
 
         if ($update->save()) {
             return redirect('/contact')->with('success', 'Contact Person  Update successfully');

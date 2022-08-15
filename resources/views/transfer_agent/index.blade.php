@@ -22,10 +22,10 @@
         <form action="{{ url('transfer-agent') }}">
             <div class="form-row">
 
-                <div class="form-group col-md-2">
+                <!-- <div class="form-group col-md-2">
                     <label>Date Range</label>
                     <input type="text" class="form-control form-control-sm daterange" value="<?= !empty($filter['date_range']) ? $filter['date_range'] : dateRange() ?>" name="date_range" />
-                </div>
+                </div> -->
 
                 <div class="form-group col-md-2">
                     <label>Transfer Agent:</label>
@@ -72,8 +72,7 @@
                 <th>City</th>
                 <th>State</th>
                 <th>Pin Code</th>
-                <th>Status</th>
-                <th>Action</th>
+                <th colspan="2" class="text-center">Action</th>
             </tr>
         </thead>
         <tbody>

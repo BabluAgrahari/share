@@ -109,8 +109,8 @@
                     <div class="form-group col-md-4">
                         <label>Status</label>
                         <select class="form-control form-control-sm" placeholder="Enter status" name="status">
-                            <option value="1">Active</option>
-                            <option value="0">Inactive</option>
+                            <option value="1" {{(old('status')==1)?"selected":(1==$res->role?'selected':'')}}>Active</option>
+                            <option value="0" {{(old('status')==0)?"selected":(0==$res->role?'selected':'')}}>Inactive</option>
                         </select>
                         @error('status')
                         <span class="text-danger">{{ $message }}</span>

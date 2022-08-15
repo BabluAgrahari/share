@@ -1,6 +1,11 @@
 @extends('layout.layout')
 @section('content')
-
+<style>
+    ul.nav-tab {
+        margin-bottom: -31px !important;
+        margin-top: -15px !important;
+    }
+</style>
 <div class="card-header py-2 h-body">
     <div class="row">
         <div class="col-md-6 pt-1">
@@ -13,6 +18,7 @@
             @else
             <a href="javascript:void(0);" class="btn btn-sm btn-outline-primary" id="filter-btn"><span class="mdi mdi-filter-outline"></span>&nbsp;Filter</a>
             @endif
+            <a href="{{url('client-export')}}{{ !empty($_SERVER['QUERY_STRING'])?'?'.$_SERVER['QUERY_STRING']:''}}" class="btn btn-outline-primary btn-sm"><span class="mdi mdi-cloud-download"></span>&nbsp;Export</a>
             <a href="{{url('client/create')}} " class="btn btn-success btn-sm"><span class="mdi mdi-plus"></span>&nbsp;Add</a>
         </div>
     </div>
@@ -59,34 +65,45 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th>File No(Manual)</th>
+                <th>Profile</th>
+                <th>File No</th>
                 <th>Share Holder</th>
                 <th>Survivor Name</th>
-                <th>Address</th>
                 <th>City</th>
-                <th>State</th>
-                <th>Pin</th>
+                <!-- <th>Company</th> -->
+                <th>Share Unit</th>
                 <th>Follow Up Status</th>
                 <th>Created</th>
                 <th>Status</th>
-                <th>Assign</th>
+                @if(Auth::user()->role=='admin') <th>Assign</th> @endif
                 <th class="text-center">Action</th>
             </tr>
         </thead>
         <tbody>
+            @php $units = 0;@endphp
             @foreach($lists as $key => $list)
             <tr>
                 <td>{{ ++$key }}</td>
+                <td class="py-1">
+                    <img src="{{asset('client_image/'.$list->image)}}" alt="image">
+                </td>
                 <td>{{$list->file_no}}</td>
                 <td>{{$list->share_holder}}</td>
                 <td>{{$list->survivor_name}}</td>
-                <td>{{$list->address}}</td>
                 <td>{{$list->city}}</td>
-                <td>{{$list->state}}</td>
-                <td>{{$list->pin}}</td>
-                <td> @if($list->status)
+                <td>@if(!empty($list->Company))
+                    @foreach($list->Company as $camp)
+                    <!-- <span>{{$camp->company_id}}</span> -->
+                    @php $units +=$camp->unit; @endphp
+                    @endforeach
+                    @endif
+                    {{$units}}
+                </td>
+                <!-- <td></td> -->
+                <td>
+                    @if($list->follow_up_status ==1)
                     <span class="badge badge-outline-success">Completed</span>
-                    @else
+                    @elseif($list->follow_up_status ==0)
                     <span class="badge badge-outline-warning">Pending</span>
                     @endif
                 </td>
@@ -99,9 +116,11 @@
                 <span class="activeVer badge badge-outline-warning" _id="' . $list->id . '" val="1">Inactive</span>
                 </a>' ?>
                 </td>
+                @if(Auth::user()->role=='admin')
                 <td> <a href="javascript:void(0);" client_id="{{$list->id}}" class="assignModal btn btn-sm btn-outline-primary" data-toggle="tooltip" data-html="true" title="Assign"><span class="mdi mdi-account-switch"></span></a></td>
+                @endif
                 <td>
-                    <a href="javascript:void(0);" client_id="{{$list->id}}" class="followUpModal btn btn-sm btn-outline-warning" data-toggle="tooltip" data-html="true" title="Follow Up"><span class="mdi mdi-note-text"></span></a>
+                    <a href="javascript:void(0);" client_name="{{ucwords($list->share_holder)}}" client_id="{{$list->id}}" class="followUpModal btn btn-sm btn-outline-warning" data-toggle="tooltip" data-html="true" title="Follow Up"><span class="mdi mdi-note-text"></span></a>
                     <a href="client/{{$list->id}}/edit" class="btn btn-sm btn-outline-info" data-toggle="tooltip" data-html="true" title="Edit"><span class="mdi mdi-pencil-box-outline"></span></a>
                 </td>
             </tr>
@@ -111,8 +130,8 @@
     {{ $lists->appends($_GET)->links()}}
 </div>
 @push('modal')
-@include('client.remarks')
-@include('client.followUp')
+@include('client.assigns')
+@include('follow_up.followUp')
 <script>
     $(document).on('click', '.activeVer', function() {
         var id = $(this).attr('_id');

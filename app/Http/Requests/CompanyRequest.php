@@ -26,9 +26,9 @@ class CompanyRequest extends FormRequest
             'cp_name'               => 'required',
             'cp_email'              => 'required|email',
             'cp_phone'              => 'required|digits:10|not_in:0|numeric',
-            'designation'           => 'required'
+            'cp_designation'           => 'required'
 
-            
+
         ];
     }
 }

@@ -24,16 +24,16 @@ class CourtController extends Controller
         if (!empty($request->status))
             $query->where('status', $request->status);
 
-        if (!empty($request->date_range)) {
-            list($start_date, $end_date) = explode('-', $request->date_range);
-            $start_date = strtotime(trim($start_date) . " 00:00:00");
-            $end_date   = strtotime(trim($end_date) . " 23:59:59");
-        } else {
-            $start_date = $this->start_date;
-            $end_date   = $this->end_date;
-        }
+        // if (!empty($request->date_range)) {
+        //     list($start_date, $end_date) = explode('-', $request->date_range);
+        //     $start_date = strtotime(trim($start_date) . " 00:00:00");
+        //     $end_date   = strtotime(trim($end_date) . " 23:59:59");
+        // } else {
+        //     $start_date = $this->start_date;
+        //     $end_date   = $this->end_date;
+        // }
 
-        $query->whereBetween('created', [$start_date, $end_date]);
+        // $query->whereBetween('created', [$start_date, $end_date]);
 
         $data['lists'] = $query->orderBy('created', 'DESC')->paginate($this->perPage);
 

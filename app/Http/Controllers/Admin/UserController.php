@@ -58,6 +58,7 @@ class UserController extends Controller
 
     public function store(UserRequest $request)
     {
+
         $store = new User();
         $store->name                = $request->name;
         $store->role                = $request->role;
@@ -70,7 +71,7 @@ class UserController extends Controller
         $store->status               = $request->status;
         $store->password            = Hash::make($request->password);
         if ($store->save()) {
-            return redirect('user')->with('success', 'Data Insert Successfully');
+            return redirect('user')->with('success', 'User Created Successfully');
         }
         return redirect()->back()->with('error', 'Data Not Insert ');
     }
@@ -98,7 +99,7 @@ class UserController extends Controller
         $update->password            = Hash::make($request->password);
 
         if ($update->save()) {
-            return redirect('user')->with('success', 'Data Insert Successfully');
+            return redirect('user')->with('success', 'User Updated Successfully');
         }
         return redirect()->back()->with('error', 'Data Not Insert ');
     }

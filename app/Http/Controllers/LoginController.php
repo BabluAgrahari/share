@@ -16,7 +16,7 @@ class LoginController extends Controller
     }
 
 
-  
+
     public function show(Request $request)
     {
 
@@ -35,9 +35,9 @@ class LoginController extends Controller
 
         if (Auth::attempt($request->only('email', 'password'))) {
 
-            return redirect('home');
+            return redirect('dashboard');
         }
-        return redirect('/')->with('error', 'Login Details Is Not Valide');
+        return redirect('/')->with('error', 'Login credentails is invalid');
     }
 
 
@@ -46,7 +46,7 @@ class LoginController extends Controller
 
         // check if user logged in
         if (Auth::check()) {
-            return redirect('home')->withErrors('success', 'You Login');
+            return redirect('dashboard')->withErrors('success', 'You Login');
         }
 
         return redirect('/')->withSuccess('Oopps! You do not have access');
@@ -57,16 +57,5 @@ class LoginController extends Controller
         $request->session()->flush();
         Auth::logout();
         return redirect('/');
-    }
-
-
-    public function home()
-    {
-        return view('dashboard');
-    }
-
-    public function destroy($id)
-    {
-        //
     }
 }

@@ -24,6 +24,15 @@
                 <div class="row">
                     <!-- <h6>Client Details</h6>
                     <hr> -->
+
+                    <div class="form-group col-md-3">
+                        <label>Image</label>
+                        <input type="file" class="form-control form-control-sm" name="image">
+                        @error('image')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
                     <div class="form-group col-md-3">
                         <label>File No</label>
                         <input type="text" class="form-control form-control-sm" value="{{ old('file_no')??$res->file_no}}" placeholder="Enter File No" name="file_no">
@@ -47,21 +56,21 @@
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
+                </div>
+
+                <div class="row">
+                    <!-- <div class="form-group col-md-3">
+                        <label>SRN</label>
+                        <input type="text" class="form-control form-control-sm" value="{{ old('srn')??$res->srn}}" placeholder="Enter SRN" name="srn">
+                        @error('srn')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div> -->
 
                     <div class="form-group col-md-3">
                         <label>Survivor Name</label>
                         <input type="text" class="form-control form-control-sm" value="{{ old('survivor_name')??$res->survivor_name}}" placeholder=" Enter Survivor Name" name="survivor_name">
                         @error('survivor_name')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="form-group col-md-3">
-                        <label>SRN</label>
-                        <input type="text" class="form-control form-control-sm" value="{{ old('srn')??$res->srn}}" placeholder="Enter SRN" name="srn">
-                        @error('srn')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -147,7 +156,7 @@
 
                     <div class="form-group col-md-3">
                         <label>Email</label>
-                        <input type="email" class="form-control form-control-sm" value="{{ old('cp_email')??$res->cp_email}}" name="cp_email" placeholder="Enter Email">
+                        <input type="email" class="form-control form-control-sm" value="{{ old('cp_email')??$res->cp_email}}" name="cp_email" placeholder="Enter Email" @readonly(Auth::user()->role !='admin')/>
                         @error('cp_email')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -155,7 +164,7 @@
 
                     <div class="form-group col-md-3">
                         <label>Mobile</label>
-                        <input type="text" class="form-control form-control-sm" value="{{ old('cp_mobile')??$res->cp_phone}}" name="cp_mobile" placeholder="Enter Mobile">
+                        <input type="text" class="form-control form-control-sm" value="{{ old('cp_mobile')??$res->cp_phone}}" name="cp_mobile" placeholder="Enter Mobile" @readonly(Auth::user()->role !='admin')/>
                         @error('cp_mobile')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -174,12 +183,13 @@
                     <!-- <h6>Company Details</h6> -->
                     <!-- <hr> -->
                     <div class="company-table">
-                        <table class="table table-sm">
+                        <table class="table table-sm w-75">
                             <thead>
                                 <tr>
                                     <th>Company Name</th>
                                     <th>Share Qty</th>
                                     <th>Type</th>
+                                    <th>SRN</th>
                                     <th>Transfer Agent</th>
                                     <th></th>
                                 </tr>
@@ -201,7 +211,7 @@
                                         <input type="number" class="form-control form-control-xs" name="company[{{$key}}][unit]" value="{{$val->unit}}" placeholder="Enter Unit">
                                     </td>
 
-                                    <td class="w-20">
+                                    <td class="w-25">
                                         <select class="form-control form-control-xs" required name="company[{{$key}}][type]">
                                             <option value="">Select</option>
                                             <option value="type1" {{$val->type =='type1'?'selected':''}}>Type1</option>
@@ -210,6 +220,10 @@
                                             <option value="type4" {{$val->type =='type4'?'selected':''}}>Type4</option>
                                             <option value="type5" {{$val->type =='type5'?'selected':''}}>Type5</option>
                                         </select>
+                                    </td>
+
+                                    <td class="w-25">
+                                        <input type="text" class="form-control form-control-xs" value="{{$val->srn}}" placeholder="Enter SRN" name="company[{{$key}}][srn]">
                                     </td>
 
                                     <td class="w-25">
@@ -260,7 +274,7 @@
                                         <input type="number" class="form-control form-control-xs" required name="company[0][unit]" value="{{old('unit')}}" placeholder="Enter Unit">
                                     </td>
 
-                                    <td class="w-20">
+                                    <td class="w-25">
                                         <select class="form-control form-control-xs" required name="company[0][type]">
                                             <option value="">Select</option>
                                             <option value="type1">Type1</option>
@@ -269,6 +283,10 @@
                                             <option value="type4">Type4</option>
                                             <option value="type5">Type5</option>
                                         </select>
+                                    </td>
+
+                                    <td class="w-25">
+                                        <input type="text" class="form-control form-control-xs" value="{{old('srn')}}" placeholder="Enter SRN" name="company[0][srn]">
                                     </td>
 
                                     <td class="w-25">
@@ -311,7 +329,7 @@
                                 <td class="w-25">
                                     <input type="number" class="form-control form-control-xs" required name="company[${i}][unit]" placeholder="Enter Qty">
                                 </td>
-                                <td class="w-20">
+                                <td class="w-25">
                                     <select class="form-control form-control-xs" required name="company[${i}][type]">
                                         <option value="">Select</option>
                                         <option value="type1">Type1</option>
@@ -321,7 +339,10 @@
                                         <option value="type5">Type5</option>
                                     </select>
                                 </td>
-                                <td class="w-20">
+                                 <td class="w-25">
+                                        <input type="text" class="form-control form-control-xs" placeholder="Enter SRN" name="company[${i}][srn]">
+                                    </td>
+                                <td class="w-25">
                                     <select class="form-control form-control-xs" id="agent-id-${i}" placeholder="Select Contant" required name="company[${i}][agent_id]">
                                         <option value="">Select</option>
                                     </select>

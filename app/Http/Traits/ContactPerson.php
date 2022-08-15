@@ -3,6 +3,7 @@
 namespace App\Http\Traits;
 
 use App\Models\ContactPerson as ModelsContactPerson;
+use Illuminate\Support\Facades\Auth;
 
 trait ContactPerson
 {
@@ -13,6 +14,7 @@ trait ContactPerson
 
         $request = (object)$request;
         $save = new ModelsContactPerson();
+        $save->user_id     = Auth::user()->id;
         $save->name        = $request->cp_name;
         $save->email       = $request->cp_email;
         $save->mobile      = $request->cp_mobile;

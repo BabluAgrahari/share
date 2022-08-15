@@ -23,6 +23,14 @@
                     <!-- <h6>Client Details</h6>
                     <hr> -->
                     <div class="form-group col-md-3">
+                        <label>Image</label>
+                        <input type="file" class="form-control form-control-sm" name="image">
+                        @error('image')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col-md-3">
                         <label>File No(Manual)</label>
                         <input type="text" class="form-control form-control-sm" value="{{ old('file_no') }}" placeholder="Enter File No" name="file_no">
                         @error('file_no')
@@ -45,6 +53,8 @@
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
+                </div>
+                <div class="row">
 
                     <div class="form-group col-md-3">
                         <label>Survivor Name</label>
@@ -53,15 +63,14 @@
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-md-3">
+
+                    <!-- <div class="form-group col-md-3">
                         <label>SRN</label>
                         <input type="text" class="form-control form-control-sm" value="{{ old('srn') }}" placeholder="Enter SRN" name="srn">
                         @error('srn')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
-                    </div>
+                    </div> -->
 
                     <div class="form-group col-md-3">
                         <label>Date</label>
@@ -143,7 +152,7 @@
 
                     <div class="form-group col-md-3">
                         <label>Email</label>
-                        <input type="email" class="form-control form-control-sm" name="cp_email" value="{{ old('cp_email') }}" placeholder="Enter Email">
+                        <input type="email" class="form-control form-control-sm" name="cp_email" value="{{ old('cp_email') }}" placeholder="Enter Email" />
                         @error('cp_email')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -169,54 +178,56 @@
                 <div class="row mb-2">
                     <!-- <h6>Company Details</h6> -->
                     <!-- <hr> -->
-                    <table class="table table-sm">
-                        <thead>
-                            <tr>
-                                <th>Company Name</th>
-                                <th>Share Qty</th>
-                                <th>Type</th>
-                                <th>Transfer Agent</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody id="field_wrapper">
-                            <tr>
-                                <td class="w-25">
-                                    <select id="company_name" selector="0" class="form-control form-control-xs" required name="company[0][company_id]">
-                                        <option value="">Select</option>
-                                        @foreach($companies as $list)
-                                        <option value="{{ $list->id }}">{{ ucwords($list->company_name)}}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
+                    <div class="company-table">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Company Name</th>
+                                    <th>Share Qty</th>
+                                    <th>Type</th>
+                                    <th>Transfer Agent</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="field_wrapper">
+                                <tr>
+                                    <td class="w-25">
+                                        <select id="company_name" selector="0" class="form-control form-control-xs" required name="company[0][company_id]">
+                                            <option value="">Select</option>
+                                            @foreach($companies as $list)
+                                            <option value="{{ $list->id }}">{{ ucwords($list->company_name)}}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
 
-                                <td class="w-25">
-                                    <input type="number" class="form-control form-control-xs" required name="company[0][unit]" placeholder="Enter Qty">
-                                </td>
+                                    <td class="w-25">
+                                        <input type="number" class="form-control form-control-xs" required name="company[0][unit]" placeholder="Enter Qty">
+                                    </td>
 
-                                <td class="w-20">
-                                    <select class="form-control form-control-xs" required name="company[0][type]">
-                                        <option value="">Select</option>
-                                        <option value="type1">Type1</option>
-                                        <option value="type2">Type2</option>
-                                        <option value="type3">Type3</option>
-                                        <option value="type4">Type4</option>
-                                        <option value="type5">Type5</option>
-                                    </select>
-                                </td>
+                                    <td class="w-20">
+                                        <select class="form-control form-control-xs" required name="company[0][type]">
+                                            <option value="">Select</option>
+                                            <option value="type1">Type1</option>
+                                            <option value="type2">Type2</option>
+                                            <option value="type3">Type3</option>
+                                            <option value="type4">Type4</option>
+                                            <option value="type5">Type5</option>
+                                        </select>
+                                    </td>
 
-                                <td class="w-25">
-                                    <select class="form-control form-control-xs" id="agent-id-0" required placeholder="Select Contant" name="company[0][agent_id]">
-                                        <option value="">Select</option>
+                                    <td class="w-25">
+                                        <select class="form-control form-control-xs" id="agent-id-0" required placeholder="Select Contant" name="company[0][agent_id]">
+                                            <option value="">Select</option>
 
-                                    </select>
-                                </td>
-                                <td>
-                                    <a href="javascript:void(0)" id="add_more" class="btn btn-xs btn-success"><span class="mdi mdi-plus"></span></a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <a href="javascript:void(0)" id="add_more" class="btn btn-xs btn-success"><span class="mdi mdi-plus"></span></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <div class="form-group text-center">

@@ -13,7 +13,7 @@
             @else
             <a href="javascript:void(0);" class="btn btn-sm btn-outline-primary" id="filter-btn"><span class="mdi mdi-filter-outline"></span>&nbsp;Filter</a>
             @endif
-            <a href="{{url('court/create')}} " class="btn btn-success btn-sm" ><span class="mdi mdi-plus"></span>&nbsp;Add</a>
+            <a href="{{url('court/create')}} " class="btn btn-success btn-sm"><span class="mdi mdi-plus"></span>&nbsp;Add</a>
         </div>
     </div>
 </div>
@@ -22,10 +22,10 @@
         <form action="{{ url('court') }}">
             <div class="form-row">
 
-                <div class="form-group col-md-2">
+                <!-- <div class="form-group col-md-2">
                     <label>Date Range</label>
                     <input type="text" class="form-control form-control-sm daterange" value="<?= !empty($filter['date_range']) ? $filter['date_range'] : dateRange() ?>" name="date_range" />
-                </div>
+                </div> -->
 
                 <div class="form-group col-md-3">
                     <label>Court Name</label>
@@ -62,8 +62,7 @@
                 <th>Contact Person Name</th>
                 <th>Email</th>
                 <th>Phone No</th>
-                <th>Status</th>
-                <th>Action</th>
+                <th colspan="2" class="text-center">Action</th>
             </tr>
         </thead>
         <tbody>

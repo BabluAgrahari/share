@@ -50,7 +50,7 @@
 
                     <div class="form-group col-md-4">
                         <label>Password</label>
-                        <input type="text" class="form-control form-control-sm" value="{{ old('password') }}" placeholder=" Enter Password" name="password">
+                        <input type="password" class="form-control form-control-sm" value="{{ old('password') }}" placeholder=" Enter Password" name="password">
                         @error('password')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -58,7 +58,7 @@
 
                     <div class="form-group col-md-4">
                         <label>Confirm Password</label>
-                        <input type="password" class="form-control form-control-sm" value="{{ old('confirm_password') }}" placeholder=" Enter confirm_password" name="confirm_password">
+                        <input type="password" class="form-control form-control-sm" value="{{ old('confirm_password') }}" placeholder=" Enter confirm Password" name="confirm_password">
                         @error('confirm_password')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -68,9 +68,9 @@
                         <label>Role</label>
                         <select class="form-control form-control-sm" placeholder="Select Role" value="{{ old('role') }}" name="role">
                             <option value="">Select</option>
-                            <option value="admin">Admin</option>
-                            <option value="supervisor">Supervisor</option>
-                            <option value="staff">Staff</option>
+                            <option value="admin" {{old('role')=='admin'?'selected':''}}>Admin</option>
+                            <option value="supervisor" {{old('role')=='supervisor'?'selected':''}}>Supervisor</option>
+                            <option value="staff" {{old('role')=='staff'?'selected':''}}>Staff</option>
                         </select>
                         @error('role')
                         <span class="text-danger">{{ $message }}</span>
@@ -123,8 +123,8 @@
                     <div class="form-group col-md-4">
                         <label>Status</label>
                         <select class="form-control form-control-sm" placeholder="Enter status" name="status">
-                            <option value="1">Active</option>
-                            <option value="0">Inactive</option>
+                            <option value="1" {{(old('status')==1)?"selected":''}}>Active</option>
+                            <option value="0" {{(old('status')==0)?"selected":''}}>Inactive</option>
                         </select>
                         @error('state')
                         <span class="text-danger">{{ $message }}</span>

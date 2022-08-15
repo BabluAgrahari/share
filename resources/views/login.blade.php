@@ -30,7 +30,7 @@
                         <div class="card auth-form-light text-left p-5">
                             <div class="brand-logo">
                                 <!-- <img src="{{asset('')}}assets/images/logo.svg"> -->
-                               <h3>Share Connection</h3>
+                               <h3>Logo Here</h3>
                             </div>
                             <h4>Hello! let's get started</h4>
                             <h6 class="font-weight-light">Sign in to continue.</h6>

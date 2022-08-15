@@ -69,10 +69,12 @@
                 <th>Email</th>
                 <th>Mobile No.</th>
                 <th>City</th>
+                <th>State</th>
+                <th>Pin</th>
+                <th>Address</th>
                 <th>Role</th>
                 <th>Address</th>
-                <th>Status</th>
-                <th>Action</th>
+                <th colspan="2" class="text-center">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -83,6 +85,9 @@
                 <td>{{$list->email}}</td>
                 <td>{{$list->mobile}}</td>
                 <td>{{$list->city}}</td>
+                <td>{{$list->state}}</td>
+                <td>{{$list->pin}}</td>
+                <td>{{$list->address}}</td>
                 <td>{{ucwords($list->role)}}</td>
                 <td>{{$list->address}}</td>
                 <td>
