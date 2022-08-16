@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\CourtExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CourtRequest;
 use Illuminate\Http\Request;
@@ -10,6 +11,7 @@ use App\Models\Company;
 use App\Models\client;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CourtController extends Controller
 {
@@ -124,5 +126,11 @@ class CourtController extends Controller
         } catch (Exception $e) {
             return response(['status' => 'error', 'msg' => 'Something went wrong!!']);
         }
+    }
+
+
+    public function export(Request $request)
+    {
+        return Excel::download(new CourtExport($request), 'court.xlsx');
     }
 }

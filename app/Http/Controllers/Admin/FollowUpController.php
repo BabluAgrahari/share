@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\FollowUpExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CourtRequest;
+use App\Http\Requests\FollowUpRequest;
 use App\Models\Client;
 use App\Models\ClientToCompany;
 use App\Models\Company;
@@ -12,6 +14,7 @@ use Illuminate\Http\Request;
 use App\Models\Court;
 use App\Models\FollowUpClient;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class FollowUpController extends Controller
 {
@@ -49,7 +52,7 @@ class FollowUpController extends Controller
         $data['filter']  = $request->all();
 
         $data['clients'] = Client::select('share_holder', 'id')->where('status', 1)->get();
-        $data['couts'] = Court::where('status', 1)->get();
+        // $data['couts'] = Court::where('status', 1)->get();
         $data['status'] = $status;
 
         return view('follow_up.follow_up_list', $data);
@@ -111,7 +114,18 @@ class FollowUpController extends Controller
         }
         $followUpList = self::clientFollowUp($client_id);
 
-        return response(['status' => 'error', 'company' => $option, 'agent' => $optionAgent, 'follow_up_list' => $followUpList]);
+        $client = Client::find($client_id);
+        if (!empty($client)) {
+            $court_id = $client->court_id;
+            $courts = Court::select('id', 'court_name')->where('id', $court_id)->where('status', 1)->get();
+        }
+
+        $optionCourts = '<option value="">Select</option>';
+        foreach ($courts as $list) {
+            $optionCourts .= '<option value="' . $list->id . '">' . ucwords($list->court_name) . '</option>';
+        }
+
+        return response(['status' => 'error', 'company' => $option, 'agent' => $optionAgent, 'court' => $optionCourts, 'follow_up_list' => $followUpList]);
     }
 
     private function clientFollowUp($client_id = false)
@@ -127,21 +141,23 @@ class FollowUpController extends Controller
                 'id'             => $record->id,
                 'type'           => $record->type,
                 'remarks'        => $record->remarks,
-                'status'         => $record->status == 'pending' ? 'Follow Up' : $record->status,
-                'user_name'      => !empty($record->user->name) ? $record->user->name : '',
-                'follow_up_date' => $record->dFormat($record->follow_up_date)
+                'status'         => $record->status == 'pending' ? 'Follow Up' : ucwords(str_replace('_',' ',$record->status)),
+                'user_name'      => !empty($record->user->name) ? ucwords($record->user->name) : '',
+                'follow_up_date' => $record->dFormat($record->follow_up_date),
+                'cp_name'        => !empty($record->CpName->name)?ucwords($record->CpName->name):'',
             ];
         }
         return $list;
     }
 
-    public function followUp(Request $request)
+    public function followUp(FollowUpRequest $request)
     {
         $save = new FollowUpClient();
         $save->user_id        = Auth::user()->id;
         $save->client_id      = $request->client_id;
         $save->follow_up_date = strtotime($request->follow_up_date);
         $save->type           = $request->type;
+        $save->cp_id          = $request->cp_id;
 
         if ($request->type == 'company') {
             $save->company_id = $request->company_id;
@@ -169,6 +185,7 @@ class FollowUpController extends Controller
         $record = ContactPerson::where('ref_id', $ref_id)->where('ref_by', $ref_by)->get();
 
         $res = '<table class="table mb-3"><tr>
+        <th>Select</th>
         <th>Designation</th>
         <th>Name</th>
         <th>Email</th>
@@ -177,10 +194,14 @@ class FollowUpController extends Controller
         </tr>';
         if (!$record->isEmpty()) {
             foreach ($record as $key => $list) {
-                $res .= '<tr><td>' . ucwords($list->designation) . '</td><td>' . ucwords($list->name) . '</td><td>' . $list->email . '</td><td>' . $list->mobile . '</td></tr>';
+                $res .= '<tr><td><div class="form-check" style="margin:0px !important; padding:0px !important">
+                              <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="cp_id" id="optionsRadios' . $key . '" value="' . $list->id . '"> <i class="input-helper"></i></label>
+                            </div>
+                </td><td>' . ucwords($list->designation) . '</td><td>' . ucwords($list->name) . '</td><td>' . $list->email . '</td><td>' . $list->mobile . '</td></tr>';
             }
         } else {
-            $res .= '<tr><td colspan="4" class="text-center">Not found any Record</td></tr>';
+            $res .= '<tr><td colspan="6" class="text-center">Not found any Record</td></tr>';
         }
         $res .= '</table>';
 
@@ -239,5 +260,10 @@ class FollowUpController extends Controller
             return redirect('follow-up-list/' . $status);
         }
         return redirect('follow-up-list/' . $status);
+    }
+
+    public function export(Request $request, $status)
+    {
+        return Excel::download(new FollowUpExport($request, $status), 'follow_up.xlsx');
     }
 }

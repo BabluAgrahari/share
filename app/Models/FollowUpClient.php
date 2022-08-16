@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\BaseModal;
+use Illuminate\Notifications\Notifiable;
 
 class FollowUpClient extends BaseModal
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
     public $table = "client_follow_up";
 
     public function User()
@@ -34,5 +35,10 @@ class FollowUpClient extends BaseModal
     public function TransAgent()
     {
         return $this->hasOne('App\Models\TransferAgent', 'id', 'agent_id')->select('id', 'transfer_agent');
+    }
+
+    public function CpName()
+    {
+        return $this->hasOne('App\Models\ContactPerson', 'id', 'cp_id')->select('id', 'name');
     }
 }

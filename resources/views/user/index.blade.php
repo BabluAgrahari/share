@@ -1,6 +1,12 @@
 @extends('layout.layout')
 @section('content')
+<style>
+    tbody.collapse.in {
+        display: table-row-group;
+    }
 
+    https: //www.codeply.com/
+</style>
 <div class="card-header py-2 h-body">
     <div class="row">
         <div class="col-md-6 pt-1">
@@ -13,6 +19,9 @@
             @else
             <a href="javascript:void(0);" class="btn btn-sm btn-outline-primary" id="filter-btn"><span class="mdi mdi-filter-outline"></span>&nbsp;Filter</a>
             @endif
+
+            <a href="{{url('user-export')}}{{ !empty($_SERVER['QUERY_STRING'])?'?'.$_SERVER['QUERY_STRING']:''}}" class="btn btn-outline-primary btn-sm"><span class="mdi mdi-cloud-download"></span>&nbsp;Export</a>
+
             <a href="{{url('user/create')}} " class="btn btn-success btn-sm"><span class="mdi mdi-plus"></span>&nbsp;Add</a>
         </div>
     </div>
@@ -61,6 +70,7 @@
     </div>
 </div>
 <div class="p-2 table-responsive">
+
     <table class="w-100 table table-hover">
         <thead>
             <tr>
@@ -78,8 +88,22 @@
             </tr>
         </thead>
         <tbody>
+            <?php
+
+            use App\Models\Client;
+            $i =0;
+            ?>
             @foreach($lists as $key => $list)
-            <tr>
+
+            <?php
+            $client_ids = $list->client_id;
+            $clients = [];
+            if (!empty($client_ids)) {
+                $client_ids = json_decode($client_ids);
+                $clients = Client::whereIn('id', $client_ids)->where('status', 1)->get();
+            }
+            ?>
+            <tr class="clickable" data-toggle="collapse" data-target="#group-of-rows-{{$i}}" aria-expanded="false" aria-controls="group-of-rows-1">
                 <td>{{ ++$key }}</td>
                 <td>{{ucwords($list->name)}}</td>
                 <td>{{$list->email}}</td>
@@ -102,10 +126,24 @@
                     <a href="user/{{$list->id}}/edit" class="btn btn-sm btn-outline-info"><span class="mdi mdi-pencil-box-outline"></span></a>
                 </td>
             </tr>
+        </tbody>
+        <tbody id="group-of-rows-{{$i}}" class="collapse">
+            @foreach($clients as $client)
+            <tr class="table-warning" colspan="12">
+                <td>{{$client->file_no}}</td>
+                <td>{{$client->share_holder}}</td>
+                <td>{{$client->survivor_name}}</td>
+                <td>{{$client->city}}</td>
+                <td>{{ $client->dformat($client->created)}}</td>
+            </tr>
             @endforeach
         </tbody>
+<?php $i++;?>
+        @endforeach
 
     </table>
+
+
     {{ $lists->appends($_GET)->links()}}
 </div>
 @push('script')

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\CompanyExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CompanyRequest;
 use App\Models\Company;
@@ -9,6 +10,7 @@ use App\Models\ContactPerson;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CompanyController extends Controller
 {
@@ -144,5 +146,12 @@ class CompanyController extends Controller
         } catch (Exception $e) {
             return response(['status' => 'error', 'msg' => 'Something went wrong!!']);
         }
+    }
+
+
+
+    public function export(Request $request)
+    {
+        return Excel::download(new CompanyExport($request), 'company.xlsx');
     }
 }

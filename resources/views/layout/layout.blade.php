@@ -133,6 +133,19 @@
                 @endif
 
                 <li class="nav-item">
+                    <a class="nav-link" href="{{url('client')}}">
+                        <i class="mdi mdi-account-multiple menu-icon"></i>
+                        <span class="menu-title">Client List</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('follow-up-list/all') }}">
+                        <i class="mdi mdi-note-text menu-icon"></i>
+                        <span class="menu-title"> Follow Up</span></a>
+                </li>
+
+                <!-- <li class="nav-item">
                     <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                         <i class="mdi mdi-account-multiple menu-icon"></i>
                         <span class="menu-title">Client</span>
@@ -140,20 +153,10 @@
                     </a>
                     <div class="collapse" id="ui-basic">
                         <ul class="nav flex-column sub-menu">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{url('client')}}">
-                                    <span class="menu-title">Client List</span>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ url('follow-up-list/all') }}">
-                                    <span class="menu-title"> Follow Up</span></a>
-                            </li>
 
                         </ul>
                     </div>
-                </li>
+                </li> -->
 
                 @if(Auth::user()->role=='admin')
                 <li class="nav-item">
@@ -206,8 +209,8 @@
                     <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
                         <a class="navbar-brand brand-logo-mini" href=""><img src="{{asset('')}}assets/images/logo-mini.svg" alt="logo" /></a>
                     </div>
-                    <!-- <ul class="navbar-nav">
-                        <li class="nav-item dropdown">
+                    <ul class="navbar-nav">
+                        <!-- <li class="nav-item dropdown">
                             <a class="nav-link" id="messageDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="mdi mdi-email-outline"></i>
                             </a>
@@ -246,7 +249,7 @@
                                 <div class="dropdown-divider"></div>
                                 <h6 class="p-3 mb-0 text-center text-primary font-13">4 new messages</h6>
                             </div>
-                        </li>
+                        </li> -->
                         <li class="nav-item dropdown ms-3">
                             <a class="nav-link" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
                                 <i class="mdi mdi-bell-outline"></i>
@@ -254,46 +257,34 @@
                             <div class="dropdown-menu dropdown-menu-left navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
                                 <h6 class="px-3 py-3 font-weight-semibold mb-0">Notifications</h6>
                                 <div class="dropdown-divider"></div>
+                                @forelse(auth()->user()->notifications as $noti)
                                 <a class="dropdown-item preview-item">
                                     <div class="preview-thumbnail">
-                                        <div class="preview-icon bg-success">
-                                            <i class="mdi mdi-calendar"></i>
-                                        </div>
+                                        <!-- <div class="preview-icon bg-success"> -->
+                                        <i class="mdi mdi-disc text-warning"></i>
+                                        <!-- </div> -->
                                     </div>
                                     <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                                        <h6 class="preview-subject font-weight-normal mb-0">New order recieved</h6>
-                                        <p class="text-gray ellipsis mb-0"> 45 sec ago </p>
+                                        <h6 class="preview-subject font-weight-normal mb-0">{{!empty($noti->data['msg'])?$noti->data['msg']:''}}</h6>
+                                        <p class="text-gray ellipsis mb-0"><small>{{!empty($noti->data['date'])?$noti->data['date']:''}}</small></p>
                                     </div>
                                 </a>
                                 <div class="dropdown-divider"></div>
+                                @empty
                                 <a class="dropdown-item preview-item">
                                     <div class="preview-thumbnail">
-                                        <div class="preview-icon bg-warning">
-                                            <i class="mdi mdi-settings"></i>
-                                        </div>
                                     </div>
                                     <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                                        <h6 class="preview-subject font-weight-normal mb-0">Server limit reached</h6>
-                                        <p class="text-gray ellipsis mb-0"> 55 sec ago </p>
+                                        <h6 class="preview-subject font-weight-normal mb-0">Not Found any Notification</h6>
                                     </div>
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item preview-item">
-                                    <div class="preview-thumbnail">
-                                        <div class="preview-icon bg-info">
-                                            <i class="mdi mdi-link-variant"></i>
-                                        </div>
-                                    </div>
-                                    <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                                        <h6 class="preview-subject font-weight-normal mb-0">Kevin karvelle</h6>
-                                        <p class="text-gray ellipsis mb-0"> 11:09 PM </p>
-                                    </div>
-                                </a>
-                                <div class="dropdown-divider"></div>
+                                @endforelse
+
                                 <h6 class="p-3 font-13 mb-0 text-primary text-center">View all notifications</h6>
                             </div>
                         </li>
-                    </ul> -->
+                    </ul>
                     <ul class="navbar-nav navbar-nav-right">
                         <li class="">
                             <a class=" btn btn-danger btn-sm" href="{{url('logout')}}">Logout</a>

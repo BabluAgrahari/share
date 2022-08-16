@@ -86,4 +86,9 @@ class User extends Authenticatable
 
         return date('d M Y', $date);
     }
+
+
+    public function clients(){
+        $this->belongsToMany('App\Models\Client', 'id', 'client_id');
+    }
 }

@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 class BaseModal extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Notifiable;
 
     public $timestamps = false;
     const CREATED_AT = 'created';

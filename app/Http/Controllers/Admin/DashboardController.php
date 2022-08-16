@@ -14,6 +14,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        notify();
 
         $query = FollowUpClient::selectRaw('id,
         COUNT(id) as all_follow_up,

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\AgentExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TransferAgentsRequest;
 use App\Models\Company;
@@ -10,6 +11,7 @@ use App\Models\ContactPerson;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TransferAgentsController extends Controller
 {
@@ -50,7 +52,7 @@ class TransferAgentsController extends Controller
 
     public function create(Request $request)
     {
-        $data['companies'] = Company::select('id', 'company_name')->where('status',1)->get();
+        $data['companies'] = Company::select('id', 'company_name')->where('status', 1)->get();
         return view('transfer_agent.create', $data);
     }
 
@@ -90,7 +92,7 @@ class TransferAgentsController extends Controller
     public function edit($id)
     {
         $data['res'] = TransferAgent::find($id);
-        $data['companies'] = Company::select('id', 'company_name')->where('status',1)->get();
+        $data['companies'] = Company::select('id', 'company_name')->where('status', 1)->get();
         return view('transfer_agent.edit', $data);
     }
 
@@ -136,4 +138,9 @@ class TransferAgentsController extends Controller
         }
     }
 
+
+    public function export(Request $request)
+    {
+        return Excel::download(new AgentExport($request), 't-agent.xlsx');
+    }
 }

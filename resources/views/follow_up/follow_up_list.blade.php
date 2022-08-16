@@ -42,14 +42,14 @@
         @else
         <a href="javascript:void(0);" class="btn btn-sm btn-outline-primary" id="filter-btn"><span class="mdi mdi-filter-outline"></span>&nbsp;Filter</a>
         @endif
-        <a href="{{url('follow-up-export')}}{{ !empty($_SERVER['QUERY_STRING'])?'?'.$_SERVER['QUERY_STRING']:''}}" class="btn btn-outline-primary btn-sm"><span class="mdi mdi-cloud-download"></span>&nbsp;Export</a>
+        <a href="{{url('follow-up-export/'.$status)}}{{ !empty($_SERVER['QUERY_STRING'])?'?'.$_SERVER['QUERY_STRING']:''}}" class="btn btn-outline-primary btn-sm"><span class="mdi mdi-cloud-download"></span>&nbsp;Export</a>
     </div>
     <!-- </div> -->
 </div>
 
 <div class="row mt-2 pl-2 pr-2" id="filter" <?= (empty($filter)) ? "style='display:none'" : "" ?>>
     <div class="col-md-12 ml-auto">
-        <form action="{{ url('follow-up-list') }}">
+        <form action="{{ url('follow-up-list/'.$status) }}">
             <div class="form-row">
 
                 <div class="form-group col-md-2">
@@ -68,7 +68,7 @@
                     </select>
                 </div>
 
-                <div class="form-group col-md-2">
+                <!-- <div class="form-group col-md-2">
                     <label>Status</label>
                     <select class="form-control form-control-sm" name="status">
                         <option value="">All</option>
@@ -78,11 +78,11 @@
                         <option value="rejected" <?= (isset($filter['status']) && $filter['status'] == 'rejected') ? 'selected' : '' ?>>Rejected</option>
                         <option value="revert" <?= (isset($filter['status']) && $filter['status'] == 'revert') ? 'selected' : '' ?>>Revert</option>
                     </select>
-                </div>
+                </div> -->
 
                 <div class="form-group mt-4">
                     <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
-                    <a href="{{ url('follow-up-list') }}" class="btn btn-warning btn-sm"><i class="mdi mdi-eraser-variant"></i>&nbsp;Clear</a>
+                    <a href="{{ url('follow-up-list/'.$status) }}" class="btn btn-warning btn-sm"><i class="mdi mdi-eraser-variant"></i>&nbsp;Clear</a>
                 </div>
             </div>
         </form>
@@ -127,7 +127,10 @@
                                 // echo !empty($list->court->court_name) ? $list->court->court_name : '';
                             }
                             ?></td> -->
-                <td>{{$list->remarks}}</td>
+                <td>
+                    <spna data-toggle="tooltip" data-html="true" title="{{ (!empty($list->remarks) && strlen($list->remarks)>40)?$list->remarks:''}}">
+                        {{mb_strimwidth($list->remarks,0,40,'...')}}</span>
+                </td>
                 <td>
                     @if($list->status =='rejected')
                     <span class="badge badge-outline-danger">Rejected</span>

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\ContactPersonExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientRequest;
 use App\Models\ContactPerson;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ContactPersonController extends Controller
 {
@@ -97,5 +99,10 @@ class ContactPersonController extends Controller
             return redirect()->back()->with('success', 'Contact Person Removed Successfully');
         }
         return redirect()->back()->with('error', 'Contact Person not Removed');
+    }
+
+    public function export(Request $request)
+    {
+        return Excel::download(new ContactPersonExport($request), 'contact-person.xlsx');
     }
 }

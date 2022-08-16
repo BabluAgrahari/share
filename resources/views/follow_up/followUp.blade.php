@@ -33,6 +33,7 @@
                                 <div class="form-group col-md-5">
                                     <label>Follow Up Date</label>
                                     <input type="date" name="follow_up_date" class="form-control form-control-sm">
+                                    <span class="text-danger" id="follow_up_date_msg"></span>
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label>Follow Up With</label>
@@ -41,8 +42,9 @@
                                         <option value="company">Company</option>
                                         <option value="agent">Agent</option>
                                         <option value="court">Court</option>
-                                        <option value="client">Client</option>
+                                        <!-- <option value="client">Client</option> -->
                                     </select>
+                                    <span class="text-danger" id="follow_with_msg"></span>
                                 </div>
 
                                 <div class="form-group col-md-4 mt-4">
@@ -56,9 +58,7 @@
 
                                     <select class="form-control form-control-sm select_field d-none" ref_by="court" name="court_id" id="court" disabled>
                                         <option value="">Select</option>
-                                        @foreach($couts as $court)
-                                        <option value="{{$court->id}}">{{ucwords($court->court_name)}}</option>
-                                        @endforeach
+
                                     </select>
 
                                     <select class="form-control form-control-sm select_field d-none" ref_by="client" name="client_id" id="client" disabled>
@@ -67,19 +67,22 @@
                                         <option value="{{$client->id}}">{{ucwords($client->share_holder)}}</option>
                                         @endforeach
                                     </select>
+                                    <span class="text-danger" id="cp_msg"></span>
                                 </div>
                             </div>
 
                             <div id="customer_person"></div>
+                            <span class="text-danger" id="cp_id_msg"></span>
                             <div id="add-new-cp"></div>
 
                             <div class="form-group">
                                 <label>Remarks</label>
                                 <textarea name="remarks" class="form-control" rows="3" placeholder="Enter Remarks"></textarea>
+                                <span class="text-danger" id="remarks_msg"></span>
                             </div>
 
                             <div class="form-group text-center">
-                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="submit" class="btn btn-primary" id="save-btn">Save</button>
                             </div>
                         </form>
 
@@ -116,6 +119,7 @@
                     $('#follow-up-list').html(follow_up_list);
                     $('#company').html(res.company);
                     $('#agent').html(res.agent);
+                    $('#court').html(res.court);
                     $('.client_id').val(client_id);
                     $('.client_name').html(`<b>Client Name -&nbsp;</b>${client_name}`);
                     $('#followUpModal').modal('show');
@@ -125,11 +129,8 @@
         })
 
         function followUpList(lists) {
-
-            console.log(lists);
             var record = '';
             $.each(lists, (index, value) => {
-                console.log(value);
                 record += `
             <div id="accordion${index}" class="mb-1">
             <div class="card">
@@ -149,14 +150,16 @@
                     <th>Remarks</th>
                     <th>Created By</th>
                     <th>Status</th>
+                    <th>CP Name</th>
                     </tr>`;
                 var tr = '';
                 $.each(value, (ind, val) => {
                     tr += `<tr>
                            <td>${val.follow_up_date}</td>
-                           <td>${val.remarks}</td>
+                           <td class="w-25">${val.remarks}</td>
                            <td>${val.user_name}</td>
                            <td>${val.status}</td>
+                           <td>${val.cp_name}</td>
                            </tr>`;
                 });
                 record += `${tr}</table>
@@ -348,13 +351,26 @@
                 contentType: false,
                 processData: false,
                 beforeSend: function() {
-                    $('.cover-loader').removeClass('d-none');
-                    $('#outlet').hide();
+                    $('#save-btn').html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;Saving...`).attr('disabled', true);
                 },
                 success: function(res) {
-                    $('.cover-loader').addClass('d-none');
-                    $('#outlet').show();
+                    $('#save-btn').html(`Save`).attr('disabled', false);
 
+                    $('.text-danger').html('');
+                    if (res.validation) {
+                        $('#follow_up_date_msg').html(res.validation.follow_up_date);
+                        $('#follow_with_msg').html(res.validation.type);
+                        if (res.validation.company_id) {
+                            var cp_msg = res.validation.company_id;
+                        } else if (res.validation.court_id) {
+                            var cp_msg = res.validation.court_id;
+                        } else if (res.validation.agent_id) {
+                            var cp_msg = res.validation.agent_id;
+                        }
+                        $('#cp_msg').html(cp_msg);
+                        $('#cp_id_msg').html(res.validation.cp_id);
+                        $('#remarks_msg').html(res.validation.remarks);
+                    }
                     /*Start Status message*/
                     if (res.status == 'success' || res.status == 'error') {
                         Swal.fire(
@@ -367,7 +383,7 @@
 
                     //for reset all field
                     if (res.status == 'success') {
-                        $('form.assign')[0].reset();
+                        $('form#follow-up')[0].reset();
                         setTimeout(function() {
                             location.reload();
                         }, 1000)

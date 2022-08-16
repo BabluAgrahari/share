@@ -1,5 +1,9 @@
 <?php
 
+use App\Models\FollowUpClient;
+use App\Notifications\CourtNotification;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 function dateRange()
 {
@@ -53,5 +57,39 @@ if (!function_exists('pr')) {
         print_r($data);
         echo '</pre>';
         die;
+    }
+}
+
+if (!function_exists('notify')) {
+    function notify()
+    {
+        $after_three_days = strtotime(trim(date("d-m-Y", strtotime('+3 days', strtotime(date('Y-m-d'))))) . " 01:00:00");
+        $today_date = strtotime(trim(date('Y-m-d')) . " 23:59:59");
+
+        $followUp = FollowUpClient::where('type', 'court')->where('follow_up_date', '>', $today_date)->where('follow_up_date', '<', $after_three_days)->where('notify_status', 0)->get();
+
+        foreach ($followUp as $follow) {
+
+            $res = Auth::user()->notify(new CourtNotification($follow));
+            $followU = FollowUpClient::find($follow->id);
+            $followU->notify_status = 1;
+            $followU->save();
+        }
+    }
+}
+
+if (!function_exists('markAsRead')) {
+
+    function markAsRead($follow_up_id)
+    {
+        if ($follow_up_id) {
+            $noti =  DB::table('notifications')->whereRaw("JSON_EXTRACT(data,'$.follow_up_id') = $follow_up_id")->first();
+            if (empty($noti))
+                return false;
+
+            $id = $noti->id;
+            auth()->user()->notifications->where('id', $id)->markAsRead();
+        }
+        return true;
     }
 }

@@ -87,7 +87,7 @@
                         <select class="form-control form-control-sm" placeholder="Enter Court Name" name="court_id">
                             <option value="">Select</option>
                             @foreach($courts as $list)
-                            <option value="{{ $list->id }} {{(old('court_id')==$list->id)?"selected":($list->id==$res->court_id?'selected':'')}}">{{ ucwords($list->court_name)}}</option>
+                            <option value="{{ $list->id }}" {{(old('court_id')==$list->id)?"selected":($list->id==$res->court_id?'selected':'')}}>{{ ucwords($list->court_name)}}</option>
                             @endforeach
                         </select>
                         @error('court_id')
