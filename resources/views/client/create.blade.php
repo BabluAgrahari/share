@@ -24,7 +24,7 @@
                     <hr> -->
                     <div class="form-group col-md-3">
                         <label>Image</label>
-                        <input type="file" class="form-control form-control-sm" name="image">
+                        <input type="file" class="form-control form-control-sm" multiple="multiple" name="images[]">
                         @error('image')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror

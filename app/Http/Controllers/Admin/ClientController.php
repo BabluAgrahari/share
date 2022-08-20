@@ -6,6 +6,7 @@ use App\Exports\ClientExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientRequest;
 use App\Models\Client;
+use App\Models\ClientImages;
 use App\Models\ClientToCompany;
 use App\Models\ContactPerson;
 use App\Models\Company;
@@ -58,6 +59,7 @@ class ClientController extends Controller
 
         $data['couts'] = Court::where('status', 1)->get();
         $data['clients'] = Client::where('status', 1)->get();
+        $data['users']   = User::select('name', 'id')->whereIn('role', ['staff', 'supervisor'])->where('status', 1)->get();
 
         return view('client.index', $data);
     }
@@ -92,10 +94,18 @@ class ClientController extends Controller
         $store->cp_phone        = $request->cp_mobile;
         $store->cp_designation  = $request->cp_designation;
 
-        if (!empty($request->file('image')))
-            $store->image  = singleFile($request->file('image'), 'client_image');
-
         if ($store->save()) {
+
+            if (!empty($request->file('images'))) {
+                $images = multipleFile($request->file('images'), 'client_image');
+                foreach ($images as $img) {
+                    $client_img = new ClientImages();
+                    $client_img->user_id   = Auth::user()->id;
+                    $client_img->client_id = $store->id;
+                    $client_img->image     = $img;
+                    $client_img->save();
+                }
+            }
 
             self::clientToCompany($request->company, $store->id, 'store'); //insert record into client_to_company table
 
@@ -109,6 +119,17 @@ class ClientController extends Controller
 
     public function show($id)
     {
+        $images = ClientImages::where('client_id', $id)->get();
+        $img = '<div class="row">';
+        foreach ($images as $image) {
+
+            $img .= '<div class="col-md-3"><div class="card p-2">
+           <img src="' . asset('client_image/' . $image->image) . '" style="width: 135px;
+    height: 135px;"></div></div>';
+        }
+        $img .= '</div>';
+
+        return response(['img'=>$img]);
     }
 
 
@@ -148,6 +169,18 @@ class ClientController extends Controller
             $update->image  = singleFile($request->file('image'), 'client_image');
 
         if ($update->save()) {
+
+            if (!empty($request->file('images'))) {
+                ClientImages::where('client_id', $update->id)->delete();
+                $images = multipleFile($request->file('images'), 'client_image');
+                foreach ($images as $img) {
+                    $client_img = new ClientImages();
+                    $client_img->user_id   = Auth::user()->id;
+                    $client_img->client_id = $update->id;
+                    $client_img->image     = $img;
+                    $client_img->save();
+                }
+            }
 
             self::clientToCompany($request->company, $update->id, 'update'); //update record into client_to_company table
 

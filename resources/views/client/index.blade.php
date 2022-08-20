@@ -65,7 +65,6 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th>Profile</th>
                 <th>File No</th>
                 <th>Share Holder</th>
                 <th>Survivor Name</th>
@@ -84,9 +83,6 @@
             @foreach($lists as $key => $list)
             <tr>
                 <td>{{ ++$key }}</td>
-                <td class="py-1">
-                    <img src="{{asset('client_image/'.$list->image)}}" alt="image">
-                </td>
                 <td>{{$list->file_no}}</td>
                 <td>{{$list->share_holder}}</td>
                 <td>{{$list->survivor_name}}</td>
@@ -113,13 +109,14 @@
                 <span class="activeVer badge badge-outline-success" _id="' . $list->id . '" val="0">Active</span>
                 </a>'
                         : '<a href="javascript:void(0);">
-                <span class="activeVer badge badge-outline-warning" _id="' . $list->id . '" val="1">Inactive</span>
+                <span class="activeVer badge badge-outline-warning" _id="' . $list->id . '" val="1">Inactive</span>D
                 </a>' ?>
                 </td>
                 @if(Auth::user()->role=='admin')
                 <td> <a href="javascript:void(0);" client_id="{{$list->id}}" class="assignModal btn btn-sm btn-outline-primary" data-toggle="tooltip" data-html="true" title="Assign"><span class="mdi mdi-account-switch"></span></a></td>
                 @endif
                 <td>
+                    <a href="javascript:void(0);" class="images btn btn-sm btn-outline-success" _id="{{$list->id}}" data-toggle="tooltip" data-html="true" title="Client Images"><span class="mdi mdi-file-image"></span></a>
                     <a href="javascript:void(0);" client_name="{{ucwords($list->share_holder)}}" client_id="{{$list->id}}" class="followUpModal btn btn-sm btn-outline-warning" data-toggle="tooltip" data-html="true" title="Follow Up"><span class="mdi mdi-note-text"></span></a>
                     <a href="client/{{$list->id}}/edit" class="btn btn-sm btn-outline-info" data-toggle="tooltip" data-html="true" title="Edit"><span class="mdi mdi-pencil-box-outline"></span></a>
                 </td>
@@ -159,8 +156,39 @@
                 )
             }
         })
+    })
+
+    $('.images').click(function() {
+        let id = $(this).attr('_id');
+        $.ajax({
+            url: '{{url("client")}}/' + id,
+            method: 'GET',
+            dataType: "JSON",
+            success: function(res) {
+                $('#image-body').html(res.img);
+                $('#imageModal').modal('show');
+            }
+        })
 
     })
 </script>
+
+
+<div class="modal fade" id="imageModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 50% !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Images</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="image-body">
+
+            </div>
+        </div>
+    </div>
+</div>
 @endpush
+
 @endsection

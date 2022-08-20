@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\FollowUpClient;
+use App\Models\FollowUpWith;
 use App\Notifications\CourtNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -66,7 +67,11 @@ if (!function_exists('notify')) {
         $after_three_days = strtotime(trim(date("d-m-Y", strtotime('+3 days', strtotime(date('Y-m-d'))))) . " 01:00:00");
         $today_date = strtotime(trim(date('Y-m-d')) . " 23:59:59");
 
-        $followUp = FollowUpClient::where('type', 'court')->where('follow_up_date', '>', $today_date)->where('follow_up_date', '<', $after_three_days)->where('notify_status', 0)->get();
+        // $followUp = FollowUpWith::where('type', 'court')->where('follow_up_date', '>', $today_date)->where('follow_up_date', '<', $after_three_days)->where('notify_status', 0)->get();
+
+        $followUp = FollowUpWith::select('fu.*')->join('client_follow_up as fu', 'followup_with_to_followup.follow_up_id', '=', 'fu.id', 'left')
+            ->where('followup_with_to_followup.type', 'client')->where('fu.follow_up_date', '>', $today_date)
+            ->where('fu.follow_up_date', '<', $after_three_days)->where('fu.notify_status', 0)->get();
 
         foreach ($followUp as $follow) {
 

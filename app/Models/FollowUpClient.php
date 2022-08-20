@@ -41,4 +41,9 @@ class FollowUpClient extends BaseModal
     {
         return $this->hasOne('App\Models\ContactPerson', 'id', 'cp_id')->select('id', 'name');
     }
+
+    public function followUpWith(){
+
+        return $this->hasMany('App\Models\FollowUpWith','follow_up_id','id');
+    }
 }

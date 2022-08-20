@@ -20,18 +20,33 @@ class FollowUpRequest extends FormRequest
         $rules = [
             'client_id'             => 'required|min:2|max:200',
             'follow_up_date'        => 'required',
-            'type'                  => 'required',
-            'cp_id'                 => 'required',
+            'follow_up_for'         => 'required',
+            'type'                  => 'required|array',
             'remarks'               => 'required|min:3|max:5000',
         ];
 
-        if ($request->type == 'company')
-            $rules['company_id'] = 'required';
-        if ($request->type == 'agent')
-            $rules['company_id'] = 'required';
-        if ($request->type == 'court')
-            $rules['company_id'] = 'required';
+        if ($request->follow_up_for == 'follow_up_user') {
+            $rules['with_user_id'] = 'required';
+        } else if ($request->follow_up_for == 'follow_up_with') {
 
+            if (!empty($request->type)) {
+                foreach ($request->type as $type) {
+
+                    if ($type == 'company') {
+                        $rules['company_id'] = 'required';
+                        $rules['company_cp_id'] = 'required';
+                    }
+                    if ($type == 'agent') {
+                        $rules['agent_id'] = 'required';
+                        $rules['agent_cp_id'] = 'required';
+                    }
+                    if ($type == 'court') {
+                        $rules['court_id'] = 'required';
+                        $rules['court_cp_id'] = 'required';
+                    }
+                }
+            }
+        }
         return $rules;
     }
 

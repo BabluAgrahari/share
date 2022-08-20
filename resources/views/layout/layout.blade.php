@@ -465,7 +465,7 @@
             }, function(start, end, label) {});
 
             $(".multiple-select1").select2({});
-            $(".multiple-select2").select2({});
+
 
             $(document).on('click', '.modal-header button', function() {
                 $(this).closest('.modal').modal('hide');

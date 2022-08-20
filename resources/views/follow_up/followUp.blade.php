@@ -1,4 +1,9 @@
 <!-- Modal -->
+<style>
+    span.select2-container--default {
+        width: 100% !important;
+    }
+</style>
 <div class="modal fade" id="followUpModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" style="max-width: 50% !important;">
         <div class="modal-content">
@@ -23,43 +28,72 @@
 
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="staff1" role="tabpanel" aria-labelledby="home-tab">
-                        <div class="text-right"><span class="client_name"></span></div>
+
                         <form id="follow-up" action="{{url('follow-up')}}" method="post">
                             @csrf
                             <input type="hidden" class="client_id" name="client_id">
 
                             <div class="row">
 
-                                <div class="form-group col-md-5">
+                                <div class="form-group col-md-4">
+                                    <div class="mt-4"><span class="client_name"></span></div>
+                                </div>
+
+                                <div class="form-group col-md-6">
                                     <label>Follow Up Date</label>
                                     <input type="date" name="follow_up_date" class="form-control form-control-sm">
                                     <span class="text-danger" id="follow_up_date_msg"></span>
                                 </div>
+                            </div>
+
+                            <div class="row">
+
                                 <div class="form-group col-md-3">
-                                    <label>Follow Up With</label>
-                                    <select name="type" class="form-control form-control-sm" id="follow_with">
+                                    <div class="form-check" style="margin:0px !important; padding:0px !important">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="follow_up_for" id="optionsRadios2" value="follow_up_user"><i class="input-helper"></i>Select User</label>
+                                    </div>
+                                    <select name="with_user_id" class="form-control form-control-sm" disabled id="follow_up_user">
                                         <option value="">Select</option>
+                                        @foreach($users as $user)
+                                        <option value="{{$user->id}}">{{ucwords($user->name)}}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="text-danger" id="with_user_id_msg"></span>
+                                    <span class="text-danger" id="follow_up_for_msg"></span>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <div class="form-check" style="margin:0px !important; padding:0px !important">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="follow_up_for" id="optionsRadios1" value="follow_up_with"><i class="input-helper"></i>Follow Up With</label>
+                                    </div>
+                                    <select name="type[]" class="form-control form-control-sm" multiple="multiple" id="follow_up_with" disabled>
+                                        <!-- <option value="">Select</option> -->
                                         <option value="company">Company</option>
                                         <option value="agent">Agent</option>
                                         <option value="court">Court</option>
                                         <!-- <option value="client">Client</option> -->
                                     </select>
-                                    <span class="text-danger" id="follow_with_msg"></span>
+                                    <span class="text-danger" id="type_msg"></span>
                                 </div>
 
+
                                 <div class="form-group col-md-4 mt-4">
-                                    <select class="form-control form-control-sm select_field d-none" ref_by="copmany" name="company_id" id="company" disabled>
-                                        <option value="">Select</option>
+                                    <select class="mb-1 form-control form-control-sm select_field d-none" ref_by="company" name="company_id" id="company" disabled>
+                                        <option value="">Select Company</option>
                                     </select>
+                                    <span class="text-danger" id="company_id_msg"></span>
 
-                                    <select class="form-control form-control-sm select_field d-none" ref_by="agent" name="agent_id" id="agent" disabled>
-                                        <option value="">Select</option>
+                                    <select class="mb-1 form-control form-control-sm select_field d-none" ref_by="agent" name="agent_id" id="agent" disabled>
+                                        <option value="">Select Agent</option>
                                     </select>
+                                    <span class="text-danger" id="agent_id_msg"></span>
 
-                                    <select class="form-control form-control-sm select_field d-none" ref_by="court" name="court_id" id="court" disabled>
-                                        <option value="">Select</option>
-
+                                    <select class="mb-1 form-control form-control-sm select_field d-none" ref_by="court" name="court_id" id="court" disabled>
+                                        <option value="">Select Court</option>
                                     </select>
+                                    <span class="text-danger" id="court_id_msg"></span>
 
                                     <select class="form-control form-control-sm select_field d-none" ref_by="client" name="client_id" id="client" disabled>
                                         <option value="">Select</option>
@@ -67,13 +101,23 @@
                                         <option value="{{$client->id}}">{{ucwords($client->share_holder)}}</option>
                                         @endforeach
                                     </select>
-                                    <span class="text-danger" id="cp_msg"></span>
+                                    <span class="text-danger" id="client_id_msg"></span>
                                 </div>
                             </div>
 
-                            <div id="customer_person"></div>
-                            <span class="text-danger" id="cp_id_msg"></span>
-                            <div id="add-new-cp"></div>
+                            <div id="cp-div">
+                                <div id="contact-person-company"></div>
+                                <span class="text-danger" id="company_cp_id_msg"></span>
+                                <div id="new-cp-company"></div>
+
+                                <div id="contact-person-agent"></div>
+                                <span class="text-danger" id="agent_cp_id_msg"></span>
+                                <div id="new-cp-agent"></div>
+
+                                <div id="contact-person-court"></div>
+                                <div id="new-cp-court"></div>
+                                <span class="text-danger" id="court_cp_id_msg"></span>
+                            </div>
 
                             <div class="form-group">
                                 <label>Remarks</label>
@@ -99,13 +143,15 @@
         </div>
     </div>
 </div>
-
 <script>
     $(document).ready(function() {
 
         $('.followUpModal').click(function() {
             var client_id = $(this).attr('client_id');
             var client_name = $(this).attr('client_name');
+            $("#follow_up_with").select2({
+                dropdownParent: $("#followUpModal")
+            });
 
             $.ajax({
                 url: '{{url("find-company")}}',
@@ -123,10 +169,11 @@
                     $('.client_id').val(client_id);
                     $('.client_name').html(`<b>Client Name -&nbsp;</b>${client_name}`);
                     $('#followUpModal').modal('show');
-                }
-            })
 
-        })
+                }
+            });
+
+        });
 
         function followUpList(lists) {
             var record = '';
@@ -173,61 +220,29 @@
 
         }
 
-        $(document).on('change', '#follow_with', function() {
-            let type = $(this).val();
+        $(document).on('change', '#follow_up_with', function() {
+            var type = $(this).val();
+            var arrayType = type.toString().split(',');
 
-            if (type == 'company') {
+            $('#company').attr('disabled', true).addClass('d-none');
+            $('#court').attr('disabled', true).val('').addClass('d-none');
+            $('#agent').attr('disabled', true).val('').addClass('d-none');
+            $('#client').attr('disabled', true).addClass('d-none');
+
+            if (arrayType.indexOf('company') !== -1)
                 $('#company').attr('disabled', false).removeClass('d-none');
-                $('#court').attr('disabled', true).val('').addClass('d-none');
-                $('#agent').attr('disabled', true).val('').addClass('d-none');
-                $('#client').attr('disabled', true).addClass('d-none');
-            } else if (type == 'agent') {
+
+            if (arrayType.indexOf('agent') !== -1)
                 $('#agent').attr('disabled', false).removeClass('d-none');
-                $('#company').attr('disabled', true).val('').addClass('d-none');
-                $('#court').attr('disabled', true).val('').addClass('d-none');
-                $('#client').attr('disabled', true).addClass('d-none');
-            } else if (type == 'court') {
+
+            if (arrayType.indexOf('court') !== -1)
                 $('#court').attr('disabled', false).removeClass('d-none');
-                $('#agent').attr('disabled', true).val('').addClass('d-none');
-                $('#company').attr('disabled', true).val('').addClass('d-none');
-                $('#client').attr('disabled', true).addClass('d-none');
-            } else if (type == 'client') {
-                $('#court').attr('disabled', true).addClass('d-none');
-                $('#agent').attr('disabled', true).val('').addClass('d-none');
-                $('#company').attr('disabled', true).val('').addClass('d-none');
+
+            if (arrayType.indexOf('client') !== -1)
                 $('#client').attr('disabled', false).removeClass('d-none');
 
-            }
             $('#cp-form').remove().fadeOut('slow');
         })
-
-
-        // $('.form-check-input').click(function() {
-        //     var radio_val = $(this).val();
-        //     if (radio_val == 'company') {
-        //         $('#company').attr('disabled', false);
-        //         $('#court').attr('disabled', true).val('');
-        //         $('#agent').attr('disabled', true).val('');
-        //         $('#optionsRadios1').prop('checked', true);
-        //         $('#optionsRadios3').prop('checked', false);
-        //         $('#optionsRadios2').prop('checked', false);
-        //     } else if (radio_val == 'agent') {
-        //         $('#agent').attr('disabled', false);
-        //         $('#company').attr('disabled', true).val('');
-        //         $('#court').attr('disabled', true).val('');
-        //         $('#optionsRadios1').prop('checked', false);
-        //         $('#optionsRadios3').prop('checked', false);
-        //         $('#optionsRadios2').prop('checked', true);
-        //     } else if (radio_val == 'court') {
-        //         $('#court').attr('disabled', false);
-        //         $('#agent').attr('disabled', true).val('');
-        //         $('#company').attr('disabled', true).val('');
-        //         $('#optionsRadios1').prop('checked', false);
-        //         $('#optionsRadios3').prop('checked', true);
-        //         $('#optionsRadios2').prop('checked', false);
-        //     }
-        //     $('#cp-form').remove().fadeOut('slow');
-        // })
 
         $('.select_field').change(function() {
             var id = $(this).val();
@@ -245,43 +260,45 @@
                 },
                 dataType: 'JSON',
                 success: function(res) {
-                    $('#customer_person').html(res.record);
+                    $('#contact-person-' + res.type).html(res.record);
+                    // $('#add-new-btn').removeClass('d-none');
                 }
             });
         }
 
-        $(document).on('click', '#add-new', function() {
+        $(document).on('click', '.add-new', function() {
 
-            let ref_id = $('#add-new').attr('ref_id');
-            let ref_by = $('#add-new').attr('ref_by');
-            $('#add-new-btn').hide();
+            let ref_id = $(this).attr('ref_id');
+            let ref_by = $(this).attr('ref_by');
+            $(this).hide();
+            $('#new-cp-' + ref_by).show();
 
-            $('#add-new-cp').html(`<div id="cp-form">
+            $('#new-cp-' + ref_by).html(`<div id="${ref_by}">
              <div id="error_msg" class="text-danger"></div>
-            <input type="hidden" id="token" name="_token" value="{{ csrf_token() }}" />
-            <input type="hidden" id="ref_id" value="${ref_id}" name="ref_id">
-            <input type="hidden" id="ref_by" value="${ref_by}" name="ref_by">
+            <input type="hidden" class="token" id="token" name="_token" value="{{ csrf_token() }}" />
+            <input type="hidden" class="ref_id" id="ref_id" value="${ref_id}" name="ref_id">
+            <input type="hidden" class="ref_by" id="ref_by" value="${ref_by}" name="ref_by">
             <div class="row">
 
             <div class="form-group col-md-3 pr-1">
-            <input type="text" name="designation" id="designation" class="form-control form-control-xs" placeholder="Enter Designation">
+            <input type="text" name="designation" id="designation" class="form-control form-control-xs designation" placeholder="Enter Designation">
             </div>
 
             <div class="form-group col-md-3 pl-1 pr-1">
-            <input type="text" required name="name" id="name" class="form-control form-control-xs" placeholder="Enter Name">
+            <input type="text" required name="name" id="name" class="form-control form-control-xs name" placeholder="Enter Name">
             </div>
 
             <div class="form-group col-md-3 pl-1 pr-1">
-            <input type="email" required name="email" id="email" class="form-control form-control-xs" placeholder="Enter Email">
+            <input type="email" required name="email" id="email" class="form-control form-control-xs email" placeholder="Enter Email">
             </div>
 
             <div class="form-group col-md-3 pl-1">
-            <input type="number" required name="mobile" id="mobile" class="form-control form-control-xs" placeholder="Enter Phone">
+            <input type="number" required name="mobile" id="mobile" class="form-control form-control-xs mobile" placeholder="Enter Phone">
             </div>
 
-            <div class="form-group col-md-2">
-           <button class="btn btn-sm btn-outline-success" id="save-cp">
-          save</button>
+            <div class="form-group col-md-2 d-flex">
+           <button class="btn btn-sm btn-outline-success save-cp" ref_by="${ref_by}" id="save-cp-${ref_by}">save</button>
+           <a href="javascript:void(0);" class="btn btn-sm btn-outline-warning cancel" ref_by="${ref_by}" id="cancel">Cancel</a>
             </div>
 
             </div>
@@ -289,18 +306,27 @@
 
         });
 
-        /*start form submit functionality*/
-        $(document).on('click', '#save-cp', function(e) {
+        $(document).on('click', '.cancel', function() {
+            let ref_by = $(this).attr('ref_by');
+            $('#new-cp-' + ref_by).hide();
+            $('#add-btn-' + ref_by).show();
+        })
 
+        /*start form submit functionality*/
+        $(document).on('click', '.save-cp', function(e) {
             e.preventDefault();
+
+            var ref_by = $(this).attr('ref_by');
+            var selector = $(this).closest('#' + ref_by);
+
             formData = {
-                '_token': $('#token').val(),
-                'ref_id': $('#ref_id').val(),
-                'ref_by': $('#ref_by').val(),
-                'name': $('#name').val(),
-                'email': $('#email').val(),
-                'mobile': $('#mobile').val(),
-                'designation': $('#designation').val()
+                '_token': selector.find('.token').val(),
+                'ref_id': selector.find('.ref_id').val(),
+                'ref_by': selector.find('.ref_by').val(),
+                'name': selector.find('.name').val(),
+                'email': selector.find('.email').val(),
+                'mobile': selector.find('.mobile').val(),
+                'designation': selector.find('.designation').val()
             };
             var url = '{{url("save-cp")}}';
             $.ajax({
@@ -309,8 +335,8 @@
                 url: url,
                 dataType: 'json',
                 beforeSend: function() {
-                    $('#save-cp').html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;Saving...`).attr('disabled', true);
-                    $('#cp-form input').attr('disabled', true);
+                    $('#save-cp-' + ref_by).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;Saving...`).attr('disabled', true);
+                    $('#' + ref_by + ' input').attr('disabled', true);
                 },
                 success: function(res) {
                     /*Start Status message*/
@@ -319,17 +345,17 @@
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
                         <strong>Error!</strong> ${res.msg}
                         </div>`);
-                        $('#save-cp').html(`Save`).attr('disabled', false);
-                        $('#cp-form input').attr('disabled', false);
+                        $('#save-cp-' + ref_by).html(`Save`).attr('disabled', false);
+                        $('#' + ref_by + ' input').attr('disabled', false);
                     }
                     /*End Status message*/
 
                     //for reset all field
                     if (res.status == 'success') {
-                        showCP($('#ref_id').val(), $('#ref_by').val());
-                        $('#save-cp').html(`Save`).attr('disabled', false);
-                        $('#cp-form').remove().fadeOut('slow');
-                        $('#add-new-btn').show();
+                        $('#save-cp-' + ref_by).html(`Save`).attr('disabled', false);
+                        selector.remove().fadeOut('slow');
+                        $('#add-btn-' + ref_by).show();
+                        showCP(selector.find('.ref_id').val(), selector.find('.ref_by').val());
                     }
                 }
             });
@@ -360,15 +386,22 @@
                     if (res.validation) {
                         $('#follow_up_date_msg').html(res.validation.follow_up_date);
                         $('#follow_with_msg').html(res.validation.type);
+                        $('#with_user_id_msg').html(res.validation.with_user_id);
+                        $('#follow_up_for_msg').html(res.validation.follow_up_for);
+
                         if (res.validation.company_id) {
-                            var cp_msg = res.validation.company_id;
-                        } else if (res.validation.court_id) {
-                            var cp_msg = res.validation.court_id;
-                        } else if (res.validation.agent_id) {
-                            var cp_msg = res.validation.agent_id;
+                            $('#company_id_msg').html(res.validation.company_id);
+                            $('#company_cp_id_msg').html(res.validation.company_cp_id);
                         }
-                        $('#cp_msg').html(cp_msg);
-                        $('#cp_id_msg').html(res.validation.cp_id);
+                        if (res.validation.court_id) {
+                            $('#court_id_msg').html(res.validation.court_id);
+                            $('#court_cp_id_msg').html(res.validation.court_cp_id);
+                        }
+                        if (res.validation.agent_id) {
+                            $('#agent_id_msg').html(res.validation.agent_id);
+                            $('#agent_cp_id_msg').html(res.validation.agent_cp_id);
+                        }
+                        $('#type_msg').html(res.validation.type);
                         $('#remarks_msg').html(res.validation.remarks);
                     }
                     /*Start Status message*/
@@ -392,5 +425,21 @@
             });
         });
         /*end form submit functionality*/
+
+        $('.form-check-input').click(function() {
+
+            let ref = $(this).val();
+            if (ref == 'follow_up_user') {
+                $('#follow_up_user').attr('disabled', false);
+                $('#follow_up_with').attr('disabled', true).attr('selected',false);
+                $('.select_field').hide();
+                $('#cp-div').hide();
+            } else if (ref == 'follow_up_with') {
+                $('#follow_up_user').attr('disabled', true);
+                $('#follow_up_with').attr('disabled', false);
+                $('.select_field').show();
+                $('#cp-div').show();
+            }
+        });
     })
 </script>
