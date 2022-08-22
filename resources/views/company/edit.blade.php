@@ -108,7 +108,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row" id="field_wrapper">
                     <!-- <h6><i class="mdi mdi-account-circle menu-icon"></i>Contact Person Details</h6>
                     <hr> -->
                     <div class="form-group col-md-3">
@@ -135,12 +135,15 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-2">
                         <label> Mobile</label>
                         <input type="text" class="form-control form-control-sm" value="{{ old('cp_phone')??$res->cp_phone }}" name="cp_phone" placeholder="Enter Mobile">
                         @error('cp_phone')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                    </div>
+                    <div class="form-group col-md-1">
+                        <a href="javascript:void(0)" id="add_more" class="btn btn-xs btn-success mt-4"><span class="mdi mdi-plus"></span></a>
                     </div>
                 </div>
 
@@ -151,4 +154,42 @@
         </div>
     </div>
 </div>
+
+@push('script')
+<script>
+    var i = 1;
+    $('#add_more').click(function() {
+
+        var vendor_id = $(this).attr('vendor_id');
+        var fieldHTML = `<div class="row" id="row-${i}">
+                    <div class="form-group col-md-3">
+                        <input type="text" class="form-control form-control-sm" value="" placeholder=" Enter Designation" name="cp_designation">
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <input type="text" class="form-control form-control-sm" name="cp_name" value="" placeholder="Contact Person Name">
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <input type="email" class="form-control form-control-sm" value="" name="cp_email" placeholder="Enter Email">
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <input type="text" class="form-control form-control-sm" value="" name="cp_phone" placeholder="Enter Mobile">
+                    </div>
+                    <div class="form-group col-md-1">
+                         <a href="javascript:void(0)" onClick="removeRow(${i});" class="btn btn-xs btn-danger"><span class="mdi mdi-delete-forever"></span></a>
+                    </div>
+                </div>`;
+
+        $('#field_wrapper').append(fieldHTML);
+        i++;
+    });
+
+    function removeRow(id) {
+        var element = document.getElementById("row-" + id);
+        element.parentNode.removeChild(element);
+    }
+</script>
+@endpush
 @endsection

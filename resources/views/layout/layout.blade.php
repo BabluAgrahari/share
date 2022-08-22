@@ -59,6 +59,9 @@
             position: relative;
             top: -15px;
         }
+        textarea{
+            resize: vertical !important;
+        }
     </style>
 </head>
 

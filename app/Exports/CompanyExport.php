@@ -32,6 +32,9 @@ class CompanyExport extends Export implements FromArray, WithHeadings
         if (!empty($request->status))
             $query->where('status', $request->status);
 
+        if (!empty($request->address))
+            $query->where('address', $request->address);
+
         $records = $query->orderBy('created', 'DESC')->get();
 
         $reults = [];

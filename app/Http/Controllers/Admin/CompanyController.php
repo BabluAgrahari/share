@@ -25,6 +25,9 @@ class CompanyController extends Controller
         if (!empty($request->email))
             $query->where('email', $request->email);
 
+        if (!empty($request->address))
+            $query->where('address', $request->address);
+
         if (!empty($request->status))
             $query->where('status', $request->status);
 

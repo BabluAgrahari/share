@@ -18,31 +18,30 @@ class FollowUpRequest extends FormRequest
     public function rules(Request $request)
     {
         $rules = [
-            'client_id'             => 'required|min:2|max:200',
-            'follow_up_date'        => 'required',
-            'follow_up_for'         => 'required',
-            'type'                  => 'required|array',
-            'remarks'               => 'required|min:3|max:5000',
+            'client_id'       => 'required|min:2|max:200',
+            'follow_up_date'  => 'required',
+            'follow_up_for'   => 'required',
+            'remarks'         => 'required|min:3|max:5000',
         ];
 
         if ($request->follow_up_for == 'follow_up_user') {
             $rules['with_user_id'] = 'required';
         } else if ($request->follow_up_for == 'follow_up_with') {
-
+            $rules['type']  = 'nullable|array';
             if (!empty($request->type)) {
                 foreach ($request->type as $type) {
 
                     if ($type == 'company') {
-                        $rules['company_id'] = 'required';
-                        $rules['company_cp_id'] = 'required';
+                        $rules['company_id']    = 'nullable';
+                        $rules['company_cp_id'] = 'nullable';
                     }
                     if ($type == 'agent') {
-                        $rules['agent_id'] = 'required';
-                        $rules['agent_cp_id'] = 'required';
+                        $rules['agent_id']    = 'nullable';
+                        $rules['agent_cp_id'] = 'nullable';
                     }
                     if ($type == 'court') {
-                        $rules['court_id'] = 'required';
-                        $rules['court_cp_id'] = 'required';
+                        $rules['court_id']    = 'nullable';
+                        $rules['court_cp_id'] = 'nullable';
                     }
                 }
             }

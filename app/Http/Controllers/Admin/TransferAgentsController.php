@@ -41,7 +41,7 @@ class TransferAgentsController extends Controller
         // }
         // $query->whereBetween('created', [$start_date, $end_date]);
 
-        $data['lists'] = $query->orderBy('created', 'DESC')->paginate($this->perPage);
+        $data['lists'] = $query->with(['Company'])->orderBy('created', 'DESC')->paginate($this->perPage);
 
         $request->request->remove('page');
         $request->request->remove('perPage');

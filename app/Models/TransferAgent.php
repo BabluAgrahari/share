@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class TransferAgent extends BaseModal
 {
     use HasFactory;
+
+    public function Company()
+    {
+        return $this->hasOne('App\Models\Company', 'id', 'company_id');
+    }
 }

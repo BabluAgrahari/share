@@ -68,27 +68,24 @@
         <thead>
             <tr>
                 <th>#</th>
+                <th>Company Name</th>
                 <th>Transfer Agent</th>
                 <th>Phone No.</th>
                 <th>Email</th>
                 <th>Address</th>
-                <th>City</th>
-                <th>State</th>
-                <th>Pin Code</th>
                 <th colspan="2" class="text-center">Action</th>
             </tr>
         </thead>
         <tbody>
             @foreach($lists as $key => $list)
+
             <tr>
                 <td>{{ ++$key }}</td>
-                <td>{{$list->transfer_agent}}</td>
+                <td>{{!empty($list->company->company_name)?ucwords($list->company->company_name):''}}</td>
+                <td>{{ucwords($list->transfer_agent)}}</td>
                 <td>{{$list->phone}}</td>
                 <td>{{$list->email}}</td>
                 <td>{{$list->address}}</td>
-                <td>{{$list->city}}</td>
-                <td>{{$list->state}}</td>
-                <td>{{$list->pin}}</td>
                 <td>
                     <?= $list->status == 1 ? '<a href="javascript:void(0)">
                 <span class="activeVer badge badge-outline-success" _id="' . $list->id . '" val="0">Active</span>

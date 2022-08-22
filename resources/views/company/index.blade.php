@@ -40,6 +40,11 @@
                     <input type="text" class="form-control form-control-sm" name="email" value="{{ !empty($filter['email']) ? $filter['email'] : ''}}" placeholder="Enter Email">
                 </div>
 
+                <div class="form-group col-md-3">
+                    <label>Address</label>
+                    <input type="text" class="form-control form-control-sm" name="address" value="{{ !empty($filter['address']) ? $filter['address'] : ''}}" placeholder="Enter Address">
+                </div>
+
                 <div class="form-group col-md-2">
                     <label>Status</label>
                     <select class="form-control form-control-sm" name="status">
@@ -66,9 +71,6 @@
                 <th>Company Name</th>
                 <th>Phone No.</th>
                 <th>Email</th>
-                <th>City</th>
-                <th>State</th>
-                <th>Pin</th>
                 <th>Address</th>
                 <th colspan="2" class="text-center">Action</th>
             </tr>
@@ -77,12 +79,9 @@
             @foreach($lists as $key => $list)
             <tr>
                 <td>{{ ++$key }}</td>
-                <td>{{$list->company_name}}</td>
+                <td>{{ucwords($list->company_name)}}</td>
                 <td>{{$list->phone}}</td>
                 <td>{{$list->email}}</td>
-                <td>{{$list->city}}</td>
-                <td>{{$list->state}}</td>
-                <td>{{$list->pin}}</td>
                 <td>{{$list->address}}</td>
 
                 <td>

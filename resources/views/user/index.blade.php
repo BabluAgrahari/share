@@ -76,14 +76,9 @@
             <tr>
                 <th>#</th>
                 <th>Name</th>
-                <th>Email</th>
                 <th>Mobile No.</th>
-                <th>City</th>
-                <th>State</th>
-                <th>Pin</th>
-                <th>Address</th>
+                <th>Email</th>
                 <th>Role</th>
-                <th>Address</th>
                 <th colspan="2" class="text-center">Action</th>
             </tr>
         </thead>
@@ -91,7 +86,8 @@
             <?php
 
             use App\Models\Client;
-            $i =0;
+
+            $i = 0;
             ?>
             @foreach($lists as $key => $list)
 
@@ -100,20 +96,15 @@
             $clients = [];
             if (!empty($client_ids)) {
                 $client_ids = json_decode($client_ids);
-                $clients = Client::whereIn('id', $client_ids)->where('status', 1)->get();
+                $clients = Client::with(['Company'])->whereIn('id', $client_ids)->where('status', 1)->get();
             }
             ?>
             <tr class="clickable" data-toggle="collapse" data-target="#group-of-rows-{{$i}}" aria-expanded="false" aria-controls="group-of-rows-1">
                 <td>{{ ++$key }}</td>
                 <td>{{ucwords($list->name)}}</td>
-                <td>{{$list->email}}</td>
                 <td>{{$list->mobile}}</td>
-                <td>{{$list->city}}</td>
-                <td>{{$list->state}}</td>
-                <td>{{$list->pin}}</td>
-                <td>{{$list->address}}</td>
+                <td>{{$list->email}}</td>
                 <td>{{ucwords($list->role)}}</td>
-                <td>{{$list->address}}</td>
                 <td>
                     <?= $list->status == 1 ? '<a href="javascript:void(0)">
                 <span class="activeVer badge badge-outline-success" _id="' . $list->id . '" val="0">Active</span>
@@ -127,18 +118,45 @@
                 </td>
             </tr>
         </tbody>
+        @php $units = 0;@endphp
+        @if(!empty($clients))
         <tbody id="group-of-rows-{{$i}}" class="collapse">
+            <tr class="table-warning" colspan="12">
+                <th>File No</th>
+                <th>Folio No</th>
+                <th>Share Holder</th>
+                <th>Survivor Name</th>
+                <th>City</th>
+                <th>Share Unit</th>
+                <th>Follow Up Status</th>
+            </tr>
             @foreach($clients as $client)
             <tr class="table-warning" colspan="12">
                 <td>{{$client->file_no}}</td>
+                <td>{{$client->folio_no}}</td>
                 <td>{{$client->share_holder}}</td>
                 <td>{{$client->survivor_name}}</td>
                 <td>{{$client->city}}</td>
-                <td>{{ $client->dformat($client->created)}}</td>
+                <td>@if(!empty($client->Company))
+                    @foreach($client->Company as $camp)
+                    @php $units +=$camp->unit; @endphp
+                    @endforeach
+                    @endif
+                    {{$units}}
+                </td>
+                <td>
+                    @if($client->follow_up_status ==1)
+                    <span class="badge badge-outline-success">Completed</span>
+                    @elseif($client->follow_up_status ==0)
+                    <span class="badge badge-outline-warning">Pending</span>
+                    @endif
+                </td>
+
             </tr>
             @endforeach
         </tbody>
-<?php $i++;?>
+        @endif
+        <?php $i++; ?>
         @endforeach
 
     </table>

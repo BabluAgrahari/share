@@ -417,21 +417,25 @@
                     //for reset all field
                     if (res.status == 'success') {
                         $('form#follow-up')[0].reset();
-                        setTimeout(function() {
-                            location.reload();
-                        }, 1000)
+                        // setTimeout(function() {
+                        //     location.reload();
+                        // }, 1000)
                     }
                 }
             });
         });
         /*end form submit functionality*/
 
+        $('#followUpModal').on('hidden.bs.modal', function() {
+            location.reload();
+        });
+
         $('.form-check-input').click(function() {
 
             let ref = $(this).val();
             if (ref == 'follow_up_user') {
                 $('#follow_up_user').attr('disabled', false);
-                $('#follow_up_with').attr('disabled', true).attr('selected',false);
+                $('#follow_up_with').attr('disabled', true).attr('selected', false);
                 $('.select_field').hide();
                 $('#cp-div').hide();
             } else if (ref == 'follow_up_with') {
