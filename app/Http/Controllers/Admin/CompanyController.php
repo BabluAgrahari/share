@@ -72,7 +72,7 @@ class CompanyController extends Controller
         $store->cp_name        = $request->cp_name;
         $store->cp_email       = $request->cp_email;
         $store->cp_phone       = $request->cp_phone;
-        $store->cp_designation    = $request->cp_designation;
+        $store->cp_designation = $request->cp_designation;
         $store->remarks        = $request->remarks;
 
         // echo "<pre>";
@@ -101,19 +101,24 @@ class CompanyController extends Controller
 
     public function update(CompanyRequest $request, $id)
     {
+        $cp = $request->cp;
         $update =  Company::find($id);
         $update->cp_id   = $request->cp_id;
-        $update->company_name     = $request->company_name;
-        $update->phone            = $request->phone;
-        $update->email            = $request->email;
+        $update->company_name    = $request->company_name;
+        $update->phone           = $request->phone;
+        $update->email           = $request->email;
         $update->address         = $request->address;
         $update->city            = $request->city;
         $update->state           = $request->state;
         $update->pin             = $request->pin;
         $update->cp_name         = $request->cp_name;
-        $update->cp_email         = $request->cp_email;
-        $update->cp_phone         = $request->cp_phone;
-        $update->cp_designation      = $request->cp_designation;
+        $update->cp_email        = $request->cp_email;
+        $update->cp_phone        = $request->cp_phone;
+        $update->cp_designation  = $request->cp_designation;
+        // $update->cp_name         = $cp[0]['cp_name'];
+        // $update->cp_email        = $cp[0]['cp_email'];
+        // $update->cp_phone        = $cp[0]['cp_phone'];
+        // $update->cp_designation  = $cp[0]['cp_designation'];
         $update->remarks         = $request->remarks;
 
         if ($update->save()) {

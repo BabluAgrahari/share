@@ -108,42 +108,49 @@
                     </div>
                 </div>
 
-                <div class="row" id="field_wrapper">
-                    <!-- <h6><i class="mdi mdi-account-circle menu-icon"></i>Contact Person Details</h6>
-                    <hr> -->
-                    <div class="form-group col-md-3">
-                        <label>Designation </label>
-                        <input type="text" class="form-control form-control-sm" value="{{ old('cp_designation')??$res->cp_designation }}" placeholder=" Enter Designation	" name="cp_designation">
-                        @error('cp_designation')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group col-md-3">
-                        <label>Contant Person Name</label>
-                        <input type="text" class="form-control form-control-sm" name="cp_name" value="{{ old('cp_name')??$res->cp_name }}" placeholder="Contact Person Name">
-                        @error('cp_name')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group col-md-3">
-                        <label> Email</label>
-                        <input type="email" class="form-control form-control-sm" value="{{ old('cp_email')??$res->cp_email }}" name="cp_email" placeholder="Enter Email">
-                        @error('cp_email')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group col-md-2">
-                        <label> Mobile</label>
-                        <input type="text" class="form-control form-control-sm" value="{{ old('cp_phone')??$res->cp_phone }}" name="cp_phone" placeholder="Enter Mobile">
-                        @error('cp_phone')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <div class="form-group col-md-1">
-                        <a href="javascript:void(0)" id="add_more" class="btn btn-xs btn-success mt-4"><span class="mdi mdi-plus"></span></a>
+                <div class="row mb-2">
+                    <div class="company-table">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Designation</th>
+                                    <th>Contact Person Name</th>
+                                    <th>Email</th>
+                                    <th>Mobile</th>
+                                </tr>
+                            </thead>
+                            <tbody id="field_wrapper">
+                                <tr>
+                                    <td>
+                                        <input type="text" class="form-control form-control-sm" value="{{ old('cp_designation')??$res->cp_designation }}" placeholder=" Enter Designation" name="cp_designation">
+                                        @error('cp_designation')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control form-control-sm" name="cp_name" value="{{ old('cp_name')??$res->cp_name }}" placeholder="Contact Person Name">
+                                        @error('cp_name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </td>
+                                    <td>
+                                        <input type="email" class="form-control form-control-sm" value="{{ old('cp_email')??$res->cp_email }}" name="cp_email" placeholder="Enter Email">
+                                        @error('cp_email')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control form-control-sm" value="{{ old('cp_phone')??$res->cp_phone }}" name="cp_phone" placeholder="Enter Mobile">
+                                        @error('cp_phone')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </td>
+                                    <!-- <td>
+                                        <a href="javascript:void(0)" id="add_more" class="btn btn-xs btn-success"><span class="mdi mdi-plus"></span></a>
+                                    </td> -->
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -161,26 +168,26 @@
     $('#add_more').click(function() {
 
         var vendor_id = $(this).attr('vendor_id');
-        var fieldHTML = `<div class="row" id="row-${i}">
-                    <div class="form-group col-md-3">
-                        <input type="text" class="form-control form-control-sm" value="" placeholder=" Enter Designation" name="cp_designation">
-                    </div>
+        var fieldHTML = `<tr id="row-${i}">
+                    <td>
+                        <input type="text" class="form-control form-control-sm" value="" placeholder=" Enter Designation" name="cp[${i}][cp_designation]">
+                    </td>
 
-                    <div class="form-group col-md-3">
-                        <input type="text" class="form-control form-control-sm" name="cp_name" value="" placeholder="Contact Person Name">
-                    </div>
+                    <td>
+                        <input type="text" class="form-control form-control-sm" name="cp[${i}][cp_name]" value="" placeholder="Contact Person Name">
+                    </td>
 
-                    <div class="form-group col-md-3">
-                        <input type="email" class="form-control form-control-sm" value="" name="cp_email" placeholder="Enter Email">
-                    </div>
+                    <td>
+                        <input type="email" class="form-control form-control-sm" value="" name="cp[${i}][cp_email]" placeholder="Enter Email">
+                    </td>
 
-                    <div class="form-group col-md-2">
-                        <input type="text" class="form-control form-control-sm" value="" name="cp_phone" placeholder="Enter Mobile">
-                    </div>
-                    <div class="form-group col-md-1">
+                    <td class="form-group col-md-2">
+                        <input type="text" class="form-control form-control-sm" value="" name="cp[${i}][cp_phone]" placeholder="Enter Mobile">
+                    </td>
+                    <td>
                          <a href="javascript:void(0)" onClick="removeRow(${i});" class="btn btn-xs btn-danger"><span class="mdi mdi-delete-forever"></span></a>
-                    </div>
-                </div>`;
+                    </td>
+                </tr>`;
 
         $('#field_wrapper').append(fieldHTML);
         i++;
